@@ -10,9 +10,14 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/editor',
-      name: 'editor',
-      component: () => import('../views/FormEditor/Editor.vue')
+      path: '/workspace',
+      name: 'workspace',
+      component: () => import('../views/WorkSpace/index.vue')
+    },
+    {
+      path: '/:id/form-editor',
+      name: 'form-editor',
+      component: () => import('../views/FormEditor/index.vue')
     },
     {
       path: '/about',
