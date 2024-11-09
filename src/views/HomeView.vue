@@ -23,7 +23,7 @@ const toProfile = () => {
   <div class="body">
       <div class="header">
         <div class="title">🍋 柠檬表单</div>
-        <a-typography-text class="description">专注调查统计，扫码签到在专业表单</a-typography-text>
+        <a-typography-text class="description">表单搭建，如此简单</a-typography-text>
       </div>
 
 

@@ -109,14 +109,16 @@ const countList = ref([{
   position: relative;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   .item {
-    width: 340px;
+    max-width: 340px;
     height: 168px;
     border-radius: 6px;
     padding: 30px 20px;
     margin-right: 10px;
     background: #fff;
     box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12372549);
+    margin-bottom: 10px;
   }
 }
 .form-item-body {
