@@ -78,12 +78,12 @@ const BasicComponentList:CompItemType[] = [
   {
     label: '多选',
     name: '多选',
-    type: CompType.select
+    type: CompType.checkout
   },
   {
     label: '单行文本',
     name: '单行文本',
-    type: CompType.radio
+    type: CompType.input
   },
   {
     label: '多行文本',

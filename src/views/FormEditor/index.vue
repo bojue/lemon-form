@@ -48,10 +48,9 @@
             <div class="form-body">
               <VueDraggable v-model="pageCompList" :animation="150" group="people" ghostClass="ghost"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
-                <div v-for="item in pageCompList"  
-                  :id="item.id"
+                <div v-for="(item, index) in pageCompList"  
                   class="cursor-move h-50px bg-gray-500/5 rounded p-3 form-item">    
-                  <FormComponent :component="item"></FormComponent>
+                  <FormComponent :component="item" :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
                 </div>
               </VueDraggable>
             </div>
@@ -79,7 +78,7 @@ function clone(element: any) {
   return {
     ...element,
     id: uuidv4(),
-    name: `${element.name}-clone-${len}`
+    title: element.name
   }
 }
 

@@ -5,16 +5,25 @@ interface CompConfig {
   description: string | null // 描述
   value: any
   defaultValue: string | null// 默认值
-  listData?: any[] // 列表数据，包括单选，多选，下拉选择
+  dataList?: any[] // 列表数据，包括单选，多选，下拉选择
 }
 export const defaultConfig: CompConfig = {
   type: '',
   name: '组件名称',
   value: null,
   defaultValue: null,
-  title: '组件',
+  title: '',
   description: null,
-  listData: [],
+  dataList: [{
+    label: '选项一',
+    value: '选项一'
+  },{
+    label: '选项二',
+    value: '选项二'
+  },{
+    label: '选项三',
+    value: '选项三'
+  }],
 }
 
 export const getDefaultConfig = () => {
