@@ -9,6 +9,7 @@ import { DatePicker,
   Radio,
   Checkbox,
   Input,
+  TimePicker,
 } from 'ant-design-vue';
 
 import App from './App.vue'
@@ -20,6 +21,7 @@ app.use(Radio);
 app.use(Button);
 app.use(Tag);
 app.use(Input);
+app.use(TimePicker);
 
 app.use(Typography);
 app.use(DatePicker);

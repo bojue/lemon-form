@@ -3,6 +3,7 @@ export enum CompType {
   textarea = 'Textarea',
   number = 'Number',
   switch = "Switch",
+  url = "Url", // 网址
   radio = 'Radio',
   checkout = 'Checkout',
   date = "Date",
@@ -81,13 +82,13 @@ const BasicComponentList:CompItemType[] = [
     type: CompType.checkout
   },
   {
-    label: '单行文本',
-    name: '单行文本',
+    label: '单行输入',
+    name: '单行输入',
     type: CompType.input
   },
   {
-    label: '多行文本',
-    name: '多行文本',
+    label: '多行输入',
+    name: '多行输入',
     type: CompType.textarea
   },
   {
@@ -131,19 +132,14 @@ const BasicComponentList:CompItemType[] = [
     type: CompType.switch
   },
   {
-    label: '按钮',
-    name: '按钮',
-    type: CompType.button
+    label: '网址',
+    name: '网址',
+    type: CompType.url
   },
   {
     label: '评分',
     name: '评分',
     type: CompType.score
-  },
-  {
-    label: 'NPS',
-    name: 'NPS',
-    type: CompType.nps
   }
   
 ]
@@ -185,18 +181,22 @@ const PersonalComponentList: CompItemType[] = [
     label: '地址',
     name: '地址',
     type: CompType.address
-  }, {
-    label: '电子签名',
-    name: '电子签名',
-    type: CompType.electronicSignature
+  },{
+    label: '邮件',
+    name: '邮件',
+    type: CompType.email
+  },{
+    label: '微信',
+    name: '微信',
+    type: CompType.wx
   }
 ]
 
 // 高级
-const AdvancedComponentList = [{
-  label: '电子签名',
-  name: '电子签名',
-  type: CompType.electronicSignature
+const AdvancedComponentList = [  {
+  label: 'NPS',
+  name: 'NPS',
+  type: CompType.nps
 },{
   label: '定位',
   name: '定位',
@@ -225,26 +225,6 @@ const CommonComponentList = [{
   name: '是否',
   type: CompType.boolean
 },{
-  label: '手机',
-  name: '手机',
-  type: CompType.phone
-},{
-  label: '邮件',
-  name: '邮件',
-  type: CompType.email
-},{
-  label: '微信',
-  name: '微信',
-  type: CompType.wx
-},{
-  label: '身份证',
-  name: '身份证',
-  type: CompType.idCard
-},{
-  label: '地址',
-  name: '地址',
-  type: CompType.address
-}, {
   label: '社会关系',
   name: '社会关系',
   type: CompType.select
@@ -278,8 +258,8 @@ export const CompListData:CompCategoryType[] = [{
   type: CompListType.layout,
   children: [...LayoutComponentList]
 },{
-  name: '个人信息',
-  label: '个人信息',
+  name: '联系方式',
+  label: '联系方式',
   type: CompListType.personal,
   children: [...PersonalComponentList]
 },{

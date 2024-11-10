@@ -26,12 +26,15 @@ import { ref } from 'vue'
 
 import RadioComponent from '@/components-form/base/Radio.vue'
 import CheckoutComponent from '@/components-form/base/Checkout.vue'
-import InputComponent from '@/components-form/base/input.vue'
-import TextareaComponent from '@/components-form/base/textarea.vue'
-import ButtonComponent from '@/components-form/base/Button.vue'
+import InputComponent from '@/components-form/base/Input.vue'
+import TextareaComponent from '@/components-form/base/Textarea.vue'
+import UrlComponent from '@/components-form/base/Url.vue'
 import DateComponent from '@/components-form/base/Date.vue'
 import DateRangeComponent from '@/components-form/base/DateRange.vue'
+import TimeComponent from '@/components-form/base/Time.vue'
+import TimeRangeComponent from '@/components-form/base/TimeRange.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
+import TimeRange from '@/components-form/base/TimeRange.vue'
 
 
 const props = defineProps({
@@ -63,9 +66,11 @@ function getTypeToComponent(type: string) {
     Input: InputComponent,
     Textarea: TextareaComponent,
     Checkout: CheckoutComponent,
-    Button: ButtonComponent,
     Date: DateComponent,
-    DateRange: DateRangeComponent
+    DateRange: DateRangeComponent,
+    Time: TimeComponent,
+    TimeRange: TimeRangeComponent,
+    Url: UrlComponent
   }
 
   return compsObject[type]

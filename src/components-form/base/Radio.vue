@@ -1,6 +1,6 @@
 <template>
   <a-radio-group v-model:value="props.value" size="large">
-    <a-radio v-for="item of props.dataList" :value="item" :style="radioStyle">{{ item.label}}</a-radio>
+    <a-radio v-for="item of props.dataList" :value="item" :style="radioStyle">{{ item?.label}}</a-radio>
   </a-radio-group>
 </template>
 <script setup lang="ts">
