@@ -19,6 +19,7 @@
     "@ant-design/icons-vue": "^7.0.1",
     "ant-design-vue": "^4.2.5",
     "pinia": "^2.2.4",
+    "uuid": "^11.0.2",
     "vue": "^3.5.12",
     "vue-draggable-plus": "^0.5.6",
     "vue-router": "^4.4.5"
