@@ -2,6 +2,7 @@ export enum CompType {
   input = 'Input',
   textarea = 'Textarea',
   number = 'Number',
+  switch = "Switch",
   radio = 'Radio',
   checkout = 'Checkout',
   date = "Date",
@@ -11,7 +12,8 @@ export enum CompType {
   upload = "Upload",
   select = 'Select', // 下拉选择
   img = 'Img', // 图片选择
-  sort = 'SORT', // 排序
+  sort = 'Sort', // 排序
+  button = "Button", // 按钮
 
   // 个人信息
   name = 'Name', // 姓名
@@ -29,7 +31,7 @@ export enum CompType {
 
   // 高级组件
   score = 'Score', // 评分
-  nps = 'PNS', // nps
+  nps = 'NPS', // nps
   electronicSignature = 'ElectronicSignature', // 电子签名
   location = 'Location', // 位置信息
   editor = "Editor", // 富文本
@@ -71,7 +73,7 @@ const BasicComponentList:CompItemType[] = [
   {
     label: '单选',
     name: '单选',
-    type: CompType.radio
+    type: CompType.radio,
   },
   {
     label: '多选',
@@ -119,6 +121,21 @@ const BasicComponentList:CompItemType[] = [
     type: CompType.sort
   },
   {
+    label: '数字',
+    name: '数字',
+    type: CompType.number
+  },
+  {
+    label: '开关',
+    name: '开关',
+    type: CompType.switch
+  },
+  {
+    label: '按钮',
+    name: '按钮',
+    type: CompType.button
+  },
+  {
     label: '评分',
     name: '评分',
     type: CompType.score
@@ -126,13 +143,8 @@ const BasicComponentList:CompItemType[] = [
   {
     label: 'NPS',
     name: 'NPS',
-    type: CompType.sort
-  },
-  {
-    label: '数字',
-    name: '数字',
-    type: CompType.number
-  },
+    type: CompType.nps
+  }
   
 ]
 
@@ -235,15 +247,23 @@ const CommonComponentList = [{
 }, {
   label: '社会关系',
   name: '社会关系',
-  type: CompType.email
+  type: CompType.select
 },{
   label: '年收入',
   name: '年收入',
   type: CompType.annualIncome
+}, {
+  label: '年收入',
+  name: '年收入',
+  type: CompType.radio
 },{
-  label: '电子签名',
-  name: '电子签名',
-  type: CompType.electronicSignature
+  label: '部门',
+  name: '部门',
+  type: CompType.select
+},{
+  label: '政治面貌',
+  name: '政治面貌',
+  type: CompType.radio
 }]
 
 // 组件列表
