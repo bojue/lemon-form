@@ -9,7 +9,9 @@ import { DatePicker,
   Radio,
   Checkbox,
   Input,
+  Rate,
   TimePicker,
+  InputNumber
 } from 'ant-design-vue';
 
 import App from './App.vue'
@@ -20,7 +22,9 @@ app.use(Checkbox);
 app.use(Radio);
 app.use(Button);
 app.use(Tag);
+app.use(Rate);
 app.use(Input);
+app.use(InputNumber);
 app.use(TimePicker);
 
 app.use(Typography);

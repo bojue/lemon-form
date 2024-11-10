@@ -1,13 +1,15 @@
+
+
 <template>
- <a-input-number id="inputNumber" v-model:value="props.value" :min="1" :max="100" />
+  <a-rate v-model:value="props.value" />
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 const props = defineProps({
   value: {
     type: String
-  }
+  },
 })
 
 </script>

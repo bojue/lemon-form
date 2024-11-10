@@ -32,6 +32,8 @@ import UrlComponent from '@/components-form/base/Url.vue'
 import DateComponent from '@/components-form/base/Date.vue'
 import DateRangeComponent from '@/components-form/base/DateRange.vue'
 import TimeComponent from '@/components-form/base/Time.vue'
+import RateComponent from '@/components-form/base/Rate.vue'
+import NumberComponent from '@/components-form/base/Number.vue'
 import TimeRangeComponent from '@/components-form/base/TimeRange.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import TimeRange from '@/components-form/base/TimeRange.vue'
@@ -70,7 +72,9 @@ function getTypeToComponent(type: string) {
     DateRange: DateRangeComponent,
     Time: TimeComponent,
     TimeRange: TimeRangeComponent,
-    Url: UrlComponent
+    Url: UrlComponent,
+    Score: RateComponent,
+    Number: NumberComponent
   }
 
   return compsObject[type]
