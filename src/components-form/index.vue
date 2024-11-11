@@ -11,6 +11,7 @@
       </a-typography-title>
     </div>
     <div class="comp-item-description">
+      <!-- <a-descriptions-item >{{ currentComp.description  || '描述' }}</a-descriptions-item> -->
       <a-typography-text type="secondary">
         {{ currentComp.description || '描述' }}
       </a-typography-text>
@@ -33,6 +34,8 @@ import DateComponent from '@/components-form/base/Date.vue'
 import DateRangeComponent from '@/components-form/base/DateRange.vue'
 import TimeComponent from '@/components-form/base/Time.vue'
 import RateComponent from '@/components-form/base/Rate.vue'
+import UploadComponent from '@/components-form/base/Upload.vue'
+import SwitchComponent from '@/components-form/base/Switch.vue'
 import NumberComponent from '@/components-form/base/Number.vue'
 import TimeRangeComponent from '@/components-form/base/TimeRange.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
@@ -74,7 +77,9 @@ function getTypeToComponent(type: string) {
     TimeRange: TimeRangeComponent,
     Url: UrlComponent,
     Score: RateComponent,
-    Number: NumberComponent
+    Number: NumberComponent,
+    Switch: SwitchComponent,
+    Upload: UploadComponent,
   }
 
   return compsObject[type]

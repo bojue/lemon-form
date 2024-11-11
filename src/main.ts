@@ -11,7 +11,9 @@ import { DatePicker,
   Input,
   Rate,
   TimePicker,
-  InputNumber
+  InputNumber,
+  Switch,
+  Upload
 } from 'ant-design-vue';
 
 import App from './App.vue'
@@ -26,6 +28,8 @@ app.use(Rate);
 app.use(Input);
 app.use(InputNumber);
 app.use(TimePicker);
+app.use(Switch);
+app.use(Upload);
 
 app.use(Typography);
 app.use(DatePicker);

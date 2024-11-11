@@ -117,11 +117,6 @@ const BasicComponentList:CompItemType[] = [
     type: CompType.upload
   },
   {
-    label: '排序',
-    name: '排序',
-    type: CompType.sort
-  },
-  {
     label: '数字',
     name: '数字',
     type: CompType.number
@@ -197,6 +192,10 @@ const AdvancedComponentList = [  {
   label: 'NPS',
   name: 'NPS',
   type: CompType.nps
+},  {
+  label: '排序',
+  name: '排序',
+  type: CompType.sort
 },{
   label: '定位',
   name: '定位',
