@@ -49,6 +49,7 @@ import PhoneComponent from '@/components-form/contact-information/Phone.vue'
 import IdCardComponent from '@/components-form/contact-information/IdCard.vue'
 import EmailComponent from '@/components-form/contact-information/Email.vue'
 import WXComponent from '@/components-form/contact-information/WX.vue'
+import AddressComponent from '@/components-form/contact-information/Address.vue'
 
 
 const props = defineProps({
@@ -98,6 +99,7 @@ function getTypeToComponent(type: string) {
     Email: EmailComponent,
     IdCard: IdCardComponent,
     Phone: PhoneComponent,
+    Address: AddressComponent,
   }
 
   return compsObject[type]
