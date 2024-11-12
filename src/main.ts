@@ -13,7 +13,8 @@ import { DatePicker,
   TimePicker,
   InputNumber,
   Switch,
-  Upload
+  Upload,
+  Divider
 } from 'ant-design-vue';
 
 import App from './App.vue'
@@ -30,6 +31,7 @@ app.use(InputNumber);
 app.use(TimePicker);
 app.use(Switch);
 app.use(Upload);
+app.use(Divider);
 
 app.use(Typography);
 app.use(DatePicker);

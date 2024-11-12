@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-
+// 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
 import CheckoutComponent from '@/components-form/base/Checkout.vue'
 import InputComponent from '@/components-form/base/Input.vue'
@@ -33,6 +33,7 @@ import UrlComponent from '@/components-form/base/Url.vue'
 import DateComponent from '@/components-form/base/Date.vue'
 import DateRangeComponent from '@/components-form/base/DateRange.vue'
 import TimeComponent from '@/components-form/base/Time.vue'
+import DividerComponent from '@/components-form/base/Divider.vue'
 import RateComponent from '@/components-form/base/Rate.vue'
 import UploadComponent from '@/components-form/base/Upload.vue'
 import SwitchComponent from '@/components-form/base/Switch.vue'
@@ -40,6 +41,14 @@ import NumberComponent from '@/components-form/base/Number.vue'
 import TimeRangeComponent from '@/components-form/base/TimeRange.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import TimeRange from '@/components-form/base/TimeRange.vue'
+
+// 联系方式
+import NameComponent from '@/components-form/contact-information/Name.vue'
+import GenderComponent from '@/components-form/contact-information/Gender.vue'
+import PhoneComponent from '@/components-form/contact-information/Phone.vue'
+import IdCardComponent from '@/components-form/contact-information/IdCard.vue'
+import EmailComponent from '@/components-form/contact-information/Email.vue'
+import WXComponent from '@/components-form/contact-information/WX.vue'
 
 
 const props = defineProps({
@@ -80,6 +89,15 @@ function getTypeToComponent(type: string) {
     Number: NumberComponent,
     Switch: SwitchComponent,
     Upload: UploadComponent,
+    Divider: DividerComponent,
+
+    // 联系信息
+    Name: NameComponent,
+    Gender: GenderComponent,
+    WX: WXComponent,
+    Email: EmailComponent,
+    IdCard: IdCardComponent,
+    Phone: PhoneComponent,
   }
 
   return compsObject[type]

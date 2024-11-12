@@ -27,7 +27,7 @@ export enum CompType {
   address = 'Address', // 地址
   
   // 布局组件
-  dividing = 'Dividing', // 分割线
+  divider = 'Divider', // 分割线
   paging = 'Paging', // 分页
 
   // 高级组件
@@ -144,7 +144,7 @@ const LayoutComponentList: CompItemType[] = [
   {
     label: '分割线',
     name: '分割线',
-    type: CompType.dividing
+    type: CompType.divider
   },  {
     label: '分页',
     name: '分页',

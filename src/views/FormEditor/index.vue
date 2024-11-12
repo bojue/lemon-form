@@ -16,7 +16,8 @@
               {{ compCategory.name }}
             </div>
             <VueDraggable v-model="compCategory.children" :animation="150" ghostClass="ghost"
-            :group="{ name: 'people', pull: 'clone', put: false }" :sort="false"
+            :group="{ name: 'people', pull: 'clone', put: false }" 
+            :sort="false"
             :clone="clone" 
             class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded compList">
             <div v-for="item in compCategory.children" :key="item.name" class="cursor-move h-50px bg-gray-500/5 item" 
@@ -47,6 +48,7 @@
             </div>
             <div class="form-body">
               <VueDraggable v-model="pageCompList" :animation="150" group="people" ghostClass="ghost"
+                :clone="clone" 
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <div v-for="(item, index) in pageCompList"  
                   class="cursor-move h-50px bg-gray-500/5 rounded p-3 form-item">    
@@ -73,13 +75,13 @@ const compList = ref([...CompListData])
 const pageCompList = ref([])
 
 function clone(element: any) {
-  const len = pageCompList.value.length
-
-  return {
+  console.log('element====>',element.id, element)
+  const item = {
     ...element,
-    id: uuidv4(),
+    id: element.id || uuidv4(),
     title: element.name
   }
+  return {...item}
 }
 
 const dyCreateComp = (type: string) => {
