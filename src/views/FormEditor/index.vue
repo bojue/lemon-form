@@ -15,10 +15,10 @@
             <div class="category-title">
               {{ compCategory.name }}
             </div>
-            <VueDraggable v-model="compCategory.children" :animation="150" ghostClass="ghost"
+            <VueDraggable v-model="compCategory.children" :animation="150" 
             :group="{ name: 'people', pull: 'clone', put: false }" 
             :sort="false"
-            :clone="clone" 
+            :clone="onClone" 
             class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded compList">
             <div v-for="item in compCategory.children" :key="item.name" class="cursor-move h-50px bg-gray-500/5 item" 
               v-bind:class="{
@@ -47,12 +47,15 @@
               </div>
             </div>
             <div class="form-body">
-              <VueDraggable v-model="pageCompList" :animation="150" group="people" ghostClass="ghost"
-                :clone="clone" 
+              <VueDraggable 
+                v-model="pageCompList" 
+                :animation="150" 
+                group="people" 
+                ghostClass="ghost"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <div v-for="(item, index) in pageCompList"  
                   class="cursor-move h-50px bg-gray-500/5 rounded p-3 form-item">    
-                  <FormComponent :component="item" :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
+                  <FormComponent :component="item" :type="item.type" :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
                 </div>
               </VueDraggable>
             </div>
@@ -74,12 +77,13 @@ import FormComponent from '@/components-form/index.vue'
 const compList = ref([...CompListData])
 const pageCompList = ref([])
 
-function clone(element: any) {
-  console.log('element====>',element.id, element)
+
+function onClone(element: any) {
   const item = {
-    ...element,
+    ...element.value,
     id: element.id || uuidv4(),
-    title: element.name
+    title: element.name,
+    type: element.type
   }
   return {...item}
 }

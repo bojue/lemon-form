@@ -3,7 +3,7 @@
     <div class="comp-item-title">
       <a-typography-title :level="5" class="title-value">
         <span class="number">
-          {{ props.lineNumber }}.
+          {{lineNumberValue }}.
         </span>
         <span>
           {{ currentComp.title }}
@@ -11,19 +11,20 @@
       </a-typography-title>
     </div>
     <div class="comp-item-description">
-      <!-- <a-descriptions-item >{{ currentComp.description  || '描述' }}</a-descriptions-item> -->
       <a-typography-text type="secondary">
         {{ currentComp.description || '描述' }}
       </a-typography-text>
     </div>
     <div class="component">
-      <component :is="currentComp.comp" v-bind="{ ...currentComp }"></component>
+      <component :is="getCompConfig(props.type).comp"  v-bind="currentComp"></component>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
+
 // 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
 import CheckoutComponent from '@/components-form/base/Checkout.vue'
@@ -39,8 +40,6 @@ import UploadComponent from '@/components-form/base/Upload.vue'
 import SwitchComponent from '@/components-form/base/Switch.vue'
 import NumberComponent from '@/components-form/base/Number.vue'
 import TimeRangeComponent from '@/components-form/base/TimeRange.vue'
-import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
-import TimeRange from '@/components-form/base/TimeRange.vue'
 
 // 联系方式
 import NameComponent from '@/components-form/contact-information/Name.vue'
@@ -57,25 +56,37 @@ const props = defineProps({
     type: Object,
     require: true
   },
+  type: {
+    type: String,
+    require: true
+  },
   lineNumber: {
     type: String
   }
 })
 
-const currentComp = ref(getCompConfig(props.component))
+const lineNumberValue = ref(props.lineNumber)
+const currentComp = ref(getCompConfig(props.type))
+
+watch(() => props.type, () => {
+  currentComp.value = getCompConfig(props.type)
+})
+
+watch(() => props.lineNumber, (val) => {
+  lineNumberValue.value = val
+})
 
 
-function getCompConfig(component: any) {
+
+function getCompConfig(type: any) {
   const defaultConfig = getDefaultConfig()
-  const compType = { comp: getTypeToComponent(component.type) }
-  const comp = { ...defaultConfig, ...component, ...compType }
-  console.log('defaultConfig', defaultConfig, 'comp', comp)
+  const compType = { comp: getTypeToComponent(type) }
+  const comp = { ...defaultConfig, ...props.component, ...compType }
   return comp
 }
 
 
 function getTypeToComponent(type: string) {
-  console.info('当前组件', type)
   const compsObject: any = {
     Radio: RadioComponent,
     Input: InputComponent,
@@ -101,8 +112,9 @@ function getTypeToComponent(type: string) {
     Phone: PhoneComponent,
     Address: AddressComponent,
   }
-
-  return compsObject[type]
+  const comp = compsObject[type]
+  console.log('type', type, comp)
+  return comp
 }
 
 

@@ -11,7 +11,7 @@ const radioStyle = reactive({
 const props = defineProps({
   value: {
     type: String
-  },
+  }
 })
 </script>
 <style lang="scss">
