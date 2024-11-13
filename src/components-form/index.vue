@@ -16,7 +16,7 @@
       </a-typography-text>
     </div>
     <div class="component">
-      <component :is="getCompConfig(props.type).comp"  v-bind="currentComp"></component>
+      <component :is="currentComp.comp"  v-bind="currentComp"></component>
     </div>
   </div>
 </template>
