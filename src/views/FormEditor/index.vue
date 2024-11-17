@@ -15,7 +15,7 @@
             <div class="category-title">
               {{ compCategory.name }}
             </div>
-            <VueDraggable v-model="compCategory.children" :animation="150" 
+            <VueDraggable v-model="compCategory.children" :animation="0" 
             :group="{ name: 'people', pull: 'clone', put: false }" 
             :sort="false"
             :clone="onClone" 
@@ -49,20 +49,24 @@
             <div class="form-body">
               <VueDraggable 
                 v-model="pageCompList" 
-                :animation="150" 
+                :animation="0" 
                 group="people" 
                 ghostClass="ghost"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <div v-for="(item, index) in pageCompList"  
                   class="cursor-move h-50px bg-gray-500/5 rounded p-3 form-item">    
-                  <FormComponent :component="item" :type="item.type" :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
+                  <FormComponent
+                    @click="selectComp(item)"
+                    :component="item" 
+                    :type="item.type" 
+                    :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
                 </div>
               </VueDraggable>
             </div>
            </div>
           </div>
         </div>
-        <CompSetting></CompSetting>
+        <CompSetting :selectComp="currentComp"></CompSetting>
       </div>
   </div>
 </template>
@@ -71,15 +75,19 @@ import { VueDraggable } from 'vue-draggable-plus'
 import { ref } from 'vue'
 import { v4 as uuidv4  } from 'uuid'
 import { CompListData} from './comp-list-data'
-import CompSetting from '@/views/FormEditor/FormSetting.vue'
+import CompSetting from '@/views/FormEditor/form-setting.vue'
 import FormComponent from '@/components-form/index.vue'
+import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 
-const compList = ref([...CompListData])
-const pageCompList = ref([])
+const compList = ref([...CompListData]) // 来源组件列表
+const pageCompList = ref([]) // 页面组件列表
+const currentComp = ref() // 当前选中组件
 
 
-function onClone(element: any) {
+const onClone = (element: any) => {
+  const defaultComp: any = getDefaultConfig(element.type)
   const item = {
+    ...defaultComp,
     ...element.value,
     id: element.id || uuidv4(),
     title: element.name,
@@ -88,8 +96,14 @@ function onClone(element: any) {
   return {...item}
 }
 
+const selectComp = (item: any) => {
+  console.log('selectClick', item)
+  currentComp.value = {...item}
+}
+
 const dyCreateComp = (type: string) => {
   console.log('type', type)
+
 }
 </script>
 
@@ -114,8 +128,8 @@ const dyCreateComp = (type: string) => {
 }
 .content {
   display: grid;
-  grid-template-columns:270px 1fr 340px;
-  padding: 0 20px;
+  grid-template-columns:270px 1fr 260px;
+  padding: 0 0 0 20px;
   height: calc(100% - 86px);
 
   .category-title {

@@ -22,8 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue'
-import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
+import { ref, computed, watch, defineEmits } from 'vue'
 
 // 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
@@ -78,10 +77,10 @@ watch(() => props.lineNumber, (val) => {
 
 
 
+
 function getCompConfig(type: any) {
-  const defaultConfig = getDefaultConfig()
   const compType = { comp: getTypeToComponent(type) }
-  const comp = { ...defaultConfig, ...props.component, ...compType }
+  const comp = { ...props.component, ...compType }
   return comp
 }
 
@@ -113,7 +112,6 @@ function getTypeToComponent(type: string) {
     Address: AddressComponent,
   }
   const comp = compsObject[type]
-  console.log('type', type, comp)
   return comp
 }
 
