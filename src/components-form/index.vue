@@ -1,6 +1,6 @@
 <template>
   <div class="comp-item">
-    <div class="comp-item-title">
+    <div class="comp-item-title" v-if="!!displaySection">
       <a-typography-title :level="5" class="title-value">
         <span class="number" v-if="formConfig?.displayNumberSort">
           {{lineNumberValue }}.
@@ -10,7 +10,7 @@
         </span>
       </a-typography-title>
     </div>
-    <div class="comp-item-description" v-if="formConfig?.displayDescription">
+    <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
       <a-typography-text type="secondary">
         {{ currentComp.description || '描述' }}
       </a-typography-text>
@@ -50,9 +50,9 @@ import AddressComponent from '@/components-form/contact-information/Address.vue'
 
 
 interface Props {
-  component: Object,
-  type: String,
-  lineNumber: String,
+  component: any,
+  type: string,
+  lineNumber: string,
   formConfig: any
 }
 
@@ -70,6 +70,8 @@ function getCompConfig(type: any) {
   return comp
 }
 
+
+const displaySection = computed(() => !['Divider', 'Paging'].includes(props.type))
 
 function getTypeToComponent(type: string) {
   const compsObject: any = {

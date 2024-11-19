@@ -101,16 +101,24 @@ const defaultFormConfig = {
 onMounted(() => useCompStore.initGlobalFormConfig({...defaultFormConfig}))
 const useCompStore = useSelectCompStore()
 
+// 更新组价UUID
+const updateCompUUID = (comp: any) => {
+  if(comp && typeof comp === 'object') {
+    comp._update = uuidv4()
+  }
+} 
+
+// 更新选中组件数据
 const updateCompByChange = (compConfig: any) => {
   currentComp.value = compConfig
   const index = _.findIndex(pageCompList.value, {id: currentComp.value?.id})
-
   if(index > -1) {
-    const newList =  pageCompList.value.splice(index, 1, compConfig)
-    pageCompList.value[index]._update = uuidv4()
+    // pageCompList.value[index]._update = uuidv4()
+    updateCompUUID(pageCompList.value[index])
   }
  
 }
+
 
 watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig],  ([compConfig, currentGlobalFormConfig]) => {
   updateCompByChange(compConfig)
