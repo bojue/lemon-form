@@ -3,7 +3,7 @@
     <div class="nav-data">
       <div class="header">
         <div class="title-data">
-          <span class="name">健康打卡登记表单</span>
+          <span class="name">Vue动态表单</span>
           <a-typography-text type="secondary" class='time'>编辑于2024-11-03 09:12</a-typography-text>
         </div>
       </div>
@@ -16,7 +16,7 @@
               {{ compCategory.name }}
             </div>
             <VueDraggable v-model="compCategory.children" :animation="0" 
-            :group="{ name: 'people', pull: 'clone', put: false }" 
+            :group="{ name: 'sevenBotForm', pull: 'clone', put: false }" 
             :sort="false"
             :clone="onClone" 
             class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded compList">
@@ -36,27 +36,28 @@
           <div class="form">
            <div class="body">
             <div class="form-header">
-              <div class="header-img"> <img src="/src/assets/background/bg.png"/></div>
-              <div class="title" >
+              <!-- <div class="header-img"> <img src="/src/assets/background/bg.png"/></div> -->
+              <!-- <div class="title" >
                 <div class="title-val">每日健康打开表单</div>
               </div>
               <div class="description">
                 <div class="description-value">
                   为了你的健康，希望你每天定时打卡登记，感谢你的参与！
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="form-body">
               <VueDraggable 
                 v-model="pageCompList" 
                 :animation="0" 
-                group="people" 
+                group="sevenBotForm" 
                 ghostClass="ghost"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <div v-for="(item, index) in pageCompList"  
                   class="cursor-move h-50px bg-gray-500/5 rounded p-3 form-item">    
                   <FormComponent
                     @click="selectComp(item)"
+                    :key="item._update"
                     :component="item" 
                     :type="item.type" 
                     :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
@@ -72,17 +73,37 @@
 </template>
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
-import { ref } from 'vue'
+import { ref, watch, } from 'vue'
 import { v4 as uuidv4  } from 'uuid'
 import { CompListData} from './comp-list-data'
 import CompSetting from '@/views/FormEditor/form-setting.vue'
 import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
+import { useSelectCompStore  } from '@/stores/selectCompStore'
+import * as _ from 'lodash'
 
 const compList = ref([...CompListData]) // 来源组件列表
-const pageCompList = ref([]) // 页面组件列表
+const pageCompList: any = ref([]) // 页面组件列表
 const currentComp = ref() // 当前选中组件
 
+
+const useCompStore = useSelectCompStore()
+
+const updateCompByChange = (compConfig: any) => {
+  currentComp.value = compConfig
+  console.log('compConfig-=>', compConfig)
+
+  const index = _.findIndex(pageCompList.value, {id: currentComp.value?.id})
+
+  if(index > -1) {
+    console.log('index', index)
+    const newList =  pageCompList.value.splice(index, 1, compConfig)
+    pageCompList.value[index]._update = new Date().getTime()
+  }
+ 
+}
+
+watch(() => useCompStore.compConfig,  (compConfig) => updateCompByChange(compConfig))
 
 const onClone = (element: any) => {
   const defaultComp: any = getDefaultConfig(element.type)
@@ -97,14 +118,14 @@ const onClone = (element: any) => {
 }
 
 const selectComp = (item: any) => {
-  console.log('selectClick', item)
-  currentComp.value = {...item}
+  useCompStore.initCurrentComp(item)
+  initCurrentComp()
 }
 
-const dyCreateComp = (type: string) => {
-  console.log('type', type)
-
+const initCurrentComp = () => {
+  currentComp.value = useCompStore.getCurrentCompConfig()
 }
+
 </script>
 
 <style scoped>
@@ -164,7 +185,7 @@ const dyCreateComp = (type: string) => {
         background: #E6F8F5;
       }
       &.advanced {
-        background: rgba(255, 0, 0, .09);
+        background: honeydew;
       }
       &.layout {
         background: beige;
@@ -173,7 +194,7 @@ const dyCreateComp = (type: string) => {
   }
 
   .editor {
-    background: #1F1F1F;
+    background: lavender;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -215,7 +236,7 @@ const dyCreateComp = (type: string) => {
     margin: 30px;
     background: #fff;
     height: calc(100% - 50px);
-    border-radius: 6px;
+    border-radius: 0px;
   }
 }
 </style>

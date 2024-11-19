@@ -23,7 +23,6 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch, defineEmits } from 'vue'
-
 // 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
 import CheckoutComponent from '@/components-form/base/Checkout.vue'
@@ -48,6 +47,7 @@ import IdCardComponent from '@/components-form/contact-information/IdCard.vue'
 import EmailComponent from '@/components-form/contact-information/Email.vue'
 import WXComponent from '@/components-form/contact-information/WX.vue'
 import AddressComponent from '@/components-form/contact-information/Address.vue'
+
 
 
 const props = defineProps({

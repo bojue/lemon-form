@@ -10,23 +10,24 @@
         基础设置
       </div>
       <div class="content m-b-0">
-        <Description/>
-        <LayoutType/>
+        <Description :comp="selectComp"/>
+        <LayoutType :comp="selectComp"/>
       </div>
       <div class="category-name border-top">
         表单验证
       </div>
       <div class="content">
-        <Required/>
-        <ValidationSystem/>
-        <ValidationCustom/>
-        <CustomText/>
+        <Required :comp="selectComp"/>
+        <ValidationSystem :comp="selectComp"/>
+        <ValidationCustom :comp="selectComp"/>
+        <CustomText :comp="selectComp"/>
       </div>
       <div class="category-name border-top">
         全局表单配置
       </div>
       <div class="content">
-        <SerialNumber/>
+        <DisplaySerialNumber :comp="selectComp"/>
+        <DisplayDescription :comp="selectComp"/>
       </div>
 
     </div>
@@ -41,7 +42,8 @@ import Required from '@/components-form-setting/form-validation/Required.vue'
 import ValidationSystem from '@/components-form-setting/form-validation/ValidationSystem.vue'
 import ValidationCustom from '@/components-form-setting/form-validation/ValidationCustom.vue'
 import CustomText from '@/components-form-setting/form-validation/CustomText.vue'
-import SerialNumber from '@/components-form-setting/common-global-configurations/SerialNumber.vue'
+import DisplaySerialNumber from '@/components-form-setting/common-global-configurations/DisplaySerialNumber.vue'
+import DisplayDescription from '@/components-form-setting/common-global-configurations/DisplayDescription.vue'
 
 
 interface Props {
