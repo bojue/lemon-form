@@ -54,11 +54,16 @@
                 ghostClass="ghost"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <div v-for="(item, index) in pageCompList"  
-                  class="cursor-move h-50px bg-gray-500/5 rounded p-3 form-item">    
+                  :class="{
+                    'cursor-move': true,
+                    'form-item': true, 
+                    'active-comp': item.id === currentComp?.id
+                  }">    
                   <FormComponent
                     @click="selectComp(item)"
-                    :key="item._update"
+                    :key="item?._update + item.selectForm?._update"
                     :component="item" 
+                    :formConfig="selectForm"
                     :type="item.type" 
                     :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
                 </div>
@@ -67,13 +72,13 @@
            </div>
           </div>
         </div>
-        <CompSetting :selectComp="currentComp"></CompSetting>
+        <CompSetting :selectComp="currentComp" :selectForm="selectForm"></CompSetting>
       </div>
   </div>
 </template>
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
-import { ref, watch, } from 'vue'
+import { computed, onMounted, ref, watch, } from 'vue'
 import { v4 as uuidv4  } from 'uuid'
 import { CompListData} from './comp-list-data'
 import CompSetting from '@/views/FormEditor/form-setting.vue'
@@ -86,24 +91,32 @@ const compList = ref([...CompListData]) // 来源组件列表
 const pageCompList: any = ref([]) // 页面组件列表
 const currentComp = ref() // 当前选中组件
 
+const selectForm = ref()
 
+const defaultFormConfig = {
+  displayNumberSort: true,
+  displayDescription: true
+}
+
+onMounted(() => useCompStore.initGlobalFormConfig({...defaultFormConfig}))
 const useCompStore = useSelectCompStore()
 
 const updateCompByChange = (compConfig: any) => {
   currentComp.value = compConfig
-  console.log('compConfig-=>', compConfig)
-
   const index = _.findIndex(pageCompList.value, {id: currentComp.value?.id})
 
   if(index > -1) {
-    console.log('index', index)
     const newList =  pageCompList.value.splice(index, 1, compConfig)
-    pageCompList.value[index]._update = new Date().getTime()
+    pageCompList.value[index]._update = uuidv4()
   }
  
 }
 
-watch(() => useCompStore.compConfig,  (compConfig) => updateCompByChange(compConfig))
+watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig],  ([compConfig, currentGlobalFormConfig]) => {
+  updateCompByChange(compConfig)
+  selectForm.value = currentGlobalFormConfig
+  selectForm.value._update = uuidv4()
+})
 
 const onClone = (element: any) => {
   const defaultComp: any = getDefaultConfig(element.type)
@@ -185,7 +198,7 @@ const initCurrentComp = () => {
         background: #E6F8F5;
       }
       &.advanced {
-        background: honeydew;
+        background: linen ;
       }
       &.layout {
         background: beige;
@@ -237,6 +250,14 @@ const initCurrentComp = () => {
     background: #fff;
     height: calc(100% - 50px);
     border-radius: 0px;
+  }
+
+  .active-comp {
+    background: mintcream;
+    border-left: 6px solid red;
+    border-color: teal;
+    border-bottom: 1px dashed #ccc;
+    border-top: 1px dashed #ccc;
   }
 }
 </style>

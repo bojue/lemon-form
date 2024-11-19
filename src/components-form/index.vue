@@ -2,7 +2,7 @@
   <div class="comp-item">
     <div class="comp-item-title">
       <a-typography-title :level="5" class="title-value">
-        <span class="number">
+        <span class="number" v-if="formConfig?.displayNumberSort">
           {{lineNumberValue }}.
         </span>
         <span>
@@ -10,7 +10,7 @@
         </span>
       </a-typography-title>
     </div>
-    <div class="comp-item-description">
+    <div class="comp-item-description" v-if="formConfig?.displayDescription">
       <a-typography-text type="secondary">
         {{ currentComp.description || '描述' }}
       </a-typography-text>
@@ -49,33 +49,19 @@ import WXComponent from '@/components-form/contact-information/WX.vue'
 import AddressComponent from '@/components-form/contact-information/Address.vue'
 
 
+interface Props {
+  component: Object,
+  type: String,
+  lineNumber: String,
+  formConfig: any
+}
 
-const props = defineProps({
-  component: {
-    type: Object,
-    require: true
-  },
-  type: {
-    type: String,
-    require: true
-  },
-  lineNumber: {
-    type: String
-  }
-})
+
+const props = defineProps<Props>()
 
 const lineNumberValue = ref(props.lineNumber)
 const currentComp = ref(getCompConfig(props.type))
-
-watch(() => props.type, () => {
-  currentComp.value = getCompConfig(props.type)
-})
-
-watch(() => props.lineNumber, (val) => {
-  lineNumberValue.value = val
-})
-
-
+const formConfig = ref(props.formConfig)
 
 
 function getCompConfig(type: any) {

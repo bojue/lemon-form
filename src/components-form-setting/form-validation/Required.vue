@@ -5,7 +5,7 @@
 
     <a-space direction="vertical" class="abs-r switch-r ">
       <a-radio-group v-model:value="size">
-        <a-switch size="small" />
+        <a-switch  />
       </a-radio-group>
     </a-space> 
   </div>

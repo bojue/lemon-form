@@ -18,7 +18,6 @@ import { useSelectCompStore  } from '@/stores/selectCompStore'
 
 const compStore = useSelectCompStore()
 
-
 const handleChangeInput = (event: any) => {
   const data = event.target.value 
   compStore.updateCurrentComp({

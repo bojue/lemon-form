@@ -26,8 +26,8 @@
         全局表单配置
       </div>
       <div class="content">
-        <DisplaySerialNumber :comp="selectComp"/>
-        <DisplayDescription :comp="selectComp"/>
+        <DisplaySerialNumber :key="selectForm?._update" :form="selectForm"/>
+        <DisplayDescription :key="selectForm?._update" :form="selectForm"/>
       </div>
 
     </div>
@@ -47,16 +47,19 @@ import DisplayDescription from '@/components-form-setting/common-global-configur
 
 
 interface Props {
-  selectComp: Object
+  selectComp: any
+  selectForm: any
 }
+
 const props = defineProps<Props>()
 const selectComp = ref(props)
+const selectForm = ref({})
 
-watch(
-  () => props.selectComp,
-  (newValue: any) => {
+watch([() => props.selectComp, () => props.selectForm],
+([newValue,newFormConfig]) => {
     selectComp.value = newValue
-  }
+    selectForm.value = newFormConfig
+  },
 );
 
 

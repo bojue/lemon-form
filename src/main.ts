@@ -16,11 +16,14 @@ import { DatePicker,
   Upload,
   Divider,
   Select,
-  List
+  List,
+  Tooltip,
+  Popconfirm
 } from 'ant-design-vue';
 
 import App from './App.vue'
 import router from './router'
+import * as Icons from '@ant-design/icons-vue';
 
 const app = createApp(App)
 app.use(Checkbox);
@@ -36,10 +39,19 @@ app.use(Upload);
 app.use(Divider);
 app.use(Select);
 app.use(List);
+app.use(Tooltip);
+app.use(Popconfirm);
 
 app.use(Typography);
 app.use(DatePicker);
+
 app.use(createPinia())
 app.use(router)
+
+// @ts-ignore
+const icons: any[] = Icons
+for(const i in icons) {
+  app.component(i, icons[i])
+}
 
 app.mount('#app')
