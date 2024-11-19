@@ -115,8 +115,15 @@ const updateCompByChange = (compConfig: any) => {
 watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig],  ([compConfig, currentGlobalFormConfig]) => {
   updateCompByChange(compConfig)
   selectForm.value = currentGlobalFormConfig
+
+  if(currentGlobalFormConfig) {
+    _.map(pageCompList.value, (item: any) => {
+      item._update = uuidv4()
+    })
+  }
   selectForm.value._update = uuidv4()
 })
+
 
 const onClone = (element: any) => {
   const defaultComp: any = getDefaultConfig(element.type)
@@ -254,10 +261,22 @@ const initCurrentComp = () => {
 
   .active-comp {
     background: mintcream;
-    border-left: 6px solid red;
-    border-color: teal;
+    /* border-left: 6px solid red;
+    border-color: teal; */
     border-bottom: 1px dashed #ccc;
     border-top: 1px dashed #ccc;
+    position: relative;
+
+    &::before {
+      content: '';
+      /* border: 4px solid teal; */
+      height: 100%;
+      display: block;
+      width: 6px;
+      background: teal;
+      height: 100%;
+      position: absolute;
+    }
   }
 }
 </style>
