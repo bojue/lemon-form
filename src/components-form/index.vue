@@ -3,26 +3,36 @@
     <div class="comp-item-title" v-if="!!displaySection">
       <a-typography-title :level="5" class="title-value">
         <span class="number" v-if="formConfig?.displayNumberSort">
-          {{lineNumberValue }}.
+          {{lineNumberValue }}. 
         </span>
         <span>
-          {{ currentComp.title }}
+          {{ compConfig.name }}
         </span>
       </a-typography-title>
     </div>
     <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
       <a-typography-text type="secondary">
-        {{ currentComp.description || '描述' }}
+        {{ compConfig.description || '描述' }}
       </a-typography-text>
     </div>
     <div class="component">
       <component :is="currentComp.comp"  v-bind="currentComp"></component>
     </div>
+    <div class="active-comp-setting">
+      <div class="bottom-setting">
+        <a-checkbox class="setting-item" v-model:checked="checked">必填</a-checkbox>
+      </div>
+    </div>
+    <div class="active-comp-setting-side-bar">
+      <CopyOutlined class="control"/>
+      <DeleteOutlined class="control"/>
+    </div>
   </div>
+
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch, defineEmits } from 'vue'
+import { ref, computed,reactive,  watch, defineEmits } from 'vue'
 // 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
 import CheckoutComponent from '@/components-form/base/Checkout.vue'
@@ -59,14 +69,16 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const lineNumberValue = ref(props.lineNumber)
-const currentComp = ref(getCompConfig(props.type))
-const formConfig = ref(props.formConfig)
+const compConfig = reactive(props.component) // 组件配置
+const currentComp = reactive(getCompConfig(props.type)) // 组件
+const formConfig = reactive(props.formConfig) // 页面配置
+
+
 
 
 function getCompConfig(type: any) {
   const compType = { comp: getTypeToComponent(type) }
-  const comp = { ...props.component, ...compType }
+  const comp = { ...compConfig, ...compType }
   return comp
 }
 
@@ -130,4 +142,28 @@ function getTypeToComponent(type: string) {
     margin-bottom: 10px;
   }
 }
+
+.active-comp-setting-side-bar {
+  position: absolute;
+  right: -20px;
+  width: 20px;
+  top: 0;
+  height: auto;
+  background: #fff;
+  .control {
+    padding: 4px;
+  }
+}
+
+.active-comp-setting {
+  width: 100%;
+  position: relative;
+  height: 30px;
+  .bottom-setting {
+
+    position: absolute;
+    right: 10px;
+  }
+}
+
 </style>

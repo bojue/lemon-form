@@ -1,5 +1,6 @@
 
 <template>
+ props  {{ props.description }}
   <a-typography-text type="secondary" class="block-title">描述/备注</a-typography-text>
   <a-textarea 
     placeholder="请输入描述" 
@@ -13,10 +14,14 @@
   ></a-textarea>
 </template>
 <script lang="ts" setup>
-import { defineProps, defineEmits }  from 'vue'
+import { defineProps, defineEmits, reactive }  from 'vue'
 import { useSelectCompStore  } from '@/stores/selectCompStore'
 
+
+
 const compStore = useSelectCompStore()
+
+
 
 const handleChangeInput = (event: any) => {
   const data = event.target.value 
@@ -31,14 +36,12 @@ interface Props{
   comp: any
 }
 
-const {
-  comp
-} = defineProps<Props>()
-
+const props = defineProps<Props>()
+const comp = reactive(props.comp)
 const {
   name,
   description
-} = comp
+} = reactive(comp)
 
 
 </script>

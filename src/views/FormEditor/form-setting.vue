@@ -10,7 +10,7 @@
         基础设置
       </div>
       <div class="content m-b-0">
-        <Description :comp="selectComp"/>
+        <Description :key="selectComp.selectComp.id" :comp="selectComp.selectComp"/>
         <LayoutType :comp="selectComp"/>
       </div>
       <div class="category-name border-top">
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import Description from '@/components-form-setting/base/Description.vue'
 import LayoutType from '@/components-form-setting/base/LayoutType.vue'
 import DataList from '@/components-form-setting/data/DataList.vue'
@@ -52,7 +52,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const selectComp = ref(props)
+const selectComp = reactive(props)
 const selectForm = ref({})
 
 watch([() => props.selectComp, () => props.selectForm],

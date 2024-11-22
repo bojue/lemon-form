@@ -256,19 +256,20 @@ export const CompListData:CompCategoryType[] = [{
   label: '布局',
   type: CompListType.layout,
   children: [...LayoutComponentList]
-},{
-  name: '联系方式',
-  label: '联系方式',
-  type: CompListType.personal,
-  children: [...PersonalComponentList]
-},{
-  name: '高级',
-  label: '高级',
-  type: CompListType.advanced,
-  children: [...AdvancedComponentList]
-}, {
-  name: '常见题目',
-  label: '常见题目',
-  type: CompListType.common,
-  children: [...CommonComponentList]
+// },{
+//   name: '联系方式',
+//   label: '联系方式',
+//   type: CompListType.personal,
+//   children: [...PersonalComponentList]
+// },{
+//   name: '高级',
+//   label: '高级',
+//   type: CompListType.advanced,
+//   children: []
+//   //  [...AdvancedComponentList]
+// }, {
+//   name: '常见题目',
+//   label: '常见题目',
+//   type: CompListType.common,
+//   children:  [...CommonComponentList]
 }]

@@ -108,15 +108,15 @@ const updateCompUUID = (comp: any) => {
   }
 } 
 
+
 // 更新选中组件数据
 const updateCompByChange = (compConfig: any) => {
   currentComp.value = compConfig
   const index = _.findIndex(pageCompList.value, {id: currentComp.value?.id})
   if(index > -1) {
-    // pageCompList.value[index]._update = uuidv4()
+    pageCompList.value[index] = compConfig
     updateCompUUID(pageCompList.value[index])
   }
- 
 }
 
 
@@ -124,11 +124,11 @@ watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig
   updateCompByChange(compConfig)
   selectForm.value = currentGlobalFormConfig
 
-  if(currentGlobalFormConfig) {
-    _.map(pageCompList.value, (item: any) => {
-      item._update = uuidv4()
-    })
-  }
+  console.log('currentGlobalFormConfig', currentGlobalFormConfig, 'compConfig', compConfig, 'pageCompList', pageCompList.value)
+
+  _.map(pageCompList.value, (item: any) => {
+    item._update = uuidv4()
+  })
   selectForm.value._update = uuidv4()
 })
 
