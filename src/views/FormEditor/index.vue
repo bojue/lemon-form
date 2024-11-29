@@ -52,15 +52,17 @@
                 :animation="0" 
                 group="sevenBotForm" 
                 ghostClass="ghost"
+                :key="activeComp.index"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <div v-for="(item, index) in pageCompList"  
                   :class="{
                     'cursor-move': true,
                     'form-item': true, 
-                    'active-comp': item.id === currentComp?.id
+                    'active-comp': activeComp.index == index
                   }">    
+                  item {{ item }}
                   <FormComponent
-                    @click="selectComp(item)"
+                    @click="selectComp(item, index)"
                     :key="item?._update + item.selectForm?._update"
                     :component="item" 
                     :formConfig="selectForm"
@@ -72,13 +74,13 @@
            </div>
           </div>
         </div>
-        <CompSetting :selectComp="currentComp" :selectForm="selectForm"></CompSetting>
+        <CompSetting :key="activeComp.index" v-if="pageCompList[activeComp.index]"  :selectForm="selectForm" :selectComp="pageCompList[activeComp.index]"></CompSetting>
       </div>
   </div>
 </template>
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
-import { computed, onMounted, ref, watch, } from 'vue'
+import { computed, onMounted, reactive, ref, watch, } from 'vue'
 import { v4 as uuidv4  } from 'uuid'
 import { CompListData} from './comp-list-data'
 import CompSetting from '@/views/FormEditor/form-setting.vue'
@@ -87,9 +89,18 @@ import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import { useSelectCompStore  } from '@/stores/selectCompStore'
 import * as _ from 'lodash'
 
+interface ActiveCompType {
+  type: 'component' | 'header',
+  index: number
+}
+
 const compList = ref([...CompListData]) // 来源组件列表
 const pageCompList: any = ref([]) // 页面组件列表
-const currentComp = ref() // 当前选中组件
+const currentComp = ref()
+const activeComp = ref<ActiveCompType>({
+  type: 'component',
+  index: 0,
+}) // 当前选中组件
 
 const selectForm = ref()
 
@@ -112,24 +123,21 @@ const updateCompUUID = (comp: any) => {
 // 更新选中组件数据
 const updateCompByChange = (compConfig: any) => {
   currentComp.value = compConfig
-  const index = _.findIndex(pageCompList.value, {id: currentComp.value?.id})
+  const index = activeComp.value.index
   if(index > -1) {
-    pageCompList.value[index] = compConfig
+    pageCompList.value[index] = {...pageCompList.value[index],...compConfig}
     updateCompUUID(pageCompList.value[index])
   }
 }
 
 
 watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig],  ([compConfig, currentGlobalFormConfig]) => {
-  updateCompByChange(compConfig)
+  updateCompByChange({
+    ...compConfig,
+  })
   selectForm.value = currentGlobalFormConfig
 
   console.log('currentGlobalFormConfig', currentGlobalFormConfig, 'compConfig', compConfig, 'pageCompList', pageCompList.value)
-
-  _.map(pageCompList.value, (item: any) => {
-    item._update = uuidv4()
-  })
-  selectForm.value._update = uuidv4()
 })
 
 
@@ -145,9 +153,12 @@ const onClone = (element: any) => {
   return {...item}
 }
 
-const selectComp = (item: any) => {
+const selectComp = (item: any, index: number) => {
   useCompStore.initCurrentComp(item)
-  initCurrentComp()
+  // initCurrentComp()
+  console.log(item, index)
+  activeComp.value.index = index
+
 }
 
 const initCurrentComp = () => {

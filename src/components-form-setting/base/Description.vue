@@ -1,8 +1,8 @@
 
 <template>
- props  {{ props.description }}
   <a-typography-text type="secondary" class="block-title">描述/备注</a-typography-text>
   <a-textarea 
+    v-if="compStore.currentCompConfig"
     placeholder="请输入描述" 
     allow-clear 
     show-count
@@ -10,18 +10,13 @@
     @Input="handleChangeInput"
     :auto-size="{ minRows: 2, maxRows: 5 }"
     :maxlength="200"
-    :key="comp.id"
   ></a-textarea>
 </template>
 <script lang="ts" setup>
-import { defineProps, defineEmits, reactive }  from 'vue'
+import { defineProps, defineEmits, ref }  from 'vue'
 import { useSelectCompStore  } from '@/stores/selectCompStore'
 
-
-
 const compStore = useSelectCompStore()
-
-
 
 const handleChangeInput = (event: any) => {
   const data = event.target.value 
@@ -30,19 +25,12 @@ const handleChangeInput = (event: any) => {
   })
 }
 
-
-
 interface Props{
   comp: any
 }
 
 const props = defineProps<Props>()
-const comp = reactive(props.comp)
-const {
-  name,
-  description
-} = reactive(comp)
-
+const comp = ref(props.comp)
 
 </script>
 <style lang="scss" scoped>

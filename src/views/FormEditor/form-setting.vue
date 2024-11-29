@@ -1,5 +1,5 @@
 <template>
-  <div class="setting">
+  <div class="setting" >
     <div class="comp-name">
       <a-typography-title :level="5">
         {{ selectComp?.title }}
@@ -10,8 +10,8 @@
         基础设置
       </div>
       <div class="content m-b-0">
-        <Description :key="selectComp.selectComp.id" :comp="selectComp.selectComp"/>
-        <LayoutType :comp="selectComp"/>
+        <Description :comp="selectComp"/>
+        <LayoutType v-if="selectComp" :comp="selectComp"/>
       </div>
       <div class="category-name border-top">
         表单验证
@@ -52,8 +52,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const selectComp = reactive(props)
-const selectForm = ref({})
+const selectComp = reactive(props.selectComp)
+const selectForm = reactive(props.selectForm)
 
 watch([() => props.selectComp, () => props.selectForm],
 ([newValue,newFormConfig]) => {

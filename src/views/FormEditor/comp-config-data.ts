@@ -6,6 +6,7 @@ interface CompConfig {
   value: any
   defaultValue: string | null// 默认值
   dataList?: any[] // 列表数据，包括单选，多选，下拉选择
+  layoutType?: 'horizontal' | 'vertical' // 横向布局，纵向布局
 }
 export const defaultConfig: CompConfig = {
   type: '',
@@ -14,6 +15,7 @@ export const defaultConfig: CompConfig = {
   defaultValue: null,
   title: '',
   description: null,
+  layoutType: 'horizontal',
   dataList: [{
     label: '选项一',
     value: '选项一'
