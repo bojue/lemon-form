@@ -44,6 +44,11 @@ export enum CompType {
   annualIncome = "AnnualIncome", // 年收入
 }
 
+export const IgnoreLineNumberTypeList = [
+  CompType.divider,
+  CompType.paging
+]
+
 // 组件元素类型
 export interface CompItemType {
   name: string 

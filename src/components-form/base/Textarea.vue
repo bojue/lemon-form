@@ -1,18 +1,22 @@
 <template>
-    <a-textarea v-model:value="props.value" placeholder="textarea with clear icon" allow-clear />
+    <a-textarea v-model:value="inputValue" :placeholder="placeholder || '提示信息'" allow-clear />
 </template>
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref,watch, reactive } from 'vue'
 
-const radioStyle = reactive({
+interface Props {
+  id: string
+  placeholder: string
+  value: string
+}
 
-});
+const props = defineProps<Props>()
+const inputValue = ref(props.value)
 
-const props = defineProps({
-  value: {
-    type: String
-  }
-})
+watch(() => props.value, (newValue) => inputValue.value = newValue)
 </script>
+<style lang="scss">
+</style>
+
 <style lang="scss">
 </style>

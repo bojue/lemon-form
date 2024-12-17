@@ -1,18 +1,19 @@
 <template>
- <a-input v-model:value="props.value" placeholder="Basic usage" />
+ <a-input class="item-comp" v-model="inputValue" :placeholder="placeholder || '提示信息'" />
 </template>
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref,watch, reactive } from 'vue'
 
-const radioStyle = reactive({
+interface Props {
+  id: string
+  placeholder: string
+  value: string
+}
 
-});
+const props = defineProps<Props>()
+const inputValue = ref(props.value)
 
-const props = defineProps({
-  value: {
-    type: String
-  },
-})
+watch(() => props.value, (newValue) => inputValue.value = newValue)
 </script>
 <style lang="scss">
 </style>

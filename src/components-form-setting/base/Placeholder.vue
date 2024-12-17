@@ -1,19 +1,16 @@
 
 <template>
-  <a-typography-text type="secondary" class="block-title">描述/备注</a-typography-text>
-  <a-textarea 
+  <a-typography-text type="secondary" class="block-title">输入框提示</a-typography-text>
+  <a-input 
     v-if="compStore.currentCompConfig"
-    placeholder="请输入描述" 
+    placeholder="输入框提示" 
     allow-clear 
-    show-count
-    v-model:value="comp.description"
+    v-model:value="comp.placeholder"
     @Input="handleChangeInput"
-    :auto-size="{ minRows: 2, maxRows: 5 }"
-    :maxlength="200"
-  ></a-textarea>
+  ></a-input>
 </template>
 <script lang="ts" setup>
-import { defineProps,watch,  defineEmits, ref }  from 'vue'
+import { defineProps, defineEmits, ref }  from 'vue'
 import { useSelectCompStore  } from '@/stores/selectCompStore'
 
 const compStore = useSelectCompStore()
@@ -21,7 +18,7 @@ const compStore = useSelectCompStore()
 const handleChangeInput = (event: any) => {
   const data = event.target.value 
   compStore.updateCurrentComp({
-    description: data
+    placeholder: data
   })
 }
 
@@ -30,10 +27,13 @@ interface Props{
 }
 
 const props = defineProps<Props>()
+const comp = ref(props.comp)
 
 </script>
 <style lang="scss" scoped>
-
+.block-title {
+  margin-top: 10px;
+}
 .comp {
   padding: 10px;
   color: yellowgreen;

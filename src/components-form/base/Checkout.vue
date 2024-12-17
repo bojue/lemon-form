@@ -1,5 +1,5 @@
 <template>
-  <a-checkbox-group :value="props.value" :options="props.dataList" :style="props.layoutType === 'vertical' ? radioVerticalStyle : radioStyle"
+  <a-checkbox-group :value="dataValue" :options="dataList" :style="layoutType === 'vertical' ? radioVerticalStyle : radioStyle"
    class="group-item">
     <template #label="{ label }" class="item">
       <span >{{ label }}</span>
@@ -9,19 +9,16 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 
-const props = defineProps({
-  dataList: {
-    type: Array
-  },
-  value: {
-    type: String
-  },
-  layoutType: String
-})
+interface Props {
+  dataList: Array<any>
+  dataValue: string
+  layoutType: string
+}
+
+const props = defineProps<Props>()
 
 const radioVerticalStyle = ref({
   display: 'flex',
-  height: '40px',
   lineHeight: '40px',
 });
 

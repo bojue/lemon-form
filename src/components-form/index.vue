@@ -1,38 +1,50 @@
 <template>
   <div class="comp-item">
     <div class="comp-item-title" v-if="!!displaySection">
-      <a-typography-title :level="5" class="title-value">
+      <a-typography-title :level="5" class="title-value" v-bind:class="{'title-value-isRequired': component.isRequired}">
         <span class="number" v-if="formConfig?.displayNumberSort">
-          {{lineNumberValue }}. 
+          {{component?.lineNumber }}. 
         </span>
-        <span>
-          {{ compConfig.name }}
+        <span class="title-value">
+          {{ component?.name || component?.title }}
         </span>
       </a-typography-title>
     </div>
     <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
       <a-typography-text type="secondary">
-        {{ compConfig.description || '描述' }}
+        {{ component.description || '描述' }}
       </a-typography-text>
     </div>
     <div class="component">
-      <component :is="currentComp.comp"  v-bind="currentComp"></component>
+      <component :key="currentComp" :is="getCompConfig(props.type).comp"  v-bind="component"></component>
     </div>
-    <div class="active-comp-setting">
+    <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()" >
       <div class="bottom-setting">
-        <a-checkbox class="setting-item" v-model:checked="checked">必填</a-checkbox>
+        <a-checkbox class="setting-item" v-model:checked="component.isRequired" @click="component.isRequired = !component.isRequired">必填</a-checkbox>
       </div>
     </div>
-    <div class="active-comp-setting-side-bar">
-      <CopyOutlined class="control"/>
-      <DeleteOutlined class="control"/>
+    <div class="active-comp-setting-side-bar" v-if="compConfig.id === selectedComp?.id">
+      <a-tooltip placement="left" @click="compControl('copy')">
+        <template  #title>
+          <span>复制</span>
+        </template>
+        <CopyOutlined class="control"/>
+      </a-tooltip>
+      <a-tooltip placement="left" :color="'#f50'"  @click="compControl('delete')">
+        <template #title>
+          <span>删除</span>
+        </template>
+        <DeleteOutlined class="control"/>
+      </a-tooltip>
+
+
     </div>
   </div>
 
 </template>
 
 <script lang="ts" setup>
-import { ref, computed,reactive,  watch, defineEmits } from 'vue'
+import { ref, computed,  watch, defineEmits } from 'vue'
 // 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
 import CheckoutComponent from '@/components-form/base/Checkout.vue'
@@ -43,6 +55,7 @@ import DateComponent from '@/components-form/base/Date.vue'
 import DateRangeComponent from '@/components-form/base/DateRange.vue'
 import TimeComponent from '@/components-form/base/Time.vue'
 import DividerComponent from '@/components-form/base/Divider.vue'
+import PagingComponent from '@/components-form/base/Paging.vue'
 import RateComponent from '@/components-form/base/Rate.vue'
 import UploadComponent from '@/components-form/base/Upload.vue'
 import SwitchComponent from '@/components-form/base/Switch.vue'
@@ -64,24 +77,21 @@ interface Props {
   type: string,
   lineNumber: string,
   formConfig: any
+  selectedComp?: any
 }
 
 
 const props = defineProps<Props>()
 
-const compConfig = reactive(props.component) // 组件配置
-const currentComp = reactive(getCompConfig(props.type)) // 组件
-const formConfig = reactive(props.formConfig) // 页面配置
-
-
-
+const compConfig = props.component // 组件配置
+const currentComp = getCompConfig(props.type)//组件
+const emit = defineEmits(['compControl'])
 
 function getCompConfig(type: any) {
   const compType = { comp: getTypeToComponent(type) }
   const comp = { ...compConfig, ...compType }
   return comp
 }
-
 
 const displaySection = computed(() => !['Divider', 'Paging'].includes(props.type))
 
@@ -101,6 +111,7 @@ function getTypeToComponent(type: string) {
     Switch: SwitchComponent,
     Upload: UploadComponent,
     Divider: DividerComponent,
+    Paging: PagingComponent,
 
     // 联系信息
     Name: NameComponent,
@@ -115,12 +126,36 @@ function getTypeToComponent(type: string) {
   return comp
 }
 
+const compControl = (type: string) => {
+  emit('compControl', type, props.component)
+}
 
+const isIgnoreEditor = () => {
+  return ['Divider', 'Paging'].includes(props.type)
+}
 
 </script>
 <style lang="scss">
+
+.control {
+  &:active, &:hover {
+    background: #ebebeb;
+  }
+}
+.form-item {
+  .comp-item {
+    padding: 16px 60px 24px;
+  }
+}
+
+.form-item-active {
+  .comp-item { 
+    padding: 32px 60px 40px;
+  }
+
+}
 .comp-item {
-  padding: 20px 30px;
+  // padding: 20px 30px;
 
   .comp-item-title {
     height: 40px;
@@ -128,13 +163,14 @@ function getTypeToComponent(type: string) {
 
   }
 
-  .title-value::before {
-    display: inline-block;
-    margin-inline-end: 4px;
+
+  .title-value-isRequired::before {
     color: #ff4d4f;
     font-size: 14px;
     font-family: SimSun, sans-serif;
     line-height: 1;
+    display: inline-block;
+    margin-inline-end: 4px;
     content: "*";
   }
 
@@ -145,25 +181,34 @@ function getTypeToComponent(type: string) {
 
 .active-comp-setting-side-bar {
   position: absolute;
-  right: -20px;
-  width: 20px;
-  top: 0;
-  height: auto;
-  background: #fff;
+  right: -33px;
+  width: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff;
+  font-size: 14px;
+  padding:5px 3px;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
   .control {
-    padding: 4px;
+    padding:10px 5px;
   }
 }
 
 .active-comp-setting {
   width: 100%;
   position: relative;
-  height: 30px;
+  height: 48px;
+  line-height: 48px;
   .bottom-setting {
 
     position: absolute;
     right: 10px;
   }
+}
+
+.item-comp {
+  width: 100%;
 }
 
 </style>

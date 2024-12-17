@@ -20,7 +20,7 @@
             :sort="false"
             :clone="onClone" 
             class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded compList">
-            <div v-for="item in compCategory.children" :key="item.name" class="cursor-move h-50px bg-gray-500/5 item" 
+            <div v-for="item in compCategory.children" class="cursor-move h-50px bg-gray-500/5 item" 
               v-bind:class="{
                 'person': compCategory.type === 'Personal Component',
                 'advanced': compCategory.type === 'Advanced Component',
@@ -52,21 +52,22 @@
                 :animation="0" 
                 group="sevenBotForm" 
                 ghostClass="ghost"
-                :key="activeComp.index"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <div v-for="(item, index) in pageCompList"  
+                  :key="item.name" 
                   :class="{
                     'cursor-move': true,
                     'form-item': true, 
                     'active-comp': activeComp.index == index
                   }">    
-                  item {{ item }}
+                  <!-- item {{ item }} -->
                   <FormComponent
                     @click="selectComp(item, index)"
-                    :key="item?._update + item.selectForm?._update"
+                    @compControl="compControl"
                     :component="item" 
                     :formConfig="selectForm"
                     :type="item.type" 
+                    :selectedComp="pageCompList[activeComp.index]"
                     :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
                 </div>
               </VueDraggable>
@@ -74,7 +75,11 @@
            </div>
           </div>
         </div>
-        <CompSetting :key="activeComp.index" v-if="pageCompList[activeComp.index]"  :selectForm="selectForm" :selectComp="pageCompList[activeComp.index]"></CompSetting>
+        <CompSetting 
+          :key="pageCompList[activeComp.index]._selectedId" 
+          v-if="pageCompList[activeComp.index]"  
+          :selectForm="selectForm" 
+          :selectComp="pageCompList[activeComp.index]"></CompSetting>
       </div>
   </div>
 </template>
@@ -82,12 +87,15 @@
 import { VueDraggable } from 'vue-draggable-plus'
 import { computed, onMounted, reactive, ref, watch, } from 'vue'
 import { v4 as uuidv4  } from 'uuid'
-import { CompListData} from './comp-list-data'
+import { CompListData, CompType, IgnoreLineNumberTypeList} from './comp-data'
 import CompSetting from '@/views/FormEditor/form-setting.vue'
 import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import { useSelectCompStore  } from '@/stores/selectCompStore'
 import * as _ from 'lodash'
+import vue from '@vitejs/plugin-vue';
+
+const _updateState = ref()
 
 interface ActiveCompType {
   type: 'component' | 'header',
@@ -112,32 +120,45 @@ const defaultFormConfig = {
 onMounted(() => useCompStore.initGlobalFormConfig({...defaultFormConfig}))
 const useCompStore = useSelectCompStore()
 
-// 更新组价UUID
-const updateCompUUID = (comp: any) => {
-  if(comp && typeof comp === 'object') {
-    comp._update = uuidv4()
-  }
-} 
-
-
 // 更新选中组件数据
 const updateCompByChange = (compConfig: any) => {
   currentComp.value = compConfig
   const index = activeComp.value.index
-  if(index > -1) {
+  if(index > -1 && pageCompList.value.length) {
     pageCompList.value[index] = {...pageCompList.value[index],...compConfig}
-    updateCompUUID(pageCompList.value[index])
   }
-}
 
+}
 
 watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig],  ([compConfig, currentGlobalFormConfig]) => {
   updateCompByChange({
     ...compConfig,
   })
   selectForm.value = currentGlobalFormConfig
+})
 
-  console.log('currentGlobalFormConfig', currentGlobalFormConfig, 'compConfig', compConfig, 'pageCompList', pageCompList.value)
+
+watch(pageCompList, (newValue) => {
+  pageCompList.value = newValue
+  if(Array.isArray(pageCompList.value)) {
+    let lineNumber = 0
+    let pageCount = _.filter(pageCompList.value, {
+      type: CompType.paging
+    })?.length
+    let pageNumber = 0
+    _.map(pageCompList.value, (item: any) => {
+      const isIgnoreTypeBool = IgnoreLineNumberTypeList.includes(item.type) 
+      const isPageTypeBool = CompType.paging === item.type
+      if(!isIgnoreTypeBool) {
+        lineNumber++
+        item.lineNumber = lineNumber
+      }
+      if(isPageTypeBool) {
+        pageNumber++
+        item.pagingValue = `第 ${pageNumber} 页 / 共 ${pageCount} 页`
+      }
+    })
+  }
 })
 
 
@@ -148,21 +169,39 @@ const onClone = (element: any) => {
     ...element.value,
     id: element.id || uuidv4(),
     title: element.name,
-    type: element.type
+    type: element.type,
+    name: element.name
   }
   return {...item}
 }
 
 const selectComp = (item: any, index: number) => {
-  useCompStore.initCurrentComp(item)
-  // initCurrentComp()
-  console.log(item, index)
+  useCompStore.initCurrentComp({
+    ...item,
+    _selectedId: uuidv4()
+  })
   activeComp.value.index = index
-
 }
 
-const initCurrentComp = () => {
-  currentComp.value = useCompStore.getCurrentCompConfig()
+const compControl = (controlType: string, value: any) => {
+  const index = pageCompList.value.indexOf(value)
+  if(index === -1) {
+    console.log("没有查询到组件！！！")
+    return 
+  }
+  if(controlType === 'copy') {
+    const newComp = {
+      ...value,
+      id: uuidv4()
+    }
+    console.log('newComp', newComp)
+    pageCompList.value.splice(index, 0, newComp)
+    // pageCompList.value.splice(index, 0, newComp)
+    console.log(pageCompList.value)
+  }
+  if(controlType === 'delete') {
+    pageCompList.value.splice(index, 1)
+  }
 }
 
 </script>
@@ -233,6 +272,7 @@ const initCurrentComp = () => {
   }
 
   .editor {
+    position: relative;
     background: lavender;
     height: 100%;
     margin: 0;
@@ -276,14 +316,23 @@ const initCurrentComp = () => {
     background: #fff;
     height: calc(100% - 50px);
     border-radius: 0px;
+    width: 700px;
+    position: absolute;
+    transform: translateX(-50%);
+    margin-left: 50%;
   }
 
+  .form-item {
+  
+  }
   .active-comp {
-    background: mintcream;
+    /* background: mintcream; */
     /* border-left: 6px solid red;
     border-color: teal; */
-    border-bottom: 1px dashed #ccc;
-    border-top: 1px dashed #ccc;
+    background: aliceblue;
+    /* border-bottom: 1px dashed #ccc;
+    border-top: 1px dashed #ccc; */
+    border: 1px dashed #1677ff;
     position: relative;
 
     &::before {
@@ -291,8 +340,10 @@ const initCurrentComp = () => {
       /* border: 4px solid teal; */
       height: 100%;
       display: block;
-      width: 6px;
-      background: teal;
+      width: 4px;
+      /* background: teal; */
+      /* background: cornflowerblue; */
+      /* background: #1677ff; */
       height: 100%;
       position: absolute;
     }

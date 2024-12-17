@@ -2,7 +2,7 @@
   <div class="setting" >
     <div class="comp-name">
       <a-typography-title :level="5">
-        {{ selectComp?.title }}
+        {{ selectComp?.title }} 
       </a-typography-title>
     </div>
     <div class="setting-base">
@@ -10,24 +10,27 @@
         基础设置
       </div>
       <div class="content m-b-0">
-        <Description :comp="selectComp"/>
+        <Description :comp="selectComp" :key="selectComp._selectedId "/>
+        <Placeholder :comp="selectComp" :key="selectComp._selectedId "/>
         <LayoutType v-if="selectComp" :comp="selectComp"/>
+        <DividerText v-if="selectComp" :comp="selectComp" ></DividerText>
+        <DividerBorderType :comp="selectComp"></DividerBorderType>
       </div>
       <div class="category-name border-top">
-        表单验证
+        表单验证 
       </div>
       <div class="content">
         <Required :comp="selectComp"/>
         <ValidationSystem :comp="selectComp"/>
-        <ValidationCustom :comp="selectComp"/>
-        <CustomText :comp="selectComp"/>
+        <ValidationCustom :comp="selectComp" />
+        <CustomText :comp="selectComp" v-if="selectComp.isCustomErrorMessage"/>
       </div>
       <div class="category-name border-top">
         全局表单配置
       </div>
       <div class="content">
-        <DisplaySerialNumber :key="selectForm?._update" :form="selectForm"/>
-        <DisplayDescription :key="selectForm?._update" :form="selectForm"/>
+        <DisplaySerialNumber :form="selectForm"/>
+        <DisplayDescription :form="selectForm"/>
       </div>
 
     </div>
@@ -36,10 +39,12 @@
 <script setup lang="ts">
 import { ref, watch, reactive } from 'vue'
 import Description from '@/components-form-setting/base/Description.vue'
+import Placeholder from '@/components-form-setting/base/Placeholder.vue'
+import DividerText from '@/components-form-setting/base/DividerText.vue'
 import LayoutType from '@/components-form-setting/base/LayoutType.vue'
-import DataList from '@/components-form-setting/data/DataList.vue'
+import DividerBorderType from '@/components-form-setting/base/DividerBorderType.vue'
 import Required from '@/components-form-setting/form-validation/Required.vue'
-import ValidationSystem from '@/components-form-setting/form-validation/ValidationSystem.vue'
+import ValidationSystem from '@/components-form-setting/form-validation/ValidationFormat.vue'
 import ValidationCustom from '@/components-form-setting/form-validation/ValidationCustom.vue'
 import CustomText from '@/components-form-setting/form-validation/CustomText.vue'
 import DisplaySerialNumber from '@/components-form-setting/common-global-configurations/DisplaySerialNumber.vue'
