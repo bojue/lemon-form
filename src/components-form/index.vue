@@ -6,7 +6,7 @@
           {{component?.lineNumber }}. 
         </span>
         <span class="title-value">
-          {{ component?.name || component?.title }}
+          {{ component?.name || component?.title }} 
         </span>
       </a-typography-title>
     </div>
@@ -24,13 +24,13 @@
       </div>
     </div>
     <div class="active-comp-setting-side-bar" v-if="compConfig.id === selectedComp?.id">
-      <a-tooltip placement="left" @click="compControl('copy')">
+      <a-tooltip placement="left" @click="compControl($event,'copy')">
         <template  #title>
           <span>复制</span>
         </template>
         <CopyOutlined class="control"/>
       </a-tooltip>
-      <a-tooltip placement="left" :color="'#f50'"  @click="compControl('delete')">
+      <a-tooltip placement="left" :color="'#f50'"  @click="compControl($event,'delete')">
         <template #title>
           <span>删除</span>
         </template>
@@ -126,7 +126,8 @@ function getTypeToComponent(type: string) {
   return comp
 }
 
-const compControl = (type: string) => {
+const compControl = (event: any, type: string) => {
+  event.stopPropagation()
   emit('compControl', type, props.component)
 }
 

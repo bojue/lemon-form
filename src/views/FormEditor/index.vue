@@ -54,21 +54,20 @@
                 ghostClass="ghost"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <div v-for="(item, index) in pageCompList"  
-                  :key="item.name" 
+                  :key="item?.name" 
                   :class="{
                     'cursor-move': true,
                     'form-item': true, 
-                    'active-comp': activeComp.index == index
-                  }">    
-                  <!-- item {{ item }} -->
+                    'active-comp': activeComp.id == item?.id
+                  }"
+                  @click="selectComp(item, index)">    
                   <FormComponent
-                    @click="selectComp(item, index)"
+                    :key="item?.id + pageCompList.length"  
                     @compControl="compControl"
                     :component="item" 
                     :formConfig="selectForm"
-                    :type="item.type" 
-                    :selectedComp="pageCompList[activeComp.index]"
-                    :lineNumber="(index + 1 >= 10 ? (index + 1) + '' : ('0' + (index + 1)))"></FormComponent>
+                    :type="item?.type" 
+                    :selectedComp="getActiveComp()"></FormComponent>
                 </div>
               </VueDraggable>
             </div>
@@ -76,16 +75,16 @@
           </div>
         </div>
         <CompSetting 
-          :key="pageCompList[activeComp.index]._selectedId" 
-          v-if="pageCompList[activeComp.index]"  
+          v-if="activeComp.id"  
+          :key="activeComp.id"
           :selectForm="selectForm" 
-          :selectComp="pageCompList[activeComp.index]"></CompSetting>
+          :selectComp="getActiveComp()"></CompSetting>
       </div>
   </div>
 </template>
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
-import { computed, onMounted, reactive, ref, watch, } from 'vue'
+import { computed, nextTick, onMounted, reactive, ref, watch, } from 'vue'
 import { v4 as uuidv4  } from 'uuid'
 import { CompListData, CompType, IgnoreLineNumberTypeList} from './comp-data'
 import CompSetting from '@/views/FormEditor/form-setting.vue'
@@ -98,16 +97,16 @@ import vue from '@vitejs/plugin-vue';
 const _updateState = ref()
 
 interface ActiveCompType {
-  type: 'component' | 'header',
-  index: number
+  type: 'component' | 'header'
+  id: string
 }
 
 const compList = ref([...CompListData]) // 来源组件列表
-const pageCompList: any = ref([]) // 页面组件列表
+const pageCompList = ref([]) // 页面组件列表
 const currentComp = ref()
 const activeComp = ref<ActiveCompType>({
   type: 'component',
-  index: 0,
+  id: '',
 }) // 当前选中组件
 
 const selectForm = ref()
@@ -123,7 +122,7 @@ const useCompStore = useSelectCompStore()
 // 更新选中组件数据
 const updateCompByChange = (compConfig: any) => {
   currentComp.value = compConfig
-  const index = activeComp.value.index
+  const index = getActiveCompIndex()
   if(index > -1 && pageCompList.value.length) {
     pageCompList.value[index] = {...pageCompList.value[index],...compConfig}
   }
@@ -137,9 +136,7 @@ watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig
   selectForm.value = currentGlobalFormConfig
 })
 
-
-watch(pageCompList, (newValue) => {
-  pageCompList.value = newValue
+const updateCompLineNumber = () => {
   if(Array.isArray(pageCompList.value)) {
     let lineNumber = 0
     let pageCount = _.filter(pageCompList.value, {
@@ -159,6 +156,11 @@ watch(pageCompList, (newValue) => {
       }
     })
   }
+}
+
+watch(pageCompList, (newValue) => {
+  pageCompList.value = newValue
+  updateCompLineNumber()
 })
 
 
@@ -177,14 +179,14 @@ const onClone = (element: any) => {
 
 const selectComp = (item: any, index: number) => {
   useCompStore.initCurrentComp({
-    ...item,
-    _selectedId: uuidv4()
+    ...item
   })
-  activeComp.value.index = index
+  activeComp.value.id = item.id
 }
 
 const compControl = (controlType: string, value: any) => {
-  const index = pageCompList.value.indexOf(value)
+  console.log(value)
+  const index = _.findIndex(pageCompList.value, (item: any) => item.id === value.id)
   if(index === -1) {
     console.log("没有查询到组件！！！")
     return 
@@ -194,16 +196,23 @@ const compControl = (controlType: string, value: any) => {
       ...value,
       id: uuidv4()
     }
-    console.log('newComp', newComp)
-    pageCompList.value.splice(index, 0, newComp)
-    // pageCompList.value.splice(index, 0, newComp)
-    console.log(pageCompList.value)
+    pageCompList.value.splice(index +1, 0, {...newComp})
   }
   if(controlType === 'delete') {
     pageCompList.value.splice(index, 1)
+    activeComp.value.id = pageCompList.value[index -1 ]?.id
   }
+  updateCompLineNumber()
 }
 
+const getActiveComp = () => {
+  const item = _.filter(pageCompList.value, (item: any) => item.id === activeComp.value.id)?.[0]
+  return item
+}
+
+const getActiveCompIndex = () => {
+  return _.findIndex(pageCompList.value, (item: any) => item.id === activeComp.value.id)
+}
 </script>
 
 <style scoped>
@@ -323,7 +332,7 @@ const compControl = (controlType: string, value: any) => {
   }
 
   .form-item {
-  
+    position: relative;
   }
   .active-comp {
     /* background: mintcream; */
