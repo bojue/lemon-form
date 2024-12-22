@@ -1,23 +1,22 @@
 <template>
-  <a-switch v-model:checked="props.value" />
+  <a-switch 
+  :disabled="isDev" 
+  :title="isDev ? disableInputByDev : placeholder" 
+  v-model:checked="props.value" />
 </template>
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { disableInputByDev } from '@/views/FormEditor/comp-config-data'
 
-const radioStyle = reactive({
-  display: 'flex',
-  height: '40px',
-  lineHeight: '40px',
-});
+interface Props {
+  id: string
+  placeholder: string
+  value: string
+  isDev: boolean
+  dataList: Array<any>
+}
 
-const props = defineProps({
-  dataList: {
-    type: Array
-  },
-  value: {
-    type: String
-  },
-})
+const props = defineProps<Props>()
 
 </script>
 <style lang="scss">

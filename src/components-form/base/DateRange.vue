@@ -1,17 +1,20 @@
 <template>
-  <a-range-picker class="item-comp" v-model:value="props.value" :placeholder="placeholderRange"/>
+  <a-range-picker
+  :disabled="isDev" :title="isDev ? disableInputByDev : ''"
+   class="item-comp" v-model:value="props.value" :placeholder="placeholderRange"/>
 </template>
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-
-const radioStyle = reactive({
-
-});
+import { disableInputByDev } from '@/views/FormEditor/comp-config-data'
 
 interface Props {
-  value: string 
+  id: string
   placeholderRange: [string, string]
+  value: string
+  isDev: boolean
 }
+
+
 const props = defineProps<Props>()
 </script>
 <style lang="scss">

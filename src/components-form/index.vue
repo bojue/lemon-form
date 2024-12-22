@@ -16,7 +16,7 @@
       </a-typography-text>
     </div>
     <div class="component">
-      <component :key="currentComp" :is="getCompConfig(props.type).comp"  v-bind="component"></component>
+      <component :key="currentComp" :isDev="isDev" :is="getCompConfig(props.type).comp"  v-bind="component"></component>
     </div>
     <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()" >
       <div class="bottom-setting">
@@ -78,6 +78,7 @@ interface Props {
   lineNumber: string,
   formConfig: any
   selectedComp?: any
+  isDev: boolean
 }
 
 
@@ -136,7 +137,20 @@ const isIgnoreEditor = () => {
 }
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+
+::v-deep(input[disabled]) {
+  background: #ffffff !important;
+}
+::v-deep(textarea[disabled]) {
+  background: #ffffff !important;
+}
+::v-deep(.ant-picker-disabled) {
+  background: #ffffff !important;
+}
+::v-deep(.ant-time-disabled) {
+  background: #ffffff !important;
+}
 
 .control {
   &:active, &:hover {
@@ -199,8 +213,9 @@ const isIgnoreEditor = () => {
 .active-comp-setting {
   width: 100%;
   position: relative;
-  height: 48px;
-  line-height: 48px;
+  height: 64px;
+  line-height: 64px;
+  padding-top: 16px;
   .bottom-setting {
 
     position: absolute;

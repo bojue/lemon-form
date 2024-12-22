@@ -5,31 +5,48 @@
         {{ pagingValue }}
       </span>
     </a-divider>
-    <div class="page-title" contenteditable="true" @blur="changeValue($event)">
-
-    </div>
-    <div class="page-sub-title" contenteditable="true" @blur="changeValue($event)">
-
-    </div>
+    <div class="page-title" contenteditable="true" @input="changeValue($event, 'pageSubTitle')" ref="subTitle"></div>
+    <div class="page-sub-description" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription"></div>
   </div>
  </template>
  <script setup lang="ts">
- import { ref, reactive } from 'vue'
+ import { ref, reactive, watch, onMounted } from 'vue'
+ import { useSelectCompStore  } from '@/stores/selectCompStore'
+
+ const subTitle = ref(null)
+ const subDescription = ref(null)
+
+  const compStore = useSelectCompStore()
  
  interface Props {
   pagingValue: string
+  pageSubTitle: string 
+  pageSubDescription: string
  }
  
  const props = defineProps<Props>()
 
- const changeValue = (event: any) => {
+ const changeValue = (event: any, params) => {
   const hasDataBool = event.target.innerText !== null &&  event.target.innerText !== '\n'
-
-  console.log(hasDataBool, event.target.innerText)
   if(!hasDataBool) {
     event.target.innerHTML = null
+  } 
+  const data = event.target.innerText
+  if(params === 'pageSubTitle') {
+    compStore.updateCurrentComp({
+      pageSubTitle: data
+    })
+  } else if(params === 'pageSubDescription') {
+    compStore.updateCurrentComp({
+      pageSubDescription: data
+    })
   }
 }
+
+onMounted(() => {
+  subTitle.value.innerText = props.pageSubTitle  || null;
+  subDescription.value.innerText = props.pageSubDescription || null
+})
  
  </script>
  <style lang="scss" scoped>
@@ -41,7 +58,7 @@
   }
 }
 
-.page-title, .page-sub-title {
+.page-title, .page-sub-description {
   padding: 8px 12px;
   outline: none;
   font-size: 16px;
@@ -68,7 +85,7 @@
   padding: 0px 12px;
 }
 
-.page-sub-title {
+.page-sub-description {
   margin-top: 10px;
   font-size: 14px;
   color:#666666;

@@ -68,8 +68,6 @@ export const getCompConfig = (type: CompType) => {
       ...compConfig,
       ...data
     }
-
-    console.log('data', data)
   }
 
   if(!isIgnoreRequireType.includes(type)) {
@@ -119,3 +117,5 @@ export const getDefaultConfig = (type: CompType) => {
   
   return {...configData}
 }
+
+export const disableInputByDev = '编辑模式不支持输入'

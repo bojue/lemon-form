@@ -13,6 +13,7 @@ export const useSelectCompStore = defineStore('compEvent', () => {
   }
   // 更新组件
   const updateCurrentComp = (updateData: any) => {
+    console.log('compConfig', updateData)
     compConfig.value = {
       ...compConfig.value,
       ...updateData

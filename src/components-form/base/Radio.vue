@@ -1,7 +1,7 @@
 <template>
   <a-space direction="vertical">
     <a-radio-group :value="dataValue" size="large">
-    <a-radio v-for="item of dataList" :value="item" :style="layoutType === 'vertical' ? radioVerticalStyle : radioStyle">{{ item?.label}}</a-radio>
+    <a-radio v-for="item of dataList" :value="item"  :style="layoutType === 'vertical' ? radioVerticalStyle : radioStyle">{{ item?.label}}</a-radio>
   </a-radio-group>
   </a-space>
 </template>
@@ -13,6 +13,7 @@ interface Props {
   dataList: Array<any>
   dataValue: string
   layoutType: string
+  isDev: boolean
 }
 
 

@@ -15,6 +15,7 @@
   dividerValue: string
   dividerBorderType: boolean // 虚线类型 
   dividerOrientation: string
+  isDev: boolean
  }
  
  const props = defineProps<Props>()

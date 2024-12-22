@@ -67,6 +67,7 @@
                     :component="item" 
                     :formConfig="selectForm"
                     :type="item?.type" 
+                    :isDev="isFormEditorDevBool"
                     :selectedComp="getActiveComp()"></FormComponent>
                 </div>
               </VueDraggable>
@@ -91,10 +92,8 @@ import CompSetting from '@/views/FormEditor/form-setting.vue'
 import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import { useSelectCompStore  } from '@/stores/selectCompStore'
+import { useRoute } from 'vue-router';
 import * as _ from 'lodash'
-import vue from '@vitejs/plugin-vue';
-
-const _updateState = ref()
 
 interface ActiveCompType {
   type: 'component' | 'header'
@@ -118,6 +117,10 @@ const defaultFormConfig = {
 
 onMounted(() => useCompStore.initGlobalFormConfig({...defaultFormConfig}))
 const useCompStore = useSelectCompStore()
+const isFormEditorDevBool = computed(() => {
+  const bool = useRoute().path.includes('form-editor')
+  return bool
+})
 
 // 更新选中组件数据
 const updateCompByChange = (compConfig: any) => {
@@ -191,6 +194,7 @@ const compControl = (controlType: string, value: any) => {
     console.log("没有查询到组件！！！")
     return 
   }
+  console.log('pageCompList', pageCompList.value)
   if(controlType === 'copy') {
     const newComp = {
       ...value,
@@ -201,7 +205,10 @@ const compControl = (controlType: string, value: any) => {
   if(controlType === 'delete') {
     pageCompList.value.splice(index, 1)
     activeComp.value.id = pageCompList.value[index -1 ]?.id
-  }
+  } 
+
+  console.log('pageCompList', pageCompList.value)
+
   updateCompLineNumber()
 }
 
