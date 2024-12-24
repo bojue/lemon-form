@@ -26,6 +26,7 @@
                 'advanced': compCategory.type === 'Advanced Component',
                 'layout': compCategory.type === 'Layout Component'
               }">
+              <img class="icon" :src="item.icon" alt="" v-if="item.icon">
               {{ item.label }}
             </div>
           </VueDraggable>
@@ -64,6 +65,7 @@
                   <FormComponent
                     :key="item?.id + pageCompList.length"  
                     @compControl="compControl"
+                    @addItem="addItem($event, item)"
                     :component="item" 
                     :formConfig="selectForm"
                     :type="item?.type" 
@@ -187,14 +189,22 @@ const selectComp = (item: any, index: number) => {
   activeComp.value.id = item.id
 }
 
+const addItem = (type: 'new' | 'other',item: any) => {
+  const isNewBool = type === 'new'
+  const isOtherBool = type === 'other'
+  if(isNewBool) {
+
+  } else {
+
+  }
+}
+
 const compControl = (controlType: string, value: any) => {
-  console.log(value)
   const index = _.findIndex(pageCompList.value, (item: any) => item.id === value.id)
   if(index === -1) {
     console.log("没有查询到组件！！！")
     return 
   }
-  console.log('pageCompList', pageCompList.value)
   if(controlType === 'copy') {
     const newComp = {
       ...value,
@@ -206,9 +216,6 @@ const compControl = (controlType: string, value: any) => {
     pageCompList.value.splice(index, 1)
     activeComp.value.id = pageCompList.value[index -1 ]?.id
   } 
-
-  console.log('pageCompList', pageCompList.value)
-
   updateCompLineNumber()
 }
 
@@ -223,6 +230,12 @@ const getActiveCompIndex = () => {
 </script>
 
 <style scoped>
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-top: -4px;
+}
 
 .form-editor {
   height: 100%;
@@ -265,17 +278,19 @@ const getActiveCompIndex = () => {
 
     .item {
       /* border: 1px solid #D7D9DC; */
-      background: rgba(0, 102, 255, .08);
+      /* background: rgba(0, 102, 255, .08); */
       height: 32px;
       line-height: 32px;
       text-align: left;
-      padding: 0px 20px;
+      padding: 0px 2px 0 10px;
       border-radius: 5px;
       /* color: #141E31; */
       color: #314666;
-      font-size: 12px;
+      font-size: 15px;
+      border: 1px solid #ebebeb;
+      background: #fff;
 
-      &.person {
+      /* &.person {
         background: #E6F8F5;
       }
       &.advanced {
@@ -283,7 +298,7 @@ const getActiveCompIndex = () => {
       }
       &.layout {
         background: beige;
-      }
+      } */
     }
   }
 

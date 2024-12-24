@@ -19,7 +19,23 @@
       <component :key="currentComp" :isDev="isDev" :is="getCompConfig(props.type).comp"  v-bind="component"></component>
     </div>
     <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()" >
+
       <div class="bottom-setting">
+        <div class="data-list-setting">
+          
+          <span class="add-item">
+            <a-typography-text type="warning" @click="addItem('new')">
+              <PlusCircleTwoTone class="icon" />添加单项</a-typography-text>
+            <span class="line"></span>
+          </span>
+          <!-- <span class="add-item">
+            <a-typography-text type="warning">模版</a-typography-text>
+            <span class="line"></span>
+          </span> -->
+          <span class="add-item">
+            <a-typography-text type="warning" @click="addItem('other')">添加其他</a-typography-text>
+          </span>
+        </div>
         <a-checkbox class="setting-item" v-model:checked="component.isRequired" @click="component.isRequired = !component.isRequired">必填</a-checkbox>
       </div>
     </div>
@@ -86,7 +102,7 @@ const props = defineProps<Props>()
 
 const compConfig = props.component // 组件配置
 const currentComp = getCompConfig(props.type)//组件
-const emit = defineEmits(['compControl'])
+const emit = defineEmits(['compControl', 'addItem'])
 
 function getCompConfig(type: any) {
   const compType = { comp: getTypeToComponent(type) }
@@ -136,8 +152,34 @@ const isIgnoreEditor = () => {
   return ['Divider', 'Paging'].includes(props.type)
 }
 
+const addItem = (type: string) => {
+  emit('addItem', type)
+}
+
 </script>
 <style lang="scss" scoped>
+.data-list-setting {
+  display: inline-block;
+  left: 0;
+}
+.add-item {
+  cursor: pointer;
+  .icon {
+    margin-right: 5px;
+    font-size: 18px;
+  }
+}
+::v-deep(.ant-typography.ant-typography-warning) {
+  color: #1677ff; 
+  padding: 2px 0px;
+  font-size: 14px;
+}
+
+.line {
+  border-left:1px solid #e0e0e0;
+  height: 10px;
+  margin: 0 12px;
+}
 
 ::v-deep(input[disabled]) {
   background: #ffffff !important;
@@ -150,6 +192,17 @@ const isIgnoreEditor = () => {
 }
 ::v-deep(.ant-time-disabled) {
   background: #ffffff !important;
+}
+::v-deep(.ant-input-affix-wrapper-disabled) {
+  background: #ffffff !important;
+}
+
+::v-deep(.ant-divider-horizontal.ant-divider-with-text::before) {
+  transform: translateY(100%) !important;
+}
+
+::v-deep(.ant-divider-horizontal.ant-divider-with-text::after) {
+  transform: translateY(100%) !important;
 }
 
 .control {
@@ -217,14 +270,20 @@ const isIgnoreEditor = () => {
   line-height: 64px;
   padding-top: 16px;
   .bottom-setting {
-
-    position: absolute;
-    right: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 100px;
   }
 }
 
 .item-comp {
   width: 100%;
+}
+
+.setting-item {
+  position: absolute;
+  right: 10px;
+  top: 36px;
 }
 
 </style>

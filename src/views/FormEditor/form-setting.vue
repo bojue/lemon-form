@@ -23,6 +23,7 @@
         <Required :comp="selectComp"/>
         <ValidationSystem :comp="selectComp"/>
         <ValidationCustom :comp="selectComp" />
+        <NumberConfig :comp="selectComp"/>
         <CustomText :comp="selectComp" v-if="selectComp.isCustomErrorMessage"/>
       </div>
       <div class="category-name border-top">
@@ -47,6 +48,7 @@ import Required from '@/components-form-setting/form-validation/Required.vue'
 import ValidationSystem from '@/components-form-setting/form-validation/ValidationFormat.vue'
 import ValidationCustom from '@/components-form-setting/form-validation/ValidationCustom.vue'
 import CustomText from '@/components-form-setting/form-validation/CustomText.vue'
+import NumberConfig from '@/components-form-setting/form-validation/NumberConfig.vue'
 import DisplaySerialNumber from '@/components-form-setting/common-global-configurations/DisplaySerialNumber.vue'
 import DisplayDescription from '@/components-form-setting/common-global-configurations/DisplayDescription.vue'
 

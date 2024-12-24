@@ -5,8 +5,8 @@
         {{ pagingValue }}
       </span>
     </a-divider>
-    <div class="page-title" contenteditable="true" @input="changeValue($event, 'pageSubTitle')" ref="subTitle"></div>
-    <div class="page-sub-description" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription"></div>
+    <div class="page-title border-radius" contenteditable="true" @input="changeValue($event, 'pageSubTitle')" ref="subTitle"></div>
+    <div class="page-sub-description border-radius" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription"></div>
   </div>
  </template>
  <script setup lang="ts">
@@ -50,11 +50,16 @@ onMounted(() => {
  
  </script>
  <style lang="scss" scoped>
+ .border-radius {
+  border-radius: 6px;
+  border:1px solid #d9d9d9;
+ }
  .paging {
   .pageNumber {
     border: 1px solid #e0e0e0;
-    padding: 4px 18px;
+    padding: 8px 18px;
     border-radius: 5px;
+    color: #666666;
   }
 }
 
@@ -63,9 +68,9 @@ onMounted(() => {
   outline: none;
   font-size: 16px;
   color:#333333;
-  border: 1px solid transparent;
+  border: 1px solid transparent; 
   &:hover, &:active {
-    border: 1px solid #eaeaea;
+    border: 1px solid #d9d9d9;
   }
 
   &:empty:before{ 

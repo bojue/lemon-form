@@ -18,6 +18,10 @@ interface CompConfig {
   customErrorMessage?: string // 自定义报错
   formValidationFormat?: string // 表单校验格式
   formValidationFormatRegex?: string // 表单正则校验内容
+
+  // 扩展字段
+  minValue?: number // 最小值
+  maxValue?: number // 最大值
 }
 export const defaultConfig: CompConfig = {
   type: '',
@@ -34,6 +38,7 @@ export const dataListType: CompType[] = [CompType.checkout, CompType.radio, Comp
 export const isIgnoreRequireType: CompType[] = [CompType.paging, CompType.divider] // 忽略类型
 export const isPlaceholderType: CompType[] = [CompType.input, CompType.textarea, CompType.number, CompType.date, CompType.time,CompType.url, CompType.email, CompType.phone, CompType.idCard, CompType.location]
 export const isRangePlaceholderType: CompType[]  = [CompType.dateRange, CompType.timeRange]
+export const isNumberType: CompType[] = [CompType.number]
 
 
 export const getCompConfig = (type: CompType) => {
@@ -81,6 +86,15 @@ export const getCompConfig = (type: CompType) => {
     compConfig = {
       ...compConfig,
       placeholder: '请输入'
+    }
+  }
+
+  if(isNumberType.includes(type)) {
+    compConfig = {
+      ...compConfig,
+      minValue: 0,
+      maxValue: 100,
+      placeholder: '请输入数字'
     }
   }
 

@@ -1,3 +1,4 @@
+import Icon from './comp-icon'
 export enum CompType {
   input = 'Input',
   textarea = 'Textarea',
@@ -54,6 +55,7 @@ export interface CompItemType {
   name: string 
   label: string 
   type: CompType
+  icon?: string
 }
 
 enum CompListType {
@@ -80,66 +82,79 @@ const BasicComponentList:CompItemType[] = [
     label: '单选',
     name: '单选',
     type: CompType.radio,
+    icon: Icon.Radio
   },
   {
     label: '多选',
     name: '多选',
-    type: CompType.checkout
+    type: CompType.checkout,
+    icon: Icon.Checkout
   },
   {
     label: '单行输入',
     name: '单行输入',
-    type: CompType.input
+    type: CompType.input,
+    icon: Icon.Input
   },
   {
     label: '多行输入',
     name: '多行输入',
-    type: CompType.textarea
+    type: CompType.textarea,
+    icon: Icon.TextArea
   },
   {
     label: '日期',
     name: '日期',
-    type: CompType.date
+    type: CompType.date,
+    icon: Icon.Date
   },
   {
     label: '日期范围',
     name: '日期范围',
-    type: CompType.dateRange
+    type: CompType.dateRange,
+    icon: Icon.DateRange
   },
   {
     label: '时间',
     name: '时间',
-    type: CompType.time
+    type: CompType.time,
+    icon: Icon.Time
   },
   {
     label: '时间范围',
     name: '时间范围',
-    type: CompType.timeRange
+    type: CompType.timeRange,
+    icon: Icon.TimeRange
   },
   {
     label: '上传',
     name: '上传',
-    type: CompType.upload
+    type: CompType.upload,
+    icon: Icon.Upload
   },
   {
     label: '数字',
     name: '数字',
-    type: CompType.number
+    type: CompType.number,
+    icon: Icon.Number
   },
   {
     label: '开关',
     name: '开关',
-    type: CompType.switch
+    type: CompType.switch,
+    icon: Icon.Switch
   },
   {
     label: '网址',
     name: '网址',
-    type: CompType.url
+    type: CompType.url,
+    icon: Icon.Url
   },
   {
     label: '评分',
     name: '评分',
-    type: CompType.score
+    type: CompType.score,
+    icon: Icon.Score
   }
   
 ]
@@ -149,11 +164,13 @@ const LayoutComponentList: CompItemType[] = [
   {
     label: '分割线',
     name: '分割线',
-    type: CompType.divider
+    type: CompType.divider,
+    icon: Icon.Divider
   },  {
     label: '分页',
     name: '分页',
-    type: CompType.paging
+    type: CompType.paging,
+    icon: Icon.Paging
   }
 ]
 
@@ -184,7 +201,8 @@ const PersonalComponentList: CompItemType[] = [
   },{
     label: '邮件',
     name: '邮件',
-    type: CompType.email
+    type: CompType.email,
+    icon: Icon.Email
   },{
     label: '微信',
     name: '微信',

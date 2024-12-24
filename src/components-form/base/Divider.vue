@@ -28,7 +28,7 @@
 }
 ::v-deep { 
     .ant-divider-with-text {
-        color: #ccc;
+        color: #666 !important;
         font-weight: 400 !important;
         font-size: 14px !important;
     }

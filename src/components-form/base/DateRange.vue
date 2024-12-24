@@ -1,7 +1,9 @@
 <template>
   <a-range-picker
   :disabled="isDev" :title="isDev ? disableInputByDev : ''"
-   class="item-comp" v-model:value="props.value" :placeholder="placeholderRange"/>
+   class="item-comp" 
+   v-model:value="props.value" 
+   :placeholder="placeholderRange"/>
 </template>
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
