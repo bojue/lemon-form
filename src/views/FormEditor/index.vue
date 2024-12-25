@@ -194,9 +194,8 @@ const addItem = (type: 'new' | 'other',item: any) => {
   const isOtherBool = type === 'other'
   if(isNewBool) {
 
-  } else {
-
-  }
+  } else {}
+  pageCompList.value.push(newComp)
 }
 
 const compControl = (controlType: string, value: any) => {
@@ -379,5 +378,11 @@ const getActiveCompIndex = () => {
       position: absolute;
     }
   }
+
 }
+
+::v-deep(.ant-row) {
+    width: 400px !important;
+    background: red;
+  }
 </style>
