@@ -65,7 +65,7 @@
                   <FormComponent
                     :key="item?.id + pageCompList.length"  
                     @compControl="compControl"
-                    @addItem="addItem($event, item)"
+                    @addItem="addItem($event, item, index)"
                     :component="item" 
                     :formConfig="selectForm"
                     :type="item?.type" 
@@ -153,7 +153,7 @@ const updateCompLineNumber = () => {
       const isPageTypeBool = CompType.paging === item.type
       if(!isIgnoreTypeBool) {
         lineNumber++
-        item.lineNumber = lineNumber
+        item.lineNumber = lineNumber && lineNumber.toString()?.length === 1 ? '0' + lineNumber : lineNumber
       }
       if(isPageTypeBool) {
         pageNumber++
@@ -189,13 +189,31 @@ const selectComp = (item: any, index: number) => {
   activeComp.value.id = item.id
 }
 
-const addItem = (type: 'new' | 'other',item: any) => {
+const updateDataListIndex = (index: number) => {
+  if(index > -1 && Array.isArray(pageCompList.value[index]?.dataList)) {
+    _.map(pageCompList.value[index].dataList, (item: any, index: number) => {
+      item._index = index
+    })
+  }
+}
+
+const addItem = (type: 'new' | 'other',item: any, index: number) => {
+  
   const isNewBool = type === 'new'
   const isOtherBool = type === 'other'
-  if(isNewBool) {
+  const newDataItem = isNewBool ? {
+    label: '选项',
+    value: '选项',
+  } : {
+    subType: 'other',
+    label: '其他',
+    value: '',
+  }
+  if(['new', 'other'].includes(type)) {
+    pageCompList.value[index].dataList.push(newDataItem)
+  }
 
-  } else {}
-  pageCompList.value.push(newComp)
+  updateDataListIndex(index)
 }
 
 const compControl = (controlType: string, value: any) => {
@@ -205,7 +223,7 @@ const compControl = (controlType: string, value: any) => {
     return 
   }
   if(controlType === 'copy') {
-    const newComp = {
+    const newComp: any = {
       ...value,
       id: uuidv4()
     }
@@ -359,10 +377,12 @@ const getActiveCompIndex = () => {
     /* background: mintcream; */
     /* border-left: 6px solid red;
     border-color: teal; */
-    background: aliceblue;
+    /* background: aliceblue; */
     /* border-bottom: 1px dashed #ccc;
     border-top: 1px dashed #ccc; */
-    border: 1px dashed #1677ff;
+    /* border: 1px dashed #1677ff; */
+    background: rgba(255, 247, 0, 0.1);
+    border: 1px dashed #ddd;
     position: relative;
 
     &::before {
@@ -381,8 +401,4 @@ const getActiveCompIndex = () => {
 
 }
 
-::v-deep(.ant-row) {
-    width: 400px !important;
-    background: red;
-  }
 </style>

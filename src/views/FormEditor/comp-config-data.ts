@@ -50,13 +50,16 @@ export const getCompConfig = (type: CompType) => {
       layoutType: 'vertical',
       dataList: [{
         label: '选项一',
-        value: '选项一'
+        value: '选项一',
+        _index: 0,
       },{
         label: '选项二',
-        value: '选项二'
+        value: '选项二',
+        _index: 1,
       },{
         label: '选项三',
-        value: '选项三'
+        value: '选项三',
+        _index: 2,
       }]
     }
   }

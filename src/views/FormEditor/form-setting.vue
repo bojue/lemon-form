@@ -12,6 +12,7 @@
       <div class="content m-b-0">
         <Description :comp="selectComp" :key="selectComp._selectedId "/>
         <Placeholder :comp="selectComp" :key="selectComp._selectedId "/>
+        <RangePlaceholder :comp="selectComp" :key="selectComp._selectedId "/>
         <LayoutType v-if="selectComp" :comp="selectComp"/>
         <DividerText v-if="selectComp" :comp="selectComp" ></DividerText>
         <DividerBorderType :comp="selectComp"></DividerBorderType>
@@ -20,10 +21,10 @@
         表单验证 
       </div>
       <div class="content">
+        <NumberConfig :comp="selectComp"/>
         <Required :comp="selectComp"/>
         <ValidationSystem :comp="selectComp"/>
         <ValidationCustom :comp="selectComp" />
-        <NumberConfig :comp="selectComp"/>
         <CustomText :comp="selectComp" v-if="selectComp.isCustomErrorMessage"/>
       </div>
       <div class="category-name border-top">
@@ -41,6 +42,7 @@
 import { ref, watch, reactive } from 'vue'
 import Description from '@/components-form-setting/base/Description.vue'
 import Placeholder from '@/components-form-setting/base/Placeholder.vue'
+import RangePlaceholder from '@/components-form-setting/base/RangePlaceholder.vue'
 import DividerText from '@/components-form-setting/base/DividerText.vue'
 import LayoutType from '@/components-form-setting/base/LayoutType.vue'
 import DividerBorderType from '@/components-form-setting/base/DividerBorderType.vue'

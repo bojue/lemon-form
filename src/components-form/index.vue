@@ -1,31 +1,39 @@
 <template>
   <div class="comp-item">
     <div class="comp-item-title" v-if="!!displaySection">
-      <a-typography-title :level="5" class="title-value" v-bind:class="{'title-value-isRequired': component.isRequired}">
-        <span class="number" v-if="formConfig?.displayNumberSort">
+      <a-typography-title :level="5" class="title-value" >
+        <span class="number" v-bind:class="{'title-value-isRequired': component.isRequired, number: true}" v-if="formConfig?.displayNumberSort">
           {{component?.lineNumber }}. 
         </span>
         <span class="title-value">
-          {{ component?.name || component?.title }} 
+          <div class="description"  @blur="changeValue($event, 'name')" contenteditable="true">
+            {{ component?.name || component?.title }} 
+          </div>
+
+       
         </span>
       </a-typography-title>
     </div>
     <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
       <a-typography-text type="secondary">
-        {{ component.description || '描述' }}
+        <div class="description"  @blur="changeValue($event, 'description')" contenteditable="true">
+          {{ component.description || '描述' }}
+        </div>
       </a-typography-text>
     </div>
     <div class="component">
-      <component :key="currentComp" :isDev="isDev" :is="getCompConfig(props.type).comp"  v-bind="component"></component>
+      <component :key="currentComp" :isSelected="component?.id === selectedComp?.id" :isDev="isDev" :is="getCompConfig(props.type).comp"  v-bind="component"></component>
     </div>
     <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()" >
 
       <div class="bottom-setting">
-        <div class="data-list-setting">
+        <div class="data-list-setting" v-if="['Radio', 'Checkout'].includes(compConfig.type)">
           
-          <span class="add-item">
+          <span class="add-item" >
             <a-typography-text type="warning" @click="addItem('new')">
-              <PlusCircleTwoTone class="icon" />添加单项</a-typography-text>
+              <PlusCircleTwoTone class="icon" />
+              <span class="add-label">添加单项 </span>
+            </a-typography-text>
             <span class="line"></span>
           </span>
           <!-- <span class="add-item">
@@ -33,7 +41,7 @@
             <span class="line"></span>
           </span> -->
           <span class="add-item">
-            <a-typography-text type="warning" @click="addItem('other')">添加其他</a-typography-text>
+            <a-typography-text type="warning"  :class="{disabled: checkAddOtherClass()}" @click="!checkAddOtherClass() && addItem('other')">添加其他</a-typography-text>
           </span>
         </div>
         <a-checkbox class="setting-item" v-model:checked="component.isRequired" @click="component.isRequired = !component.isRequired">必填</a-checkbox>
@@ -50,7 +58,7 @@
         <template #title>
           <span>删除</span>
         </template>
-        <DeleteOutlined class="control"/>
+        <DeleteOutlined class="control" />
       </a-tooltip>
 
 
@@ -86,6 +94,7 @@ import IdCardComponent from '@/components-form/contact-information/IdCard.vue'
 import EmailComponent from '@/components-form/contact-information/Email.vue'
 import WXComponent from '@/components-form/contact-information/WX.vue'
 import AddressComponent from '@/components-form/contact-information/Address.vue'
+import * as _ from 'lodash'
 
 
 interface Props {
@@ -108,6 +117,14 @@ function getCompConfig(type: any) {
   const compType = { comp: getTypeToComponent(type) }
   const comp = { ...compConfig, ...compType }
   return comp
+}
+
+const changeValue = (event: any, params: string) => {
+  const {
+    innerText
+  } = event?.target
+  const hasDataBool = innerText !== null &&  innerText !== '\n'
+  compConfig[params] = hasDataBool ? innerText : '描述'
 }
 
 const displaySection = computed(() => !['Divider', 'Paging'].includes(props.type))
@@ -156,8 +173,28 @@ const addItem = (type: string) => {
   emit('addItem', type)
 }
 
+const checkAddOtherClass = () => {
+  console.log(props.component.dataList,)
+  return _.filter(props.component.dataList, {subType: 'other'}).length > 0
+}
+
 </script>
 <style lang="scss" scoped>
+.description {
+  width: 100%;
+  padding: 6px 12px;
+  outline: none;
+  margin-left: -10px;
+  border-radius: 6px;
+  &.active, &:hover {
+    border: 1px solid #e0e0e0;
+  }
+
+  white-space: nowrap;  /* 不换行 */
+  overflow: hidden;     /* 隐藏超出部分 */
+  text-overflow: ellipsis; /* 超出部分显示省略号 */
+  width: 100%;         /* 设置宽度 */
+}
 .data-list-setting {
   display: inline-block;
   left: 0;
@@ -167,8 +204,20 @@ const addItem = (type: string) => {
   .icon {
     margin-right: 5px;
     font-size: 18px;
+    position: absolute;
+    left: 0;
+    top: 40px;
+  }
+
+  .add-label {
+    margin-left: 28px;
   }
 }
+
+.disabled {
+    color: #ddd !important;
+  }
+
 ::v-deep(.ant-typography.ant-typography-warning) {
   color: #1677ff; 
   padding: 2px 0px;
@@ -223,23 +272,36 @@ const addItem = (type: string) => {
 
 }
 .comp-item {
+  position: relative;
   // padding: 20px 30px;
 
-  .comp-item-title {
-    height: 40px;
-    line-height: 40px;
-
+  .title-value {
+    position: relative;
   }
-
+  .number {
+    position: absolute;
+    left: -30px;
+    top: 6px;
+  }
 
   .title-value-isRequired::before {
     color: #ff4d4f;
-    font-size: 14px;
+    font-size: 12px;
+    position: absolute;
+    top: 5px;
+    left: -9px;
     font-family: SimSun, sans-serif;
     line-height: 1;
     display: inline-block;
     margin-inline-end: 4px;
     content: "*";
+  }
+
+
+  .comp-item-title {
+    height: 40px;
+    line-height: 40px;
+
   }
 
   .comp-item-description {
