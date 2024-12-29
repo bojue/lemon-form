@@ -151,12 +151,6 @@ watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig
   selectForm.value = currentGlobalFormConfig
 })
 
-watch(useCompStore.currentCompKey, (newData)=> {
-  console.log('useCompStore',newData )
-})
-
-
-
 
 const updateCompLineNumber = () => {
   if(Array.isArray(pageCompList.value)) {
@@ -402,10 +396,11 @@ const getActiveCompIndex = () => {
     /* background: aliceblue; */
     /* border-bottom: 1px dashed #ccc;
     border-top: 1px dashed #ccc; */
-    /* border: 1px dashed #1677ff; */
+    border: 1px dashed #1677ff;
     /* background: lightyellow; */
-    background: rgba(0,255,0,0.1);
-    border: 1px dashed darkseagreen;
+    background: aliceblue;
+    /* rgba(0,255,0,0.1); */
+    /* darkseagreen; */
     border-radius: 5px;
     position: relative;
 

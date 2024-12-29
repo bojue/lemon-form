@@ -5,14 +5,19 @@
         {{ pagingValue }}
       </span>
     </a-divider>
-    <div class="page-title border-radius" contenteditable="true" @input="changeValue($event, 'pageSubTitle')" ref="subTitle"></div>
-    <div class="page-sub-description border-radius" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription"></div>
+    <div class="page-title border-radius" contenteditable="true" @input="changeValue($event, 'pageSubTitle')" ref="subTitle">
+      {{pageSubTitle}}
+    </div>
+    <div class="page-sub-description border-radius" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription">
+      {{pageSubDescription}}
+    </div>
   </div>
  </template>
  <script setup lang="ts">
  import { ref, reactive, watch, onMounted } from 'vue'
  import { useSelectCompStore  } from '@/stores/selectCompStore'
-
+ import { v4 as uuidv4 } from 'uuid';
+ 
  const subTitle = ref(null)
  const subDescription = ref(null)
 
@@ -41,6 +46,7 @@
       pageSubDescription: data
     })
   }
+  compStore.updateCurrentCompKey(uuidv4())
 }
 
 onMounted(() => {

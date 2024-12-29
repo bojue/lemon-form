@@ -5,7 +5,7 @@
       显示描述
       <a-tooltip placement="top">
         <template #title>
-          <span>批量操作：描述字段且有值的显示隐藏</span>
+          <span>批量操作：针对有值的描述字段显示隐藏操作，没有赋值预览页面会自动隐藏</span>
         </template>
         <QuestionCircleOutlined />
     </a-tooltip>

@@ -21,7 +21,7 @@
       </a-typography-text>
       <a-textarea 
         v-else
-        :auto-size="{ minRows: 2, maxRows: 5 }"
+        :auto-size="{ minRows: 1, maxRows: 5 }"
         v-model:value="component.description" :placeholder="'请输入描述'"
         @change="changeValue($event, 'description')" allow-clear>
 
@@ -52,8 +52,13 @@
               @click="!checkAddOtherClass() && addItem('other')">添加其他</a-typography-text>
           </span>
         </div>
-        <a-checkbox class="setting-item" v-model:checked="component.isRequired"
-          @click="component.isRequired = !component.isRequired">必填</a-checkbox>
+        <!-- <a-checkbox class="setting-item" v-model:checked="component.isRequired"
+          @click="component.isRequired = !component.isRequired">必填</a-checkbox> -->
+          <span class="setting-item">
+            <a-switch class="switch" v-model:checked="component.isRequired"  @change="handleChangeRequired"> </a-switch>
+            <label for=""> 必填</label>
+          </span>
+
       </div>
     </div>
     <div class="active-drag" v-if="compConfig.id === selectedComp?.id">
@@ -147,16 +152,17 @@ const changeValue = (event: any, params: string) => {
     compConfig[params] = value
   }
 
-
-  console.log('changeValue', params, value, innerText, event?.target)
-
-
 }
 
 const updateParams = (params: string, value: any) => {
   compStore.updateCurrentComp({
     [params]: value
   })
+  compStore.updateCurrentCompKey(uuidv4())
+}
+
+const handleChangeRequired = (value: boolean) => {
+  props.component.isRequired = value
   compStore.updateCurrentCompKey(uuidv4())
 }
 
@@ -328,6 +334,15 @@ const checkAddOtherClass = () => {
 
   .title-value {
     position: relative;
+    color: rgb(73, 96, 141);
+
+    .description {
+      &:empty:before{ 
+        content: '请输入标题'; 
+        color: #b3b3b3; 
+        font-weight: 200;
+      } 
+    }
   }
 
   .number {
@@ -340,7 +355,7 @@ const checkAddOtherClass = () => {
     color: #ff4d4f;
     font-size: 12px;
     position: absolute;
-    top: 5px;
+    top: 8px;
     left: -9px;
     font-family: SimSun, sans-serif;
     line-height: 1;
@@ -363,16 +378,18 @@ const checkAddOtherClass = () => {
 
 .active-drag {
   position: absolute;
-  left: -29px;
-  border-bottom-left-radius: 6px;
-  border-top-left-radius: 6px;
-  width: 28px;
+  left:3px;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+  width: 26px;
   top: 50%;
   transform: translateY(-50%);
-  background: #fff;
   font-size: 14px;
-  padding: 10px 4px;
-
+  padding: 10px 1px;
+  border-radius: 6px;
+  cursor: move;
+  // border: 1px solid #e0e0e0;
+  // background: #fff;
   img {
     width: 20px;
   }
@@ -416,7 +433,13 @@ const checkAddOtherClass = () => {
 .setting-item {
   position: absolute;
   right: 10px;
-  top: 36px;
+  top: 16px;
+  color: #646a73;
+  .switch {
+    position: relative;
+    margin-top: -2px;
+    margin-right: 5px;
+  }
 }
 
 ::v-deep(:where(.comp-item-description .css-dev-only-do-not-override-17yhhjv).ant-input-affix-wrapper-textarea-with-clear-btn ) {
@@ -435,11 +458,13 @@ const checkAddOtherClass = () => {
   :where(.comp-item-description .css-dev-only-do-not-override-17yhhjv).ant-input {
     background: transparent !important;
     border-style: none;
+    color: rgba(0, 0, 0, 0.45);
     &:active, &:hover, &:focus {
       border-style: solid;
       border-color: #e0e0e0;
       outline: none;
       box-shadow: none;
+
 
     }
   }

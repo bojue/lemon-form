@@ -1,11 +1,14 @@
 <template>
   <a-space direction="vertical">
     <a-radio-group :value="dataValue"  :disabled="isDev" size="large">
-    <a-radio  :key="isSelected + _updateKey" v-for="(item, _index) of dataList" :value="item" :style="layoutType === 'vertical' || isSelected ? radioVerticalStyle : radioStyle">
+    <a-radio  :key="isSelected + _updateKey" v-for="(item, _index) of dataList" :value="item" class="list-item" :style="layoutType === 'vertical' || isSelected ? radioVerticalStyle : radioStyle">
       <div class="editor-item"  @blur="changeValue($event, _index)" contenteditable="true">{{ item.label }}</div>
       <span class="other-val" v-if="item.subType === 'other'">
         <a-input :disabled="isDev" class="item-comp" v-model="item.value" 
         placeholder="其他选项内容自定义" />
+      </span>
+      <span class="delete" v-if="dataList.length > 1" @click="deleteSubItem(_index)" :title="item.label">
+        <CloseOutlined />
       </span>
     </a-radio>
   </a-radio-group>
@@ -45,6 +48,11 @@ const updateKey = () => {
   _updateKey.value = uuidv4()
 }
 
+const deleteSubItem = (index: number) => {
+  props.dataList.splice(index, 1)
+  updateKey()
+}
+
 const changeValue = (event: any, index: number) => {
   const { innerHTML, innerText } = event.target
   const hasDataBool = innerText !== null &&  innerText !== '\n'
@@ -81,6 +89,7 @@ const changeValue = (event: any, index: number) => {
   }
 }
 
+
 ::v-deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-radio-group) {
   width: 100%;
   display: block;
@@ -101,5 +110,23 @@ const changeValue = (event: any, index: number) => {
 
 ::v-deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-radio-wrapper .ant-radio-input) {
   display: inline;
+}
+
+
+.list-item {
+  position: relative;
+  .delete  {
+    display: none;
+  }
+
+  &:hover, &:active, &:focus {
+    .delete {
+      position: absolute;
+      display: block;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+  }
 }
 </style>

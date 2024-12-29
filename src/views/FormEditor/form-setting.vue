@@ -11,6 +11,8 @@
       </div>
       <div class="content m-b-0">
         <Description :comp="selectComp" :key="selectComp._selectedId "/>
+        <PageSubTitle :comp="selectComp" :key="selectComp._selectedId "/>
+        <PageSubDescription :comp="selectComp" :key="selectComp._selectedId "/>
         <Placeholder :comp="selectComp" :key="selectComp._selectedId "/>
         <RangePlaceholder :comp="selectComp" :key="selectComp._selectedId "/>
         <LayoutType v-if="selectComp" :comp="selectComp"/>
@@ -43,6 +45,8 @@ import { ref, watch, reactive } from 'vue'
 import Description from '@/components-form-setting/base/Description.vue'
 import Placeholder from '@/components-form-setting/base/Placeholder.vue'
 import RangePlaceholder from '@/components-form-setting/base/RangePlaceholder.vue'
+import PageSubTitle from '@/components-form-setting/base/PageSubTitle.vue'
+import PageSubDescription from '@/components-form-setting/base/PageSubDescription.vue'
 import DividerText from '@/components-form-setting/base/DividerText.vue'
 import LayoutType from '@/components-form-setting/base/LayoutType.vue'
 import DividerBorderType from '@/components-form-setting/base/DividerBorderType.vue'
