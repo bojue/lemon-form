@@ -1,35 +1,42 @@
 <template>
   <div class="comp-item">
     <div class="comp-item-title" v-if="!!displaySection">
-      <a-typography-title :level="5" class="title-value" >
-        <span class="number" v-bind:class="{'title-value-isRequired': component.isRequired, number: true}" v-if="formConfig?.displayNumberSort">
-          {{component?.lineNumber }}. 
+      <a-typography-title :level="5" class="title-value">
+        <span class="number" v-bind:class="{ 'title-value-isRequired': component.isRequired, number: true }"
+          v-if="formConfig?.displayNumberSort">
+          {{ component?.lineNumber }}.
         </span>
         <span class="title-value">
-          <div class="description"  @blur="changeValue($event, 'name')" contenteditable="true">
-            {{ component?.name || component?.title }} 
+          <div class="description" @blur="changeValue($event, 'name')" contenteditable="true">
+            {{ component?.name || component?.title }}
           </div>
-
-       
         </span>
       </a-typography-title>
     </div>
     <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
-      <a-typography-text type="secondary">
-        <div class="description"  @blur="changeValue($event, 'description')" contenteditable="true">
-          {{ component.description || '描述' }}
+      <a-typography-text type="secondary" v-if="component?.id !== selectedComp?.id && isDev">
+        <div class="description" @input="changeValue($event, 'description')" contenteditable="true">
+          {{ component.description }}
         </div>
       </a-typography-text>
+      <a-textarea 
+        v-else
+        :auto-size="{ minRows: 2, maxRows: 5 }"
+        v-model:value="component.description" :placeholder="'请输入描述'"
+        @change="changeValue($event, 'description')" allow-clear>
+
+      </a-textarea>
     </div>
     <div class="component">
-      <component :key="currentComp" :isSelected="component?.id === selectedComp?.id" :isDev="isDev" :is="getCompConfig(props.type).comp"  v-bind="component"></component>
+      <component :key="currentComp" :isSelected="component?.id === selectedComp?.id" :isDev="isDev"
+        :is="getCompConfig(props.type).comp" v-bind="component"></component>
     </div>
-    <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()" >
+    <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()">
 
       <div class="bottom-setting">
         <div class="data-list-setting" v-if="['Radio', 'Checkout'].includes(compConfig.type)">
-          
-          <span class="add-item" >
+
+          <span class="add-item">
             <a-typography-text type="warning" @click="addItem('new')">
               <PlusCircleTwoTone class="icon" />
               <span class="add-label">添加单项 </span>
@@ -41,34 +48,37 @@
             <span class="line"></span>
           </span> -->
           <span class="add-item">
-            <a-typography-text type="warning"  :class="{disabled: checkAddOtherClass()}" @click="!checkAddOtherClass() && addItem('other')">添加其他</a-typography-text>
+            <a-typography-text type="warning" :class="{ disabled: checkAddOtherClass() }"
+              @click="!checkAddOtherClass() && addItem('other')">添加其他</a-typography-text>
           </span>
         </div>
-        <a-checkbox class="setting-item" v-model:checked="component.isRequired" @click="component.isRequired = !component.isRequired">必填</a-checkbox>
+        <a-checkbox class="setting-item" v-model:checked="component.isRequired"
+          @click="component.isRequired = !component.isRequired">必填</a-checkbox>
       </div>
     </div>
+    <div class="active-drag" v-if="compConfig.id === selectedComp?.id">
+      <img src="/src/assets/form/drag.svg" alt="">
+    </div>
     <div class="active-comp-setting-side-bar" v-if="compConfig.id === selectedComp?.id">
-      <a-tooltip placement="left" @click="compControl($event,'copy')">
-        <template  #title>
+      <a-tooltip placement="left" @click="compControl($event, 'copy')">
+        <template #title>
           <span>复制</span>
         </template>
-        <CopyOutlined class="control"/>
+        <CopyOutlined class="control" />
       </a-tooltip>
-      <a-tooltip placement="left" :color="'#f50'"  @click="compControl($event,'delete')">
+      <a-tooltip placement="left" :color="'#f50'" @click="compControl($event, 'delete')">
         <template #title>
           <span>删除</span>
         </template>
         <DeleteOutlined class="control" />
       </a-tooltip>
-
-
     </div>
   </div>
 
 </template>
 
 <script lang="ts" setup>
-import { ref, computed,  watch, defineEmits } from 'vue'
+import { ref, computed, watch, defineEmits } from 'vue'
 // 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
 import CheckoutComponent from '@/components-form/base/Checkout.vue'
@@ -95,7 +105,8 @@ import EmailComponent from '@/components-form/contact-information/Email.vue'
 import WXComponent from '@/components-form/contact-information/WX.vue'
 import AddressComponent from '@/components-form/contact-information/Address.vue'
 import * as _ from 'lodash'
-
+import { useSelectCompStore } from '@/stores/selectCompStore'
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   component: any,
@@ -107,6 +118,8 @@ interface Props {
 }
 
 
+
+const compStore = useSelectCompStore()
 const props = defineProps<Props>()
 
 const compConfig = props.component // 组件配置
@@ -121,10 +134,30 @@ function getCompConfig(type: any) {
 
 const changeValue = (event: any, params: string) => {
   const {
-    innerText
+    innerText,
+    value
   } = event?.target
-  const hasDataBool = innerText !== null &&  innerText !== '\n'
-  compConfig[params] = hasDataBool ? innerText : '描述'
+  if (params === 'description') {
+    updateParams('description', value)
+    compConfig[params] = value
+  } else {
+
+    const hasDataBool = innerText !== null && innerText !== '\n'
+    const value = hasDataBool ? innerText : ''
+    compConfig[params] = value
+  }
+
+
+  console.log('changeValue', params, value, innerText, event?.target)
+
+
+}
+
+const updateParams = (params: string, value: any) => {
+  compStore.updateCurrentComp({
+    [params]: value
+  })
+  compStore.updateCurrentCompKey(uuidv4())
 }
 
 const displaySection = computed(() => !['Divider', 'Paging'].includes(props.type))
@@ -174,8 +207,7 @@ const addItem = (type: string) => {
 }
 
 const checkAddOtherClass = () => {
-  console.log(props.component.dataList,)
-  return _.filter(props.component.dataList, {subType: 'other'}).length > 0
+  return _.filter(props.component.dataList, { subType: 'other' }).length > 0
 }
 
 </script>
@@ -186,21 +218,32 @@ const checkAddOtherClass = () => {
   outline: none;
   margin-left: -10px;
   border-radius: 6px;
-  &.active, &:hover {
+  overflow-wrap: break-word;
+  white-space: normal;
+
+  &.active,
+  &:hover,
+  &:focus {
     border: 1px solid #e0e0e0;
   }
 
-  white-space: nowrap;  /* 不换行 */
-  overflow: hidden;     /* 隐藏超出部分 */
-  text-overflow: ellipsis; /* 超出部分显示省略号 */
-  width: 100%;         /* 设置宽度 */
+  /* 不换行 */
+  overflow: hidden;
+  /* 隐藏超出部分 */
+  text-overflow: ellipsis;
+  /* 超出部分显示省略号 */
+  width: 100%;
+  /* 设置宽度 */
 }
+
 .data-list-setting {
   display: inline-block;
   left: 0;
 }
+
 .add-item {
   cursor: pointer;
+
   .icon {
     margin-right: 5px;
     font-size: 18px;
@@ -215,17 +258,17 @@ const checkAddOtherClass = () => {
 }
 
 .disabled {
-    color: #ddd !important;
-  }
+  color: #ddd !important;
+}
 
 ::v-deep(.ant-typography.ant-typography-warning) {
-  color: #1677ff; 
+  color: #1677ff;
   padding: 2px 0px;
   font-size: 14px;
 }
 
 .line {
-  border-left:1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
   height: 10px;
   margin: 0 12px;
 }
@@ -233,15 +276,19 @@ const checkAddOtherClass = () => {
 ::v-deep(input[disabled]) {
   background: #ffffff !important;
 }
+
 ::v-deep(textarea[disabled]) {
   background: #ffffff !important;
 }
+
 ::v-deep(.ant-picker-disabled) {
   background: #ffffff !important;
 }
+
 ::v-deep(.ant-time-disabled) {
   background: #ffffff !important;
 }
+
 ::v-deep(.ant-input-affix-wrapper-disabled) {
   background: #ffffff !important;
 }
@@ -255,10 +302,13 @@ const checkAddOtherClass = () => {
 }
 
 .control {
-  &:active, &:hover {
+
+  &:active,
+  &:hover {
     background: #ebebeb;
   }
 }
+
 .form-item {
   .comp-item {
     padding: 16px 60px 24px;
@@ -266,11 +316,12 @@ const checkAddOtherClass = () => {
 }
 
 .form-item-active {
-  .comp-item { 
+  .comp-item {
     padding: 32px 60px 40px;
   }
 
 }
+
 .comp-item {
   position: relative;
   // padding: 20px 30px;
@@ -278,9 +329,10 @@ const checkAddOtherClass = () => {
   .title-value {
     position: relative;
   }
+
   .number {
     position: absolute;
-    left: -30px;
+    left: -40px;
     top: 6px;
   }
 
@@ -299,13 +351,30 @@ const checkAddOtherClass = () => {
 
 
   .comp-item-title {
-    height: 40px;
+    miheight: 40px;
     line-height: 40px;
 
   }
 
   .comp-item-description {
     margin-bottom: 10px;
+  }
+}
+
+.active-drag {
+  position: absolute;
+  left: -29px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+  width: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  font-size: 14px;
+  padding: 10px 4px;
+
+  img {
+    width: 20px;
   }
 }
 
@@ -317,11 +386,12 @@ const checkAddOtherClass = () => {
   transform: translateY(-50%);
   background: #ffffff;
   font-size: 14px;
-  padding:5px 3px;
+  padding: 5px 3px;
   border-bottom-right-radius: 6px;
   border-top-right-radius: 6px;
+
   .control {
-    padding:10px 5px;
+    padding: 10px 5px;
   }
 }
 
@@ -331,6 +401,7 @@ const checkAddOtherClass = () => {
   height: 64px;
   line-height: 64px;
   padding-top: 16px;
+
   .bottom-setting {
     width: 100%;
     display: grid;
@@ -346,6 +417,32 @@ const checkAddOtherClass = () => {
   position: absolute;
   right: 10px;
   top: 36px;
+}
+
+::v-deep(:where(.comp-item-description .css-dev-only-do-not-override-17yhhjv).ant-input-affix-wrapper-textarea-with-clear-btn ) {
+  background: transparent !important;
+  left: -10px;
+
+  .anticon-close-circle {
+    display: none;
+    &:hover, &:active, &:focus {
+      display: block;
+    }
+  }
+
+
+
+  :where(.comp-item-description .css-dev-only-do-not-override-17yhhjv).ant-input {
+    background: transparent !important;
+    border-style: none;
+    &:active, &:hover, &:focus {
+      border-style: solid;
+      border-color: #e0e0e0;
+      outline: none;
+      box-shadow: none;
+
+    }
+  }
 }
 
 </style>

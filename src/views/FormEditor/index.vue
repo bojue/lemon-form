@@ -76,10 +76,11 @@
             </div>
            </div>
           </div>
+
         </div>
         <CompSetting 
           v-if="activeComp.id"  
-          :key="activeComp.id"
+          :key="activeComp.id + updateCompKey"
           :selectForm="selectForm" 
           :selectComp="getActiveComp()"></CompSetting>
       </div>
@@ -94,7 +95,7 @@ import CompSetting from '@/views/FormEditor/form-setting.vue'
 import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import { useSelectCompStore  } from '@/stores/selectCompStore'
-import { useRoute } from 'vue-router';
+import { useRoute, createRouter } from 'vue-router';
 import * as _ from 'lodash'
 
 interface ActiveCompType {
@@ -105,6 +106,7 @@ interface ActiveCompType {
 const compList = ref([...CompListData]) // 来源组件列表
 const pageCompList = ref([]) // 页面组件列表
 const currentComp = ref()
+const updateCompKey = ref()
 const activeComp = ref<ActiveCompType>({
   type: 'component',
   id: '',
@@ -118,11 +120,14 @@ const defaultFormConfig = {
 }
 
 onMounted(() => useCompStore.initGlobalFormConfig({...defaultFormConfig}))
+
 const useCompStore = useSelectCompStore()
 const isFormEditorDevBool = computed(() => {
   const bool = useRoute().path.includes('form-editor')
   return bool
 })
+
+
 
 // 更新选中组件数据
 const updateCompByChange = (compConfig: any) => {
@@ -131,8 +136,13 @@ const updateCompByChange = (compConfig: any) => {
   if(index > -1 && pageCompList.value.length) {
     pageCompList.value[index] = {...pageCompList.value[index],...compConfig}
   }
-
 }
+const currentCompKeyData = computed(() => useCompStore.currentCompKey)
+
+watch(currentCompKeyData, (newValue) => {
+  updateCompKey.value = newValue
+})
+
 
 watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig],  ([compConfig, currentGlobalFormConfig]) => {
   updateCompByChange({
@@ -140,6 +150,13 @@ watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig
   })
   selectForm.value = currentGlobalFormConfig
 })
+
+watch(useCompStore.currentCompKey, (newData)=> {
+  console.log('useCompStore',newData )
+})
+
+
+
 
 const updateCompLineNumber = () => {
   if(Array.isArray(pageCompList.value)) {
@@ -325,13 +342,16 @@ const getActiveCompIndex = () => {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow-y: auto;
   }
   .body {
     /* background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
     background-image: linear-gradient(rgba(200,205,208,.2) 1px,transparent 0),linear-gradient(90deg,rgba(200,205,208,.1),1px,transparent 0),linear-gradient(rgba(200,205,208,.1) 1px,transparent 0),linear-gradient(90deg,rgba(200,205,208,.1) 1px,transparent 0); */
     height: 100%;
     border-radius: 6px;
-    /* padding: 20px; */
+    padding: 8px;
+    background: #ffffff;
+    
 
     .form-header {
       padding: 0;
@@ -361,13 +381,15 @@ const getActiveCompIndex = () => {
   }
   .form {
     margin: 30px;
-    background: #fff;
-    height: calc(100% - 50px);
+    /* background: #fff; */
+    min-height: calc(100% - 30px);
     border-radius: 0px;
     width: 700px;
     position: absolute;
     transform: translateX(-50%);
     margin-left: 50%;
+    display: grid;
+    padding-bottom: 20px;
   }
 
   .form-item {
@@ -381,8 +403,10 @@ const getActiveCompIndex = () => {
     /* border-bottom: 1px dashed #ccc;
     border-top: 1px dashed #ccc; */
     /* border: 1px dashed #1677ff; */
-    background: rgba(255, 247, 0, 0.1);
-    border: 1px dashed #ddd;
+    /* background: lightyellow; */
+    background: rgba(0,255,0,0.1);
+    border: 1px dashed darkseagreen;
+    border-radius: 5px;
     position: relative;
 
     &::before {

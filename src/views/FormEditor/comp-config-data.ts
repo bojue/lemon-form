@@ -31,7 +31,7 @@ export const defaultConfig: CompConfig = {
   isCustomErrorMessage: false,
   customErrorMessage: '',
   title: '',
-  description: null,
+  description: '描述',
 }
 
 export const dataListType: CompType[] = [CompType.checkout, CompType.radio, CompType.select] // 数组列表
