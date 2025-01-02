@@ -44,14 +44,23 @@
                 </div>
               </div> -->
             </div>
-            <div class="form-body">
+            <div class="form-body form-body-content">
               <VueDraggable v-model="pageCompList" :animation="0" group="sevenBotForm" ghostClass="ghost"
                 handle=".handle"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <template v-if="!pageCompList.length">
-                  <div v-if="!pageCompList.length">
-                    <div class="no-data-content">
-                      点击左侧题目 / 拖拽题目到此区域
+                  <div v-if="!pageCompList.length" @dragenter="handleDragHandle" @mouseleave="handleDragHandle"
+                    @dragleave="handleDragHandle">
+                    <div class="no-data-content" :class="[{
+                      'dragenter': noDataContentRef === 'dragenter',
+                    }]">
+                      <span class="text" v-if="noDataContentRef === 'dragenter'">
+                        鼠标释放，即可完成创建
+                      </span>
+                      <span class="text" v-else>
+                        点击左侧题目 / 拖拽题目到此区域
+                      </span>
+
                     </div>
                   </div>
                 </template>
@@ -61,17 +70,30 @@
                     'cursor-move': true,
                     'form-item': true,
                     'active-comp': activeComp.id == item?.id
-                  }" @click="selectComp(item, index)">
+                  }" @click="selectComp(item)">
                     <FormComponent :key="item?.id + pageCompList.length" @compControl="compControl"
                       @addItem="addItem($event, item, index)" :component="item" :formConfig="selectForm"
                       :type="item?.type" :isDev="isFormEditorDevBool" :selectedComp="getActiveComp()"></FormComponent>
                   </div>
                 </template>
-
-
-
-
               </VueDraggable>
+
+            </div>
+
+            <div class="form-footer" @click="selectComp(pageFooter)" :class="{
+              'form-item': true,
+              'active-comp': activeComp.id == item?.id
+            }" :style="{
+              textAlign: pageFooter.position
+            }">
+              <a-button v-if="pageFooter.buttonIconShowBool" class="submit" type="primary" :icon="h(CheckOutlined)" :size="pageFooter.size"
+                :style="{ 'padding': getSize(), 'lineHeight': getLineheight() }">
+                {{ pageFooter.buttonText || '提交' }}
+              </a-button>
+              <a-button v-else class="submit" type="primary" :size="pageFooter.size"
+                :style="{ 'padding': getSize(), 'lineHeight': getLineheight() }">
+                {{ pageFooter.buttonText || '提交' }}
+              </a-button>
             </div>
           </div>
         </div>
@@ -84,7 +106,7 @@
 </template>
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
-import { computed, nextTick, onMounted, reactive, ref, watch, } from 'vue'
+import { computed, h, onMounted, reactive, ref, watch, } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { CompListData, CompType, IgnoreLineNumberTypeList } from './comp-data'
 import CompSetting from '@/views/FormEditor/form-setting.vue'
@@ -92,6 +114,9 @@ import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import { useSelectCompStore } from '@/stores/selectCompStore'
 import { useRoute, createRouter } from 'vue-router';
+import { CheckOutlined } from '@ant-design/icons-vue';
+
+
 import * as _ from 'lodash'
 
 interface ActiveCompType {
@@ -100,9 +125,31 @@ interface ActiveCompType {
 }
 
 const compList = ref([...CompListData]) // 来源组件列表
-const pageCompList = ref([]) // 页面组件列表
+
+/**
+ * 编辑器编辑内容
+ * 1. pageHeader // 底部配置
+ * 2. pageCompList // 页面组件
+ * 3. pageFooter // 底部提交按钮配置
+ */
+
+const getSize = () => {
+  const data = pageFooter?.value
+  return data?.size == 'large' ? "0 26px" : (data?.size == "small" ? "0 10px" : "0 16px")
+}
+
+const getLineheight = () => {
+  const data = pageFooter?.value
+  return data?.size == 'large' ? "40px" : (data?.size == "small" ? "24px" : "32px")
+}
+
+const pageHeader = ref({}) // 顶部
+const pageCompList = ref([]) // 页面组件内容
+const pageFooter = ref({}) // 底部
+
 const currentComp = ref()
 const updateCompKey = ref()
+const noDataContentRef = ref('')
 const activeComp = ref<ActiveCompType>({
   type: 'component',
   id: '',
@@ -115,7 +162,14 @@ const defaultFormConfig = {
   displayDescription: true
 }
 
-onMounted(() => useCompStore.initGlobalFormConfig({ ...defaultFormConfig }))
+onMounted(() => {
+  useCompStore.initGlobalFormConfig({ ...defaultFormConfig })
+
+  // 组件初始化
+  pageFooter.value = getDefaultConfig(CompType.button)
+  pageFooter.value.id = uuidv4()
+
+})
 
 const useCompStore = useSelectCompStore()
 const isFormEditorDevBool = computed(() => {
@@ -189,7 +243,7 @@ const onClone = (element: any) => {
   return { ...item }
 }
 
-const selectComp = (item: any, index: number) => {
+const selectComp = (item: any) => {
   useCompStore.initCurrentComp({
     ...item
   })
@@ -205,7 +259,6 @@ const updateDataListIndex = (index: number) => {
 }
 
 const addItem = (type: 'new' | 'other', item: any, index: number) => {
-
   const isNewBool = type === 'new'
   const isOtherBool = type === 'other'
   const newDataItem = isNewBool ? {
@@ -222,6 +275,8 @@ const addItem = (type: 'new' | 'other', item: any, index: number) => {
 
   updateDataListIndex(index)
 }
+
+
 
 const compControl = (controlType: string, value: any) => {
   const index = _.findIndex(pageCompList.value, (item: any) => item.id === value.id)
@@ -244,12 +299,26 @@ const compControl = (controlType: string, value: any) => {
 }
 
 const getActiveComp = () => {
+  // 组件列表
   const item = _.filter(pageCompList.value, (item: any) => item.id === activeComp.value.id)?.[0]
-  return item
+  if (item) {
+    return item
+  }
+  if (activeComp.value.id === pageFooter.value.id) {
+    return pageFooter.value
+  }
 }
 
 const getActiveCompIndex = () => {
   return _.findIndex(pageCompList.value, (item: any) => item.id === activeComp.value.id)
+}
+
+
+const handleDragHandle = (e: any) => {
+  e.preventDefault()
+  const { type } = e
+  noDataContentRef.value = type
+  console.log(e, type)
 }
 </script>
 
@@ -435,8 +504,47 @@ const getActiveCompIndex = () => {
     border-radius: 4px;
     color: #666;
     padding: 50px 100px;
+    position: absolute;
+    top: 20px;
+    width: calc(100% - 40px);
+
+
+    &:hover,
+    &.dragenter {
+      border-color: #1677ff;
+      color: #1677ff;
+      background: aliceblue;
+    }
 
   }
+
+  .form-body-content {
+    min-height: 120px;
+  }
+
+  .form-footer {
+    height: 100px;
+    line-height: 100px;
+    padding: 0 60px;
+    width: 100%;
+
+
+  }
+
+  ::v-deep(.form-footer) {
+
+    .submit {
+      max-width: 100%;
+      white-space: nowrap;
+      /* 不换行 */
+      overflow: hidden;
+      /* 隐藏超出部分 */
+      text-overflow: ellipsis;
+      /* 显示省略号 */
+    }
+  }
+
+
 
 }
 </style>

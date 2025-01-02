@@ -11,6 +11,7 @@
       </div>
       <div class="content m-b-0">
         <Title v-if="showParams('name')" :comp="selectComp" :key="selectComp._selectedId "/>
+        <ButtonText v-if="showParams('buttonText')" :comp="selectComp" :key="selectComp._selectedId "/>
         <Description v-if="showParams('description')" :comp="selectComp" :key="selectComp._selectedId "/>
         <PageSubTitle v-if="showParams('pageSubTitle')"  :comp="selectComp" :key="selectComp._selectedId "/>
         <PageSubDescription v-if="showParams('pageSubTitle')" :comp="selectComp" :key="selectComp._selectedId "/>
@@ -19,9 +20,12 @@
         <LayoutType v-if="showParams('layoutType')" :comp="selectComp"/>
         <DividerText v-if="showParams('dividerValue')" :comp="selectComp" ></DividerText>
         <DividerBorderType v-if="showParams('dividerValue')" :comp="selectComp"></DividerBorderType>
+        <Position v-if="showParams('position')" :comp="selectComp"/>
+        <Size v-if="showParams('size')" :comp="selectComp"/>
+
         <RateConfig v-if="selectComp.type=== 'Rate'" :comp="selectComp" />
       </div>
-      <div class="category-name">
+      <div class="category-name" v-if="['Button'].includes(selectComp.type)">
         表单验证 
       </div>
       <div class="content">
@@ -38,13 +42,15 @@
         <DisplaySerialNumber :form="selectForm"/>
         <DisplayDescription :form="selectForm"/>
       </div>
-
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref, watch, reactive } from 'vue'
 import Title from '@/components-form-setting/base/Title.vue'
+import Position from '@/components-form-setting/base/Position.vue'
+import Size from '@/components-form-setting/base/Size.vue'
+import ButtonText from '@/components-form-setting/base/ButtonText.vue'
 import Description from '@/components-form-setting/base/Description.vue'
 import Placeholder from '@/components-form-setting/base/Placeholder.vue'
 import RangePlaceholder from '@/components-form-setting/base/RangePlaceholder.vue'

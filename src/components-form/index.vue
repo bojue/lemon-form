@@ -59,7 +59,7 @@
         <!-- <a-checkbox class="setting-item" v-model:checked="component.isRequired"
           @click="component.isRequired = !component.isRequired">必填</a-checkbox> -->
           <span class="setting-item">
-            <a-switch size="small" class="switch" v-model:checked="component.isRequired"  @change="handleChangeRequired"> </a-switch>
+            <a-switch class="switch" v-model:checked="component.isRequired"  @change="handleChangeRequired"> </a-switch>
             <label for=""> 必填</label>
           </span>
 
