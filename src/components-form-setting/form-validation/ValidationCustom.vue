@@ -3,7 +3,7 @@
   <div class="setting-item h-42">
     <a-typography-text type="secondary" class="secondary">自定错误提示</a-typography-text>
     <a-space direction="vertical" class="abs-r switch-r ">
-      <a-switch v-model:checked="comp.isCustomErrorMessage" :size="size" @change="handleChangeInput"/>
+      <a-switch  v-model:checked="comp.isCustomErrorMessage" :size="size" @change="handleChangeInput"/>
     </a-space> 
   </div>
 

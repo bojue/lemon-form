@@ -38,30 +38,34 @@
 
           <span class="add-item">
             <a-typography-text type="warning" @click="addItem('new')">
-              <PlusCircleTwoTone class="icon" />
+              <PlusCircleTwoTone class="icon" :style="{fontSize: '16px', color: '#646a73'}" />
               <span class="add-label">添加单项 </span>
             </a-typography-text>
-            <span class="line"></span>
           </span>
+          
           <!-- <span class="add-item">
             <a-typography-text type="warning">模版</a-typography-text>
             <span class="line"></span>
           </span> -->
           <span class="add-item">
+      
             <a-typography-text type="warning" :class="{ disabled: checkAddOtherClass() }"
-              @click="!checkAddOtherClass() && addItem('other')">添加其他</a-typography-text>
+              @click="!checkAddOtherClass() && addItem('other')">
+              <PlusCircleTwoTone class="icon" :style="{fontSize: '16px', color: '#646a73'}" />
+              <span class="add-label">添加其他 </span>
+              </a-typography-text>
           </span>
         </div>
         <!-- <a-checkbox class="setting-item" v-model:checked="component.isRequired"
           @click="component.isRequired = !component.isRequired">必填</a-checkbox> -->
           <span class="setting-item">
-            <a-switch class="switch" v-model:checked="component.isRequired"  @change="handleChangeRequired"> </a-switch>
+            <a-switch size="small" class="switch" v-model:checked="component.isRequired"  @change="handleChangeRequired"> </a-switch>
             <label for=""> 必填</label>
           </span>
 
       </div>
     </div>
-    <div class="active-drag" v-if="compConfig.id === selectedComp?.id">
+    <div class="active-drag handle" v-if="compConfig.id === selectedComp?.id">
       <img src="/src/assets/form/drag.svg" alt="">
     </div>
     <div class="active-comp-setting-side-bar" v-if="compConfig.id === selectedComp?.id">
@@ -142,11 +146,11 @@ const changeValue = (event: any, params: string) => {
     innerText,
     value
   } = event?.target
-  if (params === 'description') {
+  const isChangeParams = ['description', 'name'].includes(params)
+  if (isChangeParams) {
     updateParams('description', value)
     compConfig[params] = value
   } else {
-
     const hasDataBool = innerText !== null && innerText !== '\n'
     const value = hasDataBool ? innerText : ''
     compConfig[params] = value
@@ -179,7 +183,7 @@ function getTypeToComponent(type: string) {
     Time: TimeComponent,
     TimeRange: TimeRangeComponent,
     Url: UrlComponent,
-    Score: RateComponent,
+    Rate: RateComponent,
     Number: NumberComponent,
     Switch: SwitchComponent,
     Upload: UploadComponent,
@@ -218,6 +222,7 @@ const checkAddOtherClass = () => {
 
 </script>
 <style lang="scss" scoped>
+
 .description {
   width: 100%;
   padding: 6px 12px;
@@ -226,11 +231,12 @@ const checkAddOtherClass = () => {
   border-radius: 6px;
   overflow-wrap: break-word;
   white-space: normal;
+  font-weight: 400;
 
   &.active,
   &:hover,
   &:focus {
-    border: 1px solid #e0e0e0;
+    // border: 1px solid #e0e0e0;
   }
 
   /* 不换行 */
@@ -248,18 +254,20 @@ const checkAddOtherClass = () => {
 }
 
 .add-item {
+  position: relative;
   cursor: pointer;
+  margin-right: 20px;
 
   .icon {
     margin-right: 5px;
     font-size: 18px;
     position: absolute;
     left: 0;
-    top: 40px;
+    top: 4px;
   }
 
   .add-label {
-    margin-left: 28px;
+    margin-left: 24px;
   }
 }
 
@@ -268,7 +276,7 @@ const checkAddOtherClass = () => {
 }
 
 ::v-deep(.ant-typography.ant-typography-warning) {
-  color: #1677ff;
+  color: #646a73;
   padding: 2px 0px;
   font-size: 14px;
 }
@@ -335,6 +343,7 @@ const checkAddOtherClass = () => {
   .title-value {
     position: relative;
     color: rgb(73, 96, 141);
+    font-weight: 400;
 
     .description {
       &:empty:before{ 
@@ -366,8 +375,8 @@ const checkAddOtherClass = () => {
 
 
   .comp-item-title {
-    miheight: 40px;
-    line-height: 40px;
+    min-height: 36px;
+    line-height: 36px;
 
   }
 
@@ -381,17 +390,22 @@ const checkAddOtherClass = () => {
   left:3px;
   border-bottom-right-radius: 6px;
   border-top-right-radius: 6px;
-  width: 26px;
+  width: 46px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 14px;
-  padding: 10px 1px;
+  padding: 10px 6px;
+  height: 100%;
   border-radius: 6px;
   cursor: move;
   // border: 1px solid #e0e0e0;
   // background: #fff;
   img {
     width: 20px;
+    position: absolute;
+    top: 50%;
+    z-index: 1000000;
+    transform: translateY(-50%);
   }
 }
 
@@ -432,8 +446,9 @@ const checkAddOtherClass = () => {
 
 .setting-item {
   position: absolute;
-  right: 10px;
+  right: 0px;
   top: 16px;
+  font-size: 14px;
   color: #646a73;
   .switch {
     position: relative;
@@ -460,8 +475,8 @@ const checkAddOtherClass = () => {
     border-style: none;
     color: rgba(0, 0, 0, 0.45);
     &:active, &:hover, &:focus {
-      border-style: solid;
-      border-color: #e0e0e0;
+      // border-style: solid;
+      // border-color: #e0e0e0;
       outline: none;
       box-shadow: none;
 
@@ -469,5 +484,7 @@ const checkAddOtherClass = () => {
     }
   }
 }
+
+
 
 </style>

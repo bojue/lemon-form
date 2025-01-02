@@ -1,3 +1,4 @@
+
 import { CompType } from "./comp-data"
 
 interface CompConfig {
@@ -28,10 +29,8 @@ export const defaultConfig: CompConfig = {
   name: '组件名称',
   dataValue: null,
   defaultValue: null,
-  isCustomErrorMessage: false,
   customErrorMessage: '',
   title: '',
-  description: '描述',
 }
 
 export const dataListType: CompType[] = [CompType.checkout, CompType.radio, CompType.select] // 数组列表
@@ -39,7 +38,7 @@ export const isIgnoreRequireType: CompType[] = [CompType.paging, CompType.divide
 export const isPlaceholderType: CompType[] = [CompType.input, CompType.textarea, CompType.number, CompType.date, CompType.time,CompType.url, CompType.email, CompType.phone, CompType.idCard, CompType.location]
 export const isRangePlaceholderType: CompType[]  = [CompType.dateRange, CompType.timeRange]
 export const isNumberType: CompType[] = [CompType.number]
-
+export const isRate: CompType[] = [CompType.rate]
 
 export const getCompConfig = (type: CompType) => {
   let compConfig: any = {}
@@ -67,14 +66,16 @@ export const getCompConfig = (type: CompType) => {
   if(isIgnoreRequireType.includes(type)) {
     const isPageBool = CompType.paging === type 
     const data = isPageBool ? {
-      pagingValue: '分页'
+      pagingValue: '分页',
+      pageSubTitle: '',
+      pageSubDescription: ''
     } : {
       dividerValue: '分割线',
       dividerOrientation: 'center'
     }
     compConfig = {
       ...compConfig,
-      ...data
+      ...data,
     }
   }
 
@@ -82,6 +83,8 @@ export const getCompConfig = (type: CompType) => {
     compConfig = {
       ...compConfig,
       isRequired: true,
+      isCustomErrorMessage: false,
+      description: '描述',
     }
   }
 
@@ -120,6 +123,16 @@ export const getCompConfig = (type: CompType) => {
       placeholderRange: rangePlaceholder
     }
   }
+
+  if(isRate.includes(type)) {
+    compConfig = {
+      ...compConfig,
+      rateCount:5,
+      rateCharacter: '⭐️',
+      rateColor: '#ff9900',
+      rateAllowHalf: false,
+    }
+  }
   
   return compConfig
 
@@ -136,3 +149,18 @@ export const getDefaultConfig = (type: CompType) => {
 }
 
 export const disableInputByDev = '编辑模式不支持输入'
+export const hasOwnPropertyFunction = (object: Object, key: string)=> {
+  return Object.prototype.hasOwnProperty.call(object, key)
+}
+
+
+export const verifyRegularityCompList = () => {
+  return [
+    CompType.input,
+    CompType.textarea,
+    CompType.url,
+    CompType.email,
+    CompType.phone,
+    CompType.idCard
+  ]
+}

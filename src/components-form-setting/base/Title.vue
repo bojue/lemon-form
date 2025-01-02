@@ -1,17 +1,14 @@
 
 <template>
-  <a-typography-text type="secondary" class="block-title">描述/备注</a-typography-text>
-  <a-textarea 
+  <a-typography-text type="secondary" class="block-title">标题</a-typography-text>
+  <a-input 
     class="mb-10"
     v-if="compStore.currentCompConfig"
     placeholder="请输入描述" 
-    allow-clear 
-    show-count
-    v-model:value="comp.description"
+    v-model:value="comp.name"
     @Input="handleChangeInput"
-    :auto-size="{ minRows: 2, maxRows: 5 }"
-    :maxlength="200"
-  ></a-textarea>
+    :maxlength="100"
+  ></a-input>
 </template>
 <script lang="ts" setup>
 import { defineProps,watch, computed, defineEmits, ref, onMounted }  from 'vue'
@@ -23,7 +20,7 @@ const compStore: any = useSelectCompStore()
 const handleChangeInput = (event: any) => {
   const data = event.target.value 
   compStore.updateCurrentComp({
-    description: data
+    name: data
   })
 }
 

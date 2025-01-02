@@ -127,6 +127,9 @@ const radioStyle = ref({
   .editor-item {
     width: 100%;
     padding-left: 35px;
+    &:active,&:focus, &:hover {
+      // background: red !important;
+    }
   }
 }
 

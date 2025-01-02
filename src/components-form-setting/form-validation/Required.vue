@@ -3,7 +3,7 @@
   <div class="setting-item h-42">
     <a-typography-text type="secondary" class="secondary">必填</a-typography-text>
     <a-space direction="vertical" class="abs-r switch-r ">
-      <a-switch v-model:checked="comp.isRequired" :size="size" @change="handleChangeInput"/>
+      <a-switch  v-model:checked="comp.isRequired" :size="size" @change="handleChangeInput"/>
     </a-space> 
   </div>
 

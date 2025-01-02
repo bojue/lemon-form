@@ -14,8 +14,7 @@
       allow-clear 
       maxlength="40"
       :autosize="autosize"
-      @Input="changeValidationFormatRegexInput"
-      />
+      @Input="changeValidationFormatRegexInput"/>
   </div>
 </template>
 <script lang="ts" setup>

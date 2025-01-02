@@ -10,7 +10,7 @@
     </a-tooltip>
     </a-typography-text>
     <a-space direction="vertical" class="abs-r switch-r ">
-      <a-switch v-model:checked="form.displayNumberSort" @change="changeValue($event)" />
+      <a-switch  v-model:checked="form.displayNumberSort" @change="changeValue($event)" />
     </a-space> 
   </div>
 

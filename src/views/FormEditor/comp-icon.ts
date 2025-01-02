@@ -12,7 +12,7 @@ import Time from '/src/assets/form/time.svg'
 import TimeRange from '/src/assets/form/timeRange.svg'
 import Upload from '/src/assets/form/upload.svg'
 import Number from '/src/assets/form/number.svg'
-import Score from '/src/assets/form/score.svg'
+import Rate from '/src/assets/form/score.svg'
 import Divider from '/src/assets/form/divider.svg'
 import Paging from '/src/assets/form/paging.svg'
 
@@ -31,7 +31,7 @@ export default {
   TimeRange,
   Upload,
   Number,
-  Score,
+  Rate,
   Divider,
   Paging,
 

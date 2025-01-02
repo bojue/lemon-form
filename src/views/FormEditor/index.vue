@@ -10,32 +10,29 @@
     </div>
 
     <div class="content">
-        <div class="comps">
-          <div class="comp-category-item" v-for="compCategory in compList">
-            <div class="category-title">
-              {{ compCategory.name }}
-            </div>
-            <VueDraggable v-model="compCategory.children" :animation="0" 
-            :group="{ name: 'sevenBotForm', pull: 'clone', put: false }" 
-            :sort="false"
-            :clone="onClone" 
+      <div class="comps">
+        <div class="comp-category-item" v-for="compCategory in compList">
+          <div class="category-title">
+            {{ compCategory.name }}
+          </div>
+          <VueDraggable v-model="compCategory.children" :animation="0"
+            :group="{ name: 'sevenBotForm', pull: 'clone', put: false }" :sort="false" :clone="onClone"
             class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded compList">
-            <div v-for="item in compCategory.children" class="cursor-move h-50px bg-gray-500/5 item" 
-              v-bind:class="{
-                'person': compCategory.type === 'Personal Component',
-                'advanced': compCategory.type === 'Advanced Component',
-                'layout': compCategory.type === 'Layout Component'
-              }">
+            <div v-for="item in compCategory.children" class="cursor-move h-50px bg-gray-500/5 item" v-bind:class="{
+              'person': compCategory.type === 'Personal Component',
+              'advanced': compCategory.type === 'Advanced Component',
+              'layout': compCategory.type === 'Layout Component'
+            }">
               <img class="icon" :src="item.icon" alt="" v-if="item.icon">
               {{ item.label }}
             </div>
           </VueDraggable>
-          </div>
-
         </div>
-        <div class="editor">
-          <div class="form">
-           <div class="body">
+
+      </div>
+      <div class="editor">
+        <div class="form">
+          <div class="body">
             <div class="form-header">
               <!-- <div class="header-img"> <img src="/src/assets/background/bg.png"/></div> -->
               <!-- <div class="title" >
@@ -48,53 +45,52 @@
               </div> -->
             </div>
             <div class="form-body">
-              <VueDraggable 
-                v-model="pageCompList" 
-                :animation="0" 
-                group="sevenBotForm" 
-                ghostClass="ghost"
+              <VueDraggable v-model="pageCompList" :animation="0" group="sevenBotForm" ghostClass="ghost"
+                handle=".handle"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
-                <div v-for="(item, index) in pageCompList"  
-                  :key="item?.name" 
-                  :class="{
+                <template v-if="!pageCompList.length">
+                  <div v-if="!pageCompList.length">
+                    <div class="no-data-content">
+                      点击左侧题目 / 拖拽题目到此区域
+                    </div>
+                  </div>
+                </template>
+
+                <template v-else>
+                  <div v-for="(item, index) in pageCompList" :key="item?.name" :class="{
                     'cursor-move': true,
-                    'form-item': true, 
+                    'form-item': true,
                     'active-comp': activeComp.id == item?.id
-                  }"
-                  @click="selectComp(item, index)">    
-                  <FormComponent
-                    :key="item?.id + pageCompList.length"  
-                    @compControl="compControl"
-                    @addItem="addItem($event, item, index)"
-                    :component="item" 
-                    :formConfig="selectForm"
-                    :type="item?.type" 
-                    :isDev="isFormEditorDevBool"
-                    :selectedComp="getActiveComp()"></FormComponent>
-                </div>
+                  }" @click="selectComp(item, index)">
+                    <FormComponent :key="item?.id + pageCompList.length" @compControl="compControl"
+                      @addItem="addItem($event, item, index)" :component="item" :formConfig="selectForm"
+                      :type="item?.type" :isDev="isFormEditorDevBool" :selectedComp="getActiveComp()"></FormComponent>
+                  </div>
+                </template>
+
+
+
+
               </VueDraggable>
             </div>
-           </div>
           </div>
-
         </div>
-        <CompSetting 
-          v-if="activeComp.id"  
-          :key="activeComp.id + updateCompKey"
-          :selectForm="selectForm" 
-          :selectComp="getActiveComp()"></CompSetting>
+
       </div>
+      <CompSetting v-if="activeComp.id" :key="activeComp.id + updateCompKey" :selectForm="selectForm"
+        :selectComp="getActiveComp()"></CompSetting>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
 import { computed, nextTick, onMounted, reactive, ref, watch, } from 'vue'
-import { v4 as uuidv4  } from 'uuid'
-import { CompListData, CompType, IgnoreLineNumberTypeList} from './comp-data'
+import { v4 as uuidv4 } from 'uuid'
+import { CompListData, CompType, IgnoreLineNumberTypeList } from './comp-data'
 import CompSetting from '@/views/FormEditor/form-setting.vue'
 import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
-import { useSelectCompStore  } from '@/stores/selectCompStore'
+import { useSelectCompStore } from '@/stores/selectCompStore'
 import { useRoute, createRouter } from 'vue-router';
 import * as _ from 'lodash'
 
@@ -119,7 +115,7 @@ const defaultFormConfig = {
   displayDescription: true
 }
 
-onMounted(() => useCompStore.initGlobalFormConfig({...defaultFormConfig}))
+onMounted(() => useCompStore.initGlobalFormConfig({ ...defaultFormConfig }))
 
 const useCompStore = useSelectCompStore()
 const isFormEditorDevBool = computed(() => {
@@ -133,8 +129,8 @@ const isFormEditorDevBool = computed(() => {
 const updateCompByChange = (compConfig: any) => {
   currentComp.value = compConfig
   const index = getActiveCompIndex()
-  if(index > -1 && pageCompList.value.length) {
-    pageCompList.value[index] = {...pageCompList.value[index],...compConfig}
+  if (index > -1 && pageCompList.value.length) {
+    pageCompList.value[index] = { ...pageCompList.value[index], ...compConfig }
   }
 }
 const currentCompKeyData = computed(() => useCompStore.currentCompKey)
@@ -144,7 +140,7 @@ watch(currentCompKeyData, (newValue) => {
 })
 
 
-watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig],  ([compConfig, currentGlobalFormConfig]) => {
+watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig], ([compConfig, currentGlobalFormConfig]) => {
   updateCompByChange({
     ...compConfig,
   })
@@ -153,20 +149,20 @@ watch([() => useCompStore.compConfig, () => useCompStore.currentGlobalFormConfig
 
 
 const updateCompLineNumber = () => {
-  if(Array.isArray(pageCompList.value)) {
+  if (Array.isArray(pageCompList.value)) {
     let lineNumber = 0
     let pageCount = _.filter(pageCompList.value, {
       type: CompType.paging
     })?.length
     let pageNumber = 0
     _.map(pageCompList.value, (item: any) => {
-      const isIgnoreTypeBool = IgnoreLineNumberTypeList.includes(item.type) 
+      const isIgnoreTypeBool = IgnoreLineNumberTypeList.includes(item.type)
       const isPageTypeBool = CompType.paging === item.type
-      if(!isIgnoreTypeBool) {
+      if (!isIgnoreTypeBool) {
         lineNumber++
         item.lineNumber = lineNumber && lineNumber.toString()?.length === 1 ? '0' + lineNumber : lineNumber
       }
-      if(isPageTypeBool) {
+      if (isPageTypeBool) {
         pageNumber++
         item.pagingValue = `第 ${pageNumber} 页 / 共 ${pageCount} 页`
       }
@@ -190,7 +186,7 @@ const onClone = (element: any) => {
     type: element.type,
     name: element.name
   }
-  return {...item}
+  return { ...item }
 }
 
 const selectComp = (item: any, index: number) => {
@@ -201,15 +197,15 @@ const selectComp = (item: any, index: number) => {
 }
 
 const updateDataListIndex = (index: number) => {
-  if(index > -1 && Array.isArray(pageCompList.value[index]?.dataList)) {
+  if (index > -1 && Array.isArray(pageCompList.value[index]?.dataList)) {
     _.map(pageCompList.value[index].dataList, (item: any, index: number) => {
       item._index = index
     })
   }
 }
 
-const addItem = (type: 'new' | 'other',item: any, index: number) => {
-  
+const addItem = (type: 'new' | 'other', item: any, index: number) => {
+
   const isNewBool = type === 'new'
   const isOtherBool = type === 'other'
   const newDataItem = isNewBool ? {
@@ -220,7 +216,7 @@ const addItem = (type: 'new' | 'other',item: any, index: number) => {
     label: '其他',
     value: '',
   }
-  if(['new', 'other'].includes(type)) {
+  if (['new', 'other'].includes(type)) {
     pageCompList.value[index].dataList.push(newDataItem)
   }
 
@@ -229,21 +225,21 @@ const addItem = (type: 'new' | 'other',item: any, index: number) => {
 
 const compControl = (controlType: string, value: any) => {
   const index = _.findIndex(pageCompList.value, (item: any) => item.id === value.id)
-  if(index === -1) {
+  if (index === -1) {
     console.log("没有查询到组件！！！")
-    return 
+    return
   }
-  if(controlType === 'copy') {
+  if (controlType === 'copy') {
     const newComp: any = {
       ...value,
       id: uuidv4()
     }
-    pageCompList.value.splice(index +1, 0, {...newComp})
+    pageCompList.value.splice(index + 1, 0, { ...newComp })
   }
-  if(controlType === 'delete') {
+  if (controlType === 'delete') {
     pageCompList.value.splice(index, 1)
-    activeComp.value.id = pageCompList.value[index -1 ]?.id
-  } 
+    activeComp.value.id = pageCompList.value[index - 1]?.id
+  }
   updateCompLineNumber()
 }
 
@@ -258,7 +254,6 @@ const getActiveCompIndex = () => {
 </script>
 
 <style scoped>
-
 .icon {
   width: 16px;
   height: 16px;
@@ -269,6 +264,7 @@ const getActiveCompIndex = () => {
   height: 100%;
   overflow: hidden;
 }
+
 .nav-data {
   height: 56px;
   line-height: 1;
@@ -282,27 +278,32 @@ const getActiveCompIndex = () => {
     font-size: 16px;
   }
 }
+
 .content {
   display: grid;
-  grid-template-columns:270px 1fr 260px;
+  grid-template-columns: 270px 1fr 260px;
   padding: 0 0 0 20px;
   height: calc(100% - 86px);
+  /* background-image: url(/src/assets/form-editor/bg-body.png); */
 
   .category-title {
     font-weight: 700;
     color: rgba(0, 0, 0, .65);
     padding: 15px 0px 15px;
     font-size: 14px;
+    user-select: none;
   }
 
   .comps {
-    padding:0 30px 0 10px;
+    padding: 0 30px 0 10px;
   }
+
   .compList {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
     margin-bottom: 15px;
+    user-select: none;
 
     .item {
       /* border: 1px solid #D7D9DC; */
@@ -332,23 +333,28 @@ const getActiveCompIndex = () => {
 
   .editor {
     position: relative;
-    background: lavender;
+    /* background: lavender; */
     height: 100%;
     margin: 0;
     padding: 0;
     overflow-y: auto;
+    background-image: url(./bg.png);
+    background-repeat: round;
   }
+
   .body {
     /* background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
     background-image: linear-gradient(rgba(200,205,208,.2) 1px,transparent 0),linear-gradient(90deg,rgba(200,205,208,.1),1px,transparent 0),linear-gradient(rgba(200,205,208,.1) 1px,transparent 0),linear-gradient(90deg,rgba(200,205,208,.1) 1px,transparent 0); */
     height: 100%;
     border-radius: 6px;
-    padding: 8px;
+    padding: 20px;
     background: #ffffff;
-    
+
+
 
     .form-header {
       padding: 0;
+
       img {
         width: 100%;
         height: 250px;
@@ -373,22 +379,25 @@ const getActiveCompIndex = () => {
       }
     }
   }
+
   .form {
-    margin: 30px;
+    margin: 10px 30px;
     /* background: #fff; */
-    min-height: calc(100% - 30px);
+    min-height: calc(100% - 10px);
     border-radius: 0px;
     width: 700px;
     position: absolute;
     transform: translateX(-50%);
     margin-left: 50%;
     display: grid;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 
   .form-item {
     position: relative;
+    background: #fff;
   }
+
   .active-comp {
     /* background: mintcream; */
     /* border-left: 6px solid red;
@@ -396,13 +405,15 @@ const getActiveCompIndex = () => {
     /* background: aliceblue; */
     /* border-bottom: 1px dashed #ccc;
     border-top: 1px dashed #ccc; */
-    border: 1px dashed #1677ff;
+    /* border: 1px dashed #1677ff; */
     /* background: lightyellow; */
-    background: aliceblue;
+    /* background: aliceblue; */
     /* rgba(0,255,0,0.1); */
     /* darkseagreen; */
     border-radius: 5px;
     position: relative;
+    box-shadow: 0px 4px 16px 4px rgba(31, 35, 41, 0.03), 0px 4px 8px 0px rgba(31, 35, 41, 0.02), 0px 2px 4px -4px rgba(31, 35, 41, 0.02);
+    border: 1px solid #94b4ff;
 
     &::before {
       content: '';
@@ -418,6 +429,14 @@ const getActiveCompIndex = () => {
     }
   }
 
-}
+  .no-data-content {
+    border: 1px dashed #cdcdcd;
+    text-align: center;
+    border-radius: 4px;
+    color: #666;
+    padding: 50px 100px;
 
+  }
+
+}
 </style>

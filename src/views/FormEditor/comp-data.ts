@@ -32,7 +32,7 @@ export enum CompType {
   paging = 'Paging', // 分页
 
   // 高级组件
-  score = 'Score', // 评分
+  rate = 'Rate', // 评分
   nps = 'NPS', // nps
   electronicSignature = 'ElectronicSignature', // 电子签名
   location = 'Location', // 位置信息
@@ -145,16 +145,10 @@ const BasicComponentList:CompItemType[] = [
     icon: Icon.Switch
   },
   {
-    label: '网址',
-    name: '网址',
-    type: CompType.url,
-    icon: Icon.Url
-  },
-  {
     label: '评分',
     name: '评分',
-    type: CompType.score,
-    icon: Icon.Score
+    type: CompType.rate,
+    icon: Icon.Rate
   }
   
 ]
@@ -239,33 +233,38 @@ const AdvancedComponentList = [  {
 
 // 常见组件
 const CommonComponentList = [{
-  label: '满意度',
-  name: '满意度',
-  type: CompType.satisfactionLevel
-},{
-  label: '是否',
-  name: '是否',
-  type: CompType.boolean
-},{
-  label: '社会关系',
-  name: '社会关系',
-  type: CompType.select
-},{
-  label: '年收入',
-  name: '年收入',
-  type: CompType.annualIncome
-}, {
-  label: '年收入',
-  name: '年收入',
-  type: CompType.radio
-},{
-  label: '部门',
-  name: '部门',
-  type: CompType.select
-},{
-  label: '政治面貌',
-  name: '政治面貌',
-  type: CompType.radio
+  label: '网址',
+  name: '网址',
+  type: CompType.url,
+  icon: Icon.Url
+// },{
+//   label: '满意度',
+//   name: '满意度',
+//   type: CompType.satisfactionLevel
+// },{
+//   label: '是否',
+//   name: '是否',
+//   type: CompType.boolean
+// },{
+//   label: '社会关系',
+//   name: '社会关系',
+//   type: CompType.select
+// },{
+//   label: '年收入',
+//   name: '年收入',
+//   type: CompType.annualIncome
+// }, {
+//   label: '年收入',
+//   name: '年收入',
+//   type: CompType.radio
+// },{
+//   label: '部门',
+//   name: '部门',
+//   type: CompType.select
+// },{
+//   label: '政治面貌',
+//   name: '政治面貌',
+//   type: CompType.radio
 }]
 
 // 组件列表
@@ -290,9 +289,9 @@ export const CompListData:CompCategoryType[] = [{
 //   type: CompListType.advanced,
 //   children: []
 //   //  [...AdvancedComponentList]
-// }, {
-//   name: '常见题目',
-//   label: '常见题目',
-//   type: CompListType.common,
-//   children:  [...CommonComponentList]
+}, {
+  name: '常见题目',
+  label: '常见题目',
+  type: CompListType.common,
+  children:  [...CommonComponentList]
 }]
