@@ -145,10 +145,12 @@ export const getCompConfig = (type: CompType) => {
   if(isButton.includes(type)) {
     compConfig = {
       ...compConfig,
+      title: '提交按钮',
       buttonText: '提交',
       size: 'large',
       position: 'center',
       buttonIconShowBool: true,
+
       
     }
   }

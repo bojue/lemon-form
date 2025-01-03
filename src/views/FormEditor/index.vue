@@ -82,7 +82,7 @@
 
             <div class="form-footer" @click="selectComp(pageFooter)" :class="{
               'form-item': true,
-              'active-comp': activeComp.id == item?.id
+              'active-comp': activeComp.id == pageFooter?.id
             }" :style="{
               textAlign: pageFooter.position
             }">
@@ -149,7 +149,7 @@ const pageFooter = ref({}) // 底部
 
 const currentComp = ref()
 const updateCompKey = ref()
-const noDataContentRef = ref('')
+const noDataContentRef = ref()
 const activeComp = ref<ActiveCompType>({
   type: 'component',
   id: '',
@@ -177,6 +177,10 @@ const isFormEditorDevBool = computed(() => {
   return bool
 })
 
+
+const initDataState = () => {
+  noDataContentRef.value = ''
+}
 
 
 // 更新选中组件数据
@@ -243,11 +247,14 @@ const onClone = (element: any) => {
   return { ...item }
 }
 
+
 const selectComp = (item: any) => {
   useCompStore.initCurrentComp({
     ...item
   })
   activeComp.value.id = item.id
+
+  console.log(item, item.id)
 }
 
 const updateDataListIndex = (index: number) => {
@@ -274,6 +281,7 @@ const addItem = (type: 'new' | 'other', item: any, index: number) => {
   }
 
   updateDataListIndex(index)
+  initDataState()
 }
 
 
@@ -295,6 +303,7 @@ const compControl = (controlType: string, value: any) => {
     pageCompList.value.splice(index, 1)
     activeComp.value.id = pageCompList.value[index - 1]?.id
   }
+  initDataState()
   updateCompLineNumber()
 }
 
@@ -523,17 +532,17 @@ const handleDragHandle = (e: any) => {
   }
 
   .form-footer {
-    height: 100px;
-    line-height: 100px;
+    height: 90px;
+    line-height: 90px;
     padding: 0 60px;
     width: 100%;
-
+    margin-top: 10px;
 
   }
 
   ::v-deep(.form-footer) {
-
     .submit {
+    
       max-width: 100%;
       white-space: nowrap;
       /* 不换行 */
