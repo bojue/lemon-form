@@ -1,5 +1,9 @@
 
 import { CompType } from "./comp-data"
+import Placeholder from '@/components-form-setting/base/Placeholder.vue';
+import Name from '/src/assets/form/name.svg';
+import type Email from "@/components-form/contact-information/Email.vue";
+import TelePhone from '/src/assets/form/telePhone.svg';
 
 interface CompConfig {
   name: string 
@@ -29,6 +33,9 @@ interface CompConfig {
   // 扩展字段
   minValue?: number // 最小值
   maxValue?: number // 最大值
+
+  // 布局组件
+  isLayoutComp?: boolean // 布局组件
 }
 export const defaultConfig: CompConfig = {
   type: '',
@@ -41,7 +48,15 @@ export const defaultConfig: CompConfig = {
 export const dataListType: CompType[] = [CompType.checkout, CompType.radio, CompType.select] // 数组列表
 export const isLayoutType: CompType[] = [CompType.paging, CompType.divider] // 忽略类型
 export const isIgnoreRequireType: CompType[] = [CompType.paging, CompType.divider, CompType.button] // 忽略类型
-export const isPlaceholderType: CompType[] = [CompType.input, CompType.textarea, CompType.number, CompType.date, CompType.time,CompType.url, CompType.email, CompType.phone, CompType.idCard, CompType.location]
+export const isPlaceholderType: CompType[] = [CompType.input, CompType.textarea, CompType.number, CompType.date, CompType.time,CompType.url, 
+  CompType.email,
+  CompType.phone, CompType.idCard, CompType.location,
+  CompType.wx,
+  CompType.telePhone,
+  CompType.phone,
+  CompType.name,
+  CompType.gender
+]
 export const isRangePlaceholderType: CompType[]  = [CompType.dateRange, CompType.timeRange]
 export const isNumberType: CompType[] = [CompType.number]
 export const isRate: CompType[] = [CompType.rate]
@@ -83,6 +98,7 @@ export const getCompConfig = (type: CompType) => {
     compConfig = {
       ...compConfig,
       ...data,
+      isLayoutComp: true
     }
   }
 
@@ -98,7 +114,7 @@ export const getCompConfig = (type: CompType) => {
   if(isPlaceholderType.includes(type)) {
     compConfig = {
       ...compConfig,
-      placeholder: '请输入'
+      placeholder:  getCompPlaceHolderDataByType(type) || '请输入'
     }
   }
 
@@ -121,7 +137,7 @@ export const getCompConfig = (type: CompType) => {
         rangePlaceholder = ['开始时间', '结束时间']
         break;
       default: 
-      rangePlaceholder = ['开始', '结束']
+        rangePlaceholder = ['开始', '结束']
         break;
     }
 
@@ -150,13 +166,28 @@ export const getCompConfig = (type: CompType) => {
       size: 'large',
       position: 'center',
       buttonIconShowBool: true,
-
-      
     }
   }
 
+
+
   return compConfig
 
+}
+
+export const getCompPlaceHolderDataByType = (type: string) => {
+
+  const placeholderObject: any = {
+    Name: '请输入名称',
+    Gender: '请选择性别',
+    Phone: '请输入手机号',
+    TelePhone: '请输入固话',
+    IDCard: '请输入身份证',
+    Email: '请输入邮件',
+    WX: '请输入微信',
+  }
+
+  return placeholderObject[type]
 }
 
 export const getDefaultConfig = (type: CompType) => {

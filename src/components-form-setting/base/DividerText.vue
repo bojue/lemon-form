@@ -8,6 +8,8 @@
     allow-clear 
     v-model:value="comp.dividerValue"
     @Input="handleChangeInput"
+    maxLength="30"
+    showCount
   ></a-input>
 
 </template>

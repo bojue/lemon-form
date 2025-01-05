@@ -7,23 +7,32 @@
           {{ component?.lineNumber }}.
         </span>
         <span class="title-value">
-          <div class="description" @blur="changeValue($event, 'name')" contenteditable="true">
-            {{ component?.name || component?.title }}
-          </div>
+          <a-textarea class="input-comp" v-if="isDev && component?.id === selectedComp?.id"
+            :auto-size="{ minRows: 1, maxRows: 5 }" maxlength="50" v-model:value="component.title"
+            :placeholder="'请输入标题'" @change="changeValue($event, 'title')" allow-clear>
+          </a-textarea>
+
+          <a-typography-text v-else type="secondary">
+            <div class="description input-comp">
+              {{ component.title }}
+            </div>
+          </a-typography-text>
+
         </span>
       </a-typography-title>
     </div>
+    <!-- <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
+
+    </div> -->
+
     <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
       <a-typography-text type="secondary" v-if="component?.id !== selectedComp?.id && isDev">
-        <div class="description" @input="changeValue($event, 'description')" contenteditable="true">
+        <div class="description">
           {{ component.description }}
         </div>
       </a-typography-text>
-      <a-textarea 
-        v-else
-        :auto-size="{ minRows: 1, maxRows: 5 }"
-        v-model:value="component.description" :placeholder="'请输入描述'"
-        @change="changeValue($event, 'description')" allow-clear>
+      <a-textarea v-else :auto-size="{ minRows: 1, maxRows: 5 }" v-model:value="component.description"
+        :placeholder="'请输入描述'" @change="changeValue($event, 'description')" allow-clear>
 
       </a-textarea>
     </div>
@@ -38,30 +47,30 @@
 
           <span class="add-item">
             <a-typography-text type="warning" @click="addItem('new')">
-              <PlusCircleTwoTone class="icon" :style="{fontSize: '16px', color: '#646a73'}" />
+              <PlusCircleTwoTone class="icon" :style="{ fontSize: '16px', color: '#646a73' }" />
               <span class="add-label">添加单项 </span>
             </a-typography-text>
           </span>
-          
+
           <!-- <span class="add-item">
             <a-typography-text type="warning">模版</a-typography-text>
             <span class="line"></span>
           </span> -->
           <span class="add-item">
-      
+
             <a-typography-text type="warning" :class="{ disabled: checkAddOtherClass() }"
               @click="!checkAddOtherClass() && addItem('other')">
-              <PlusCircleTwoTone class="icon" :style="{fontSize: '16px', color: '#646a73'}" />
+              <PlusCircleTwoTone class="icon" :style="{ fontSize: '16px', color: '#646a73' }" />
               <span class="add-label">添加其他 </span>
-              </a-typography-text>
+            </a-typography-text>
           </span>
         </div>
         <!-- <a-checkbox class="setting-item" v-model:checked="component.isRequired"
           @click="component.isRequired = !component.isRequired">必填</a-checkbox> -->
-          <span class="setting-item">
-            <a-switch class="switch" v-model:checked="component.isRequired"  @change="handleChangeRequired"> </a-switch>
-            <label for=""> 必填</label>
-          </span>
+        <span class="setting-item">
+          <a-switch class="switch" v-model:checked="component.isRequired" @change="handleChangeRequired"> </a-switch>
+          <label for=""> 必填</label>
+        </span>
 
       </div>
     </div>
@@ -147,9 +156,9 @@ const changeValue = (event: any, params: string) => {
     innerText,
     value
   } = event?.target
-  const isChangeParams = ['description', 'name'].includes(params)
+  const isChangeParams = ['description', 'title'].includes(params)
   if (isChangeParams) {
-    updateParams('description', value)
+    updateParams(params, value)
     compConfig[params] = value
   } else {
     const hasDataBool = innerText !== null && innerText !== '\n'
@@ -196,7 +205,7 @@ function getTypeToComponent(type: string) {
     Gender: GenderComponent,
     WX: WXComponent,
     Email: EmailComponent,
-    IdCard: IdCardComponent,
+    IDCard: IdCardComponent,
     Phone: PhoneComponent,
     TelePhone: TelePhoneComponent,
     Address: AddressComponent,
@@ -224,6 +233,29 @@ const checkAddOtherClass = () => {
 
 </script>
 <style lang="scss" scoped>
+::v-deep {
+
+  textarea.input-comp,
+  .description.input-comp {
+    background: transparent;
+    border: none !important;
+    padding: 6px 12px !important;
+    margin-left: -10px !important;
+    color: rgb(73, 96, 141) !important;
+    font-size: 16px !important;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  textarea.input-comp,
+  span.input-comp {
+    background: aliceblue;
+  }
+}
+
 
 .description {
   width: 100%;
@@ -348,11 +380,11 @@ const checkAddOtherClass = () => {
     font-weight: 400;
 
     .description {
-      &:empty:before{ 
-        content: '请输入标题'; 
-        color: #b3b3b3; 
+      &:empty:before {
+        content: '请输入标题';
+        color: #b3b3b3;
         font-weight: 200;
-      } 
+      }
     }
   }
 
@@ -389,7 +421,7 @@ const checkAddOtherClass = () => {
 
 .active-drag {
   position: absolute;
-  left:3px;
+  left: 3px;
   border-bottom-right-radius: 6px;
   border-top-right-radius: 6px;
   width: 46px;
@@ -400,6 +432,7 @@ const checkAddOtherClass = () => {
   height: 100%;
   border-radius: 6px;
   cursor: move;
+
   // border: 1px solid #e0e0e0;
   // background: #fff;
   img {
@@ -452,6 +485,7 @@ const checkAddOtherClass = () => {
   top: 16px;
   font-size: 14px;
   color: #646a73;
+
   .switch {
     position: relative;
     margin-top: -2px;
@@ -459,13 +493,16 @@ const checkAddOtherClass = () => {
   }
 }
 
-::v-deep(:where(.comp-item-description .css-dev-only-do-not-override-17yhhjv).ant-input-affix-wrapper-textarea-with-clear-btn ) {
+::v-deep(:where(.comp-item-description .css-dev-only-do-not-override-17yhhjv).ant-input-affix-wrapper-textarea-with-clear-btn) {
   background: transparent !important;
   left: -10px;
 
   .anticon-close-circle {
     display: none;
-    &:hover, &:active, &:focus {
+
+    &:hover,
+    &:active,
+    &:focus {
       display: block;
     }
   }
@@ -476,7 +513,10 @@ const checkAddOtherClass = () => {
     background: transparent !important;
     border-style: none;
     color: rgba(0, 0, 0, 0.45);
-    &:active, &:hover, &:focus {
+
+    &:active,
+    &:hover,
+    &:focus {
       // border-style: solid;
       // border-color: #e0e0e0;
       outline: none;
@@ -486,7 +526,4 @@ const checkAddOtherClass = () => {
     }
   }
 }
-
-
-
 </style>

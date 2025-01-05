@@ -335,7 +335,6 @@ const handleDragHandle = (e: any) => {
   e.preventDefault()
   const { type } = e
   noDataContentRef.value = type
-  console.log(e, type)
 }
 </script>
 

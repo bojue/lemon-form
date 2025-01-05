@@ -2,7 +2,7 @@
   <div class="setting" >
     <div class="comp-name">
       <a-typography-title :level="5">
-        {{ selectComp?.title }} 
+        {{ selectComp?.name }} 
       </a-typography-title>
     </div>
     <div class="setting-base">
@@ -10,7 +10,7 @@
         基础设置
       </div>
       <div class="content m-b-0">
-        <Title v-if="showParams('name')" :comp="selectComp" :key="selectComp._selectedId "/>
+        <Title v-if="showParams('name') && !showParams('isLayoutComp')" :comp="selectComp" :key="selectComp._selectedId "/>
         <ButtonText v-if="showParams('buttonText')" :comp="selectComp" :key="selectComp._selectedId "/>
         <Description v-if="showParams('description')" :comp="selectComp" :key="selectComp._selectedId "/>
         <PageSubTitle v-if="showParams('pageSubTitle')"  :comp="selectComp" :key="selectComp._selectedId "/>

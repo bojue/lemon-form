@@ -1,13 +1,13 @@
 <template>
  <a-input v-model:value="props.value" placeholder="Basic usage" >
   <template #prefix>
-        <user-outlined />
+    <img class="icon" :src="Gender" alt="">
       </template>
  </a-input>
 </template>
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-
+ import Gender from '/src/assets/form/gender.svg'
 const radioStyle = reactive({
 
 });
@@ -19,4 +19,7 @@ const props = defineProps({
 })
 </script>
 <style lang="scss">
+ .icon {
+   height: 18px;
+ }
 </style>
