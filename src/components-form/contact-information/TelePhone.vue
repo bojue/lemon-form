@@ -1,13 +1,13 @@
 <template>
  <a-input v-model:value="props.value" :placeholder="placeholder" >
   <template #prefix>
-      <img class="icon" :src="Phone" alt="">
+      <img class="icon" :src="TelePhone" alt="">
     </template>
  </a-input>
 </template>
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import Phone from '/src/assets/form/phone.svg'
+import TelePhone from '/src/assets/form/telePhone.svg'
 
 interface Props {
   id: string

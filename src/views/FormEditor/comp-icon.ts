@@ -1,6 +1,6 @@
 import Checkout from '/src/assets/form/checkout.svg'
 import Email from '/src/assets/form/email.svg'
-import Switch from '/src/assets/form/checkout.svg'
+import Switch from '/src/assets/form/switch.svg'
 import Date from '/src/assets/form/date.svg'
 import DateRange from '/src/assets/form/dateRange.svg'
 import Input from '/src/assets/form/input.svg'
@@ -15,6 +15,13 @@ import Number from '/src/assets/form/number.svg'
 import Rate from '/src/assets/form/score.svg'
 import Divider from '/src/assets/form/divider.svg'
 import Paging from '/src/assets/form/paging.svg'
+import WX from '/src/assets/form/wx.svg'
+import Name from '/src/assets/form/name.svg'
+import Gender from '/src/assets/form/gender.svg'
+import Phone from '/src/assets/form/phone.svg'
+import Address from '/src/assets/form/address.svg'
+import ID from '/src/assets/form/id.svg'
+import TelePhone from '/src/assets/form/telePhone.svg'
 
 export default {
   Checkout,
@@ -34,5 +41,12 @@ export default {
   Rate,
   Divider,
   Paging,
+  WX,
+  Name,
+  Gender,
+  Phone,
+  Address,
+  ID,
+  TelePhone
 
 }

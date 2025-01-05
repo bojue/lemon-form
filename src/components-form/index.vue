@@ -109,6 +109,7 @@ import TimeRangeComponent from '@/components-form/base/TimeRange.vue'
 import NameComponent from '@/components-form/contact-information/Name.vue'
 import GenderComponent from '@/components-form/contact-information/Gender.vue'
 import PhoneComponent from '@/components-form/contact-information/Phone.vue'
+import TelePhoneComponent from '@/components-form/contact-information/Telephone.vue'
 import IdCardComponent from '@/components-form/contact-information/IdCard.vue'
 import EmailComponent from '@/components-form/contact-information/Email.vue'
 import WXComponent from '@/components-form/contact-information/WX.vue'
@@ -197,6 +198,7 @@ function getTypeToComponent(type: string) {
     Email: EmailComponent,
     IdCard: IdCardComponent,
     Phone: PhoneComponent,
+    TelePhone: TelePhoneComponent,
     Address: AddressComponent,
   }
   const comp = compsObject[type]

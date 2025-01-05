@@ -1,22 +1,25 @@
 <template>
- <a-input v-model:value="props.value" placeholder="Basic usage" >
-  <template #prefix>
-        <user-outlined />
-      </template>
- </a-input>
-</template>
-<script setup lang="ts">
-import { ref, reactive } from 'vue'
+  <a-input v-model:value="props.value" :placeholder="placeholder" >
+   <template #prefix>
+       <img class="icon" :src="ID" alt="">
+     </template>
+  </a-input>
+ </template>
+ <script setup lang="ts">
+ import { ref, reactive } from 'vue'
+ import ID from '/src/assets/form/id.svg'
+ 
+ interface Props {
+  id: string
+  placeholder: string
+  value: string
+  isDev: boolean
+}
 
-const radioStyle = reactive({
-
-});
-
-const props = defineProps({
-  value: {
-    type: String
-  },
-})
-</script>
-<style lang="scss">
-</style>
+const props = defineProps<Props>()
+ </script>
+ <style lang="scss" scoped>
+ .icon {
+   height: 18px;
+ }
+ </style>

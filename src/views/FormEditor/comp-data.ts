@@ -22,6 +22,7 @@ export enum CompType {
   gender = 'Gender', // 性别
   wx = "WX", // 微信
   phone = 'Phone', // 手机
+  telePhone = 'TelePhone', // 固话
   email = "Email", // 邮箱
   landline = 'Landline', // 座机
   idCard = 'IDCard', // 身份证
@@ -91,6 +92,18 @@ const BasicComponentList:CompItemType[] = [
     icon: Icon.Checkout
   },
   {
+    label: '数字',
+    name: '数字',
+    type: CompType.number,
+    icon: Icon.Number
+  },
+  {
+    label: '开关',
+    name: '开关',
+    type: CompType.switch,
+    icon: Icon.Switch
+  },
+  {
     label: '单行输入',
     name: '单行输入',
     type: CompType.input,
@@ -102,6 +115,27 @@ const BasicComponentList:CompItemType[] = [
     type: CompType.textarea,
     icon: Icon.TextArea
   },
+  {
+    label: '上传',
+    name: '上传',
+    type: CompType.upload,
+    icon: Icon.Upload
+  },
+  {
+    label: '网址',
+    name: '网址',
+    type: CompType.url,
+    icon: Icon.Url
+  },
+  {
+    label: '评分',
+    name: '评分',
+    type: CompType.rate,
+    icon: Icon.Rate
+  }
+]
+
+const TimeComponentList: CompItemType[] = [
   {
     label: '日期',
     name: '日期',
@@ -126,32 +160,9 @@ const BasicComponentList:CompItemType[] = [
     type: CompType.timeRange,
     icon: Icon.TimeRange
   },
-  {
-    label: '上传',
-    name: '上传',
-    type: CompType.upload,
-    icon: Icon.Upload
-  },
-  {
-    label: '数字',
-    name: '数字',
-    type: CompType.number,
-    icon: Icon.Number
-  },
-  {
-    label: '开关',
-    name: '开关',
-    type: CompType.switch,
-    icon: Icon.Switch
-  },
-  {
-    label: '评分',
-    name: '评分',
-    type: CompType.rate,
-    icon: Icon.Rate
-  }
-  
+
 ]
+
 
 // 布局组件
 const LayoutComponentList: CompItemType[] = [
@@ -173,26 +184,30 @@ const PersonalComponentList: CompItemType[] = [
   {
     label: '姓名',
     name: '姓名',
-    type: CompType.name
+    type: CompType.name,
+    icon: Icon.Name
   },
   {
     label: '性别',
     name: '性别',
-    type: CompType.gender
+    type: CompType.gender,
+    icon: Icon.Gender
   },{
     label: '手机',
     name: '手机',
-    type: CompType.phone
+    type: CompType.phone,
+    icon: Icon.Phone
+  },{
+    label: '固定电话',
+    name: '固定电话',
+    type: CompType.telePhone,
+    icon: Icon.TelePhone
   },{
     label: '身份证',
     name: '身份证',
-    type: CompType.idCard
-  }, 
-  {
-    label: '地址',
-    name: '地址',
-    type: CompType.address
-  },{
+    type: CompType.idCard,
+    icon: Icon.ID
+  }, {
     label: '邮件',
     name: '邮件',
     type: CompType.email,
@@ -200,8 +215,14 @@ const PersonalComponentList: CompItemType[] = [
   },{
     label: '微信',
     name: '微信',
-    type: CompType.wx
-  }
+    type: CompType.wx,
+    icon: Icon.WX
+  }, {
+    label: '地址',
+    name: '地址',
+    type: CompType.address,
+    icon: Icon.Address
+  },
 ]
 
 // 高级
@@ -232,12 +253,8 @@ const AdvancedComponentList = [  {
 }]
 
 // 常见组件
-const CommonComponentList = [{
-  label: '网址',
-  name: '网址',
-  type: CompType.url,
-  icon: Icon.Url
-// },{
+const CommonComponentList = [
+//{
 //   label: '满意度',
 //   name: '满意度',
 //   type: CompType.satisfactionLevel
@@ -265,7 +282,8 @@ const CommonComponentList = [{
 //   label: '政治面貌',
 //   name: '政治面貌',
 //   type: CompType.radio
-}]
+// }
+]
 
 // 组件列表
 export const CompListData:CompCategoryType[] = [{
@@ -274,24 +292,31 @@ export const CompListData:CompCategoryType[] = [{
   type: CompListType.basic,
   children: [...BasicComponentList]
 },{
+  name: '日期和时间',
+  label: '日期和时间',
+  type: CompListType.basic,
+  children: [...TimeComponentList]
+},{
   name: '布局',
   label: '布局',
   type: CompListType.layout,
   children: [...LayoutComponentList]
-// },{
-//   name: '联系方式',
-//   label: '联系方式',
-//   type: CompListType.personal,
-//   children: [...PersonalComponentList]
-// },{
+},{
+  name: '个人信息',
+  label: '个人信息',
+  type: CompListType.personal,
+  children: [...PersonalComponentList]
+},
+//{
 //   name: '高级',
 //   label: '高级',
 //   type: CompListType.advanced,
 //   children: []
 //   //  [...AdvancedComponentList]
-}, {
-  name: '常见题目',
-  label: '常见题目',
-  type: CompListType.common,
-  children:  [...CommonComponentList]
-}]
+// }, {
+//   name: '通用',
+//   label: '通用',
+//   type: CompListType.common,
+//   children:  [...CommonComponentList]
+// }
+]

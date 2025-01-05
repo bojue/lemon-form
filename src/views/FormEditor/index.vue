@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="content">
+    <div class="content editor-content">
       <div class="comps">
         <div class="comp-category-item" v-for="compCategory in compList">
           <div class="category-title">
@@ -31,7 +31,9 @@
 
       </div>
       <div class="editor">
-        <div class="form">
+        <div class="form" v-bind:class="{
+          'no-data': !pageCompList.length
+        }">
           <div class="body">
             <div class="form-header">
               <!-- <div class="header-img"> <img src="/src/assets/background/bg.png"/></div> -->
@@ -99,7 +101,7 @@
         </div>
 
       </div>
-      <CompSetting v-if="activeComp.id" :key="activeComp.id + updateCompKey" :selectForm="selectForm"
+      <CompSetting  v-if="activeComp.id" :key="activeComp.id + updateCompKey" :selectForm="selectForm"
         :selectComp="getActiveComp()"></CompSetting>
     </div>
   </div>
@@ -115,6 +117,7 @@ import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import { useSelectCompStore } from '@/stores/selectCompStore'
 import { useRoute, createRouter } from 'vue-router';
 import { CheckOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
 
 
 import * as _ from 'lodash'
@@ -286,6 +289,10 @@ const addItem = (type: 'new' | 'other', item: any, index: number) => {
 
 
 
+const deleteSuccess = (compName = '') => {
+  message.success(`【${compName}】删除成功！`, 1);
+};
+
 const compControl = (controlType: string, value: any) => {
   const index = _.findIndex(pageCompList.value, (item: any) => item.id === value.id)
   if (index === -1) {
@@ -300,9 +307,10 @@ const compControl = (controlType: string, value: any) => {
     pageCompList.value.splice(index + 1, 0, { ...newComp })
   }
   if (controlType === 'delete') {
-    pageCompList.value.splice(index, 1)
+    const deleteComp =  pageCompList.value.splice(index, 1)
     activeComp.value.id = pageCompList.value[index - 1]?.id
-  }
+    deleteSuccess(deleteComp?.[0]?.name)
+  } 
   initDataState()
   updateCompLineNumber()
 }
@@ -357,11 +365,27 @@ const handleDragHandle = (e: any) => {
   }
 }
 
-.content {
+.editor-content {
   display: grid;
   grid-template-columns: 270px 1fr 260px;
   padding: 0 0 0 20px;
   height: calc(100% - 86px);
+  min-width: 1120px;
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: 270px 1fr 260px;
+    overflow-x: auto;
+    .form {
+      width: auto ;
+      min-width: calc(100% - 20px);
+    }
+    
+  }
+
+
+}
+
+.content {
+
   /* background-image: url(/src/assets/form-editor/bg-body.png); */
 
   .category-title {
@@ -374,6 +398,7 @@ const handleDragHandle = (e: any) => {
 
   .comps {
     padding: 0 30px 0 10px;
+    background: #fafafa;
   }
 
   .compList {
@@ -392,7 +417,7 @@ const handleDragHandle = (e: any) => {
       padding: 0px 2px 0 10px;
       border-radius: 5px;
       /* color: #141E31; */
-      color: #314666;
+      color: rgba(0, 0, 0, 0.45);
       font-size: 15px;
       border: 1px solid #ebebeb;
       background: #fff;
@@ -469,12 +494,32 @@ const handleDragHandle = (e: any) => {
     margin-left: 50%;
     display: grid;
     padding-bottom: 10px;
+
+    .sortable-chosen:not(.active-comp){
+      background: aliceblue;
+      border-radius: 4px;
+      border:1px dashed #94b4ff;
+      width: calc(100% - 0px);
+      padding: 48px 50px;
+      text-align: center;
+      margin: 2px 0;
+    }
+
+    &.no-data {
+      .sortable-chosen {
+        margin: 2px;
+        width: calc(100% - 4px);
+      }
+    }
+
   }
 
   .form-item {
     position: relative;
     background: #fff;
   }
+
+
 
   .active-comp {
     /* background: mintcream; */
@@ -485,13 +530,12 @@ const handleDragHandle = (e: any) => {
     border-top: 1px dashed #ccc; */
     /* border: 1px dashed #1677ff; */
     /* background: lightyellow; */
-    /* background: aliceblue; */
-    /* rgba(0,255,0,0.1); */
+    background:aliceblue;
     /* darkseagreen; */
     border-radius: 5px;
     position: relative;
     box-shadow: 0px 4px 16px 4px rgba(31, 35, 41, 0.03), 0px 4px 8px 0px rgba(31, 35, 41, 0.02), 0px 2px 4px -4px rgba(31, 35, 41, 0.02);
-    border: 1px solid #94b4ff;
+    border: 1px dashed #94b4ff;
 
     &::before {
       content: '';
@@ -522,7 +566,7 @@ const handleDragHandle = (e: any) => {
     &.dragenter {
       border-color: #1677ff;
       color: #1677ff;
-      background: aliceblue;
+      background: ≈;
     }
 
   }

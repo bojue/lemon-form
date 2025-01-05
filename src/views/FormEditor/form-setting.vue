@@ -16,7 +16,7 @@
         <PageSubTitle v-if="showParams('pageSubTitle')"  :comp="selectComp" :key="selectComp._selectedId "/>
         <PageSubDescription v-if="showParams('pageSubTitle')" :comp="selectComp" :key="selectComp._selectedId "/>
         <Placeholder v-if="showParams('placeholder')" :comp="selectComp" :key="selectComp._selectedId "/>
-        <RangePlaceholder v-if="showParams('rangePlaceholder')" :comp="selectComp" :key="selectComp._selectedId "/>
+        <RangePlaceholder v-if="showParams('placeholderRange')" :comp="selectComp" :key="selectComp._selectedId "/>
         <LayoutType v-if="showParams('layoutType')" :comp="selectComp"/>
         <DividerText v-if="showParams('dividerValue')" :comp="selectComp" ></DividerText>
         <DividerBorderType v-if="showParams('dividerValue')" :comp="selectComp"></DividerBorderType>
@@ -106,7 +106,7 @@ watch([() => props.selectComp, () => props.selectForm],
 
 
 .setting {
-
+  background: #fafafa;
 }
 
 .comp-name {

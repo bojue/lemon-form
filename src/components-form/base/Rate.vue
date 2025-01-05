@@ -1,7 +1,7 @@
 
 
 <template>
-  <a-rate class='item' v-model:value="props.value" :character="rateCharacter" :count="props.rateCount" />
+  <a-rate class='item' v-model:value="props.value" :character="rateCharacter" :count="props.rateCount" :allowHalf="props.rateAllowHalf" />
 </template>
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
@@ -9,6 +9,7 @@ interface Props{
   value: string,
   rateCharacter: number | string
   rateCount: number
+  rateAllowHalf: boolean
 }
 
 const props = defineProps<Props>()
