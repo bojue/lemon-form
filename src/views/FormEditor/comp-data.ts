@@ -74,6 +74,7 @@ interface CompCategoryType {
   name: string
   label: string 
   type: CompListType,
+  tooltip?: string
   children: CompItemType[]
 }
 
@@ -305,6 +306,7 @@ export const CompListData:CompCategoryType[] = [{
   name: '个人信息',
   label: '个人信息',
   type: CompListType.personal,
+  tooltip: '提供常见的个人信息配置，同时方便后期数据统计',
   children: [...PersonalComponentList]
 },
 //{

@@ -25,6 +25,7 @@ import Description from '@/components-form-setting/base/Description.vue';
 
 const compStore: any = useSelectCompStore()
 
+
 const handleChangeInput = (event: any) => {
   const data = event.target.value 
   compStore.updateCurrentComp({

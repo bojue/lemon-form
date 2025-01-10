@@ -17,7 +17,6 @@
               {{ component.title }}
             </div>
           </a-typography-text>
-
         </span>
       </a-typography-title>
     </div>
@@ -47,7 +46,7 @@
 
           <span class="add-item">
             <a-typography-text type="warning" @click="addItem('new')">
-              <PlusCircleTwoTone class="icon" :style="{ fontSize: '16px', color: '#646a73' }" />
+              <ControlTwoTone class="icon" :style="{ fontSize: '16px', color: '#646a73' }" />
               <span class="add-label">添加单项 </span>
             </a-typography-text>
           </span>
@@ -57,11 +56,17 @@
             <span class="line"></span>
           </span> -->
           <span class="add-item">
-
             <a-typography-text type="warning" :class="{ disabled: checkAddOtherClass() }"
               @click="!checkAddOtherClass() && addItem('other')">
               <PlusCircleTwoTone class="icon" :style="{ fontSize: '16px', color: '#646a73' }" />
               <span class="add-label">添加其他 </span>
+            </a-typography-text>
+          </span>
+          <span class="add-item">
+            <a-typography-text type="warning"
+              @click="batchChangeData">
+              <ControlTwoTone class="icon" :style="{ fontSize: '16px', color: '#646a73' }" />
+              <span class="add-label">批量操作 </span>
             </a-typography-text>
           </span>
         </div>
@@ -91,7 +96,14 @@
         <DeleteOutlined class="control" />
       </a-tooltip>
     </div>
+    <BatchOperationData 
+    v-if="openBatchOperationDataBool"
+    :open="openBatchOperationDataBool"
+    :dataList="component.dataList"
+    @handleBatchOperation="handleBatchOperation"
+     />
   </div>
+
 
 </template>
 
@@ -123,6 +135,10 @@ import IdCardComponent from '@/components-form/contact-information/IdCard.vue'
 import EmailComponent from '@/components-form/contact-information/Email.vue'
 import WXComponent from '@/components-form/contact-information/WX.vue'
 import AddressComponent from '@/components-form/contact-information/Address.vue'
+
+// 组件
+import BatchOperationData from '@/components/form/batchOperationData.vue'
+
 import * as _ from 'lodash'
 import { useSelectCompStore } from '@/stores/selectCompStore'
 import { v4 as uuidv4 } from 'uuid';
@@ -140,6 +156,9 @@ interface Props {
 
 const compStore = useSelectCompStore()
 const props = defineProps<Props>()
+
+// 批量操作
+const openBatchOperationDataBool = ref(false)
 
 const compConfig = props.component // 组件配置
 const currentComp = getCompConfig(props.type)//组件
@@ -178,6 +197,14 @@ const updateParams = (params: string, value: any) => {
 const handleChangeRequired = (value: boolean) => {
   props.component.isRequired = value
   compStore.updateCurrentCompKey(uuidv4())
+}
+
+// 批量操作
+const handleBatchOperation = (isOk: boolean, dataList: any[]) => {
+  openBatchOperationDataBool.value = false
+  if(isOk) {
+    updateParams('dataList', dataList)
+  }
 }
 
 const displaySection = computed(() => !['Divider', 'Paging'].includes(props.type))
@@ -227,6 +254,10 @@ const addItem = (type: string) => {
   emit('addItem', type)
 }
 
+const batchChangeData = () => {
+  openBatchOperationDataBool.value =  true
+}
+
 const checkAddOtherClass = () => {
   return _.filter(props.component.dataList, { subType: 'other' }).length > 0
 }
@@ -267,11 +298,6 @@ const checkAddOtherClass = () => {
   white-space: normal;
   font-weight: 400;
 
-  &.active,
-  &:hover,
-  &:focus {
-    // border: 1px solid #e0e0e0;
-  }
 
   /* 不换行 */
   overflow: hidden;
@@ -433,8 +459,6 @@ const checkAddOtherClass = () => {
   border-radius: 6px;
   cursor: move;
 
-  // border: 1px solid #e0e0e0;
-  // background: #fff;
   img {
     width: 20px;
     position: absolute;

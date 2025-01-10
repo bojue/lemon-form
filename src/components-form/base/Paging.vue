@@ -11,6 +11,20 @@
     <div class="page-sub-description border-radius" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription">
       {{pageSubDescription}}
     </div>
+
+    <!-- <span class="title-value">
+          <a-textarea class="input-comp" v-if="isDev && component?.id === selectedComp?.id"
+            :auto-size="{ minRows: 1, maxRows: 5 }" maxlength="50" v-model:value="component.title"
+            :placeholder="'请输入标题'" @change="changeValue($event, 'title')" allow-clear>
+          </a-textarea>
+
+          <a-typography-text v-else type="secondary">
+            <div class="description input-comp">
+              {{ component.title }}
+            </div>
+          </a-typography-text>
+        </span> -->
+        
   </div>
  </template>
  <script setup lang="ts">
@@ -50,8 +64,7 @@
 }
 
 onMounted(() => {
-  subTitle.value.innerText = props.pageSubTitle  || null;
-  subDescription.value.innerText = props.pageSubDescription || null
+
 })
  
  </script>

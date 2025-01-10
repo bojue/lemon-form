@@ -18,7 +18,9 @@ import { DatePicker,
   Select,
   List,
   Tooltip,
-  Popconfirm
+  Popconfirm,
+  Drawer,
+  Modal
 } from 'ant-design-vue';
 
 import App from './App.vue'
@@ -39,11 +41,13 @@ app.use(Upload);
 app.use(Divider);
 app.use(Select);
 app.use(List);
+app.use(Drawer);
 app.use(Tooltip);
 app.use(Popconfirm);
 
 app.use(Typography);
 app.use(DatePicker);
+app.use(Modal);
 
 app.use(createPinia())
 app.use(router)

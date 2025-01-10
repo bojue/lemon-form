@@ -14,6 +14,12 @@
         <div class="comp-category-item" v-for="compCategory in compList">
           <div class="category-title">
             {{ compCategory.name }}
+            <a-tooltip placement="top" v-if="compCategory.tooltip">
+              <template #title>
+                <span>{{ compCategory.tooltip }}</span>
+              </template>
+              <QuestionCircleOutlined />
+          </a-tooltip>
           </div>
           <VueDraggable v-model="compCategory.children" :animation="0"
             :group="{ name: 'sevenBotForm', pull: 'clone', put: false }" :sort="false" :clone="onClone"
@@ -28,13 +34,19 @@
             </div>
           </VueDraggable>
         </div>
-
       </div>
       <div class="editor">
+        <div class="preview-control" title="预览" @click="preview">
+                <img :src="Icon.Preview" alt="">
+                <div class="label">
+                  预览
+                </div>
+              </div>
         <div class="form" v-bind:class="{
           'no-data': !pageCompList.length
         }">
           <div class="body">
+    
             <div class="form-header">
               <!-- <div class="header-img"> <img src="/src/assets/background/bg.png"/></div> -->
               <!-- <div class="title" >
@@ -79,7 +91,7 @@
                   </div>
                 </template>
               </VueDraggable>
-
+      
             </div>
 
             <div class="form-footer" @click="selectComp(pageFooter)" :class="{
@@ -105,6 +117,13 @@
         :selectComp="getActiveComp()"></CompSetting>
     </div>
   </div>
+  <PreviewPage 
+    :open="openDraw" 
+    :pageCompList="pageCompList"
+    :pageFooter="pageFooter"
+    @onClose="onClose"></PreviewPage>
+
+
 </template>
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
@@ -112,6 +131,7 @@ import { computed, h, onMounted, reactive, ref, watch, } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { CompListData, CompType, IgnoreLineNumberTypeList } from './comp-data'
 import CompSetting from '@/views/FormEditor/form-setting.vue'
+import PreviewPage from '@/views/Preview/index.vue'
 import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import { useSelectCompStore } from '@/stores/selectCompStore'
@@ -121,12 +141,14 @@ import { message } from 'ant-design-vue';
 
 
 import * as _ from 'lodash'
+import Icon from './comp-icon'
 
 interface ActiveCompType {
   type: 'component' | 'header'
   id: string
 }
 
+const openDraw = ref(false)
 const compList = ref([...CompListData]) // 来源组件列表
 
 /**
@@ -336,9 +358,17 @@ const handleDragHandle = (e: any) => {
   const { type } = e
   noDataContentRef.value = type
 }
+
+const preview = () => {
+  openDraw.value = true
+}
+
+const onClose = () => {
+  openDraw.value = false
+}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .icon {
   width: 16px;
   height: 16px;
@@ -502,6 +532,7 @@ const handleDragHandle = (e: any) => {
       padding: 48px 50px;
       text-align: center;
       margin: 2px 0;
+      z-index: 0;
     }
 
     &.no-data {
@@ -565,7 +596,8 @@ const handleDragHandle = (e: any) => {
     &.dragenter {
       border-color: #1677ff;
       color: #1677ff;
-      background: ≈;
+      z-index: 1000;
+    
     }
 
   }
@@ -595,8 +627,43 @@ const handleDragHandle = (e: any) => {
       /* 显示省略号 */
     }
   }
+}
 
+.preview-control {
+  position: fixed;
+  box-shadow: 0 0 6px rgba(0,0,0,.08);
+  color: #666;
+  width: 50px;
+  height: 55px;
+  top: 0;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px 4px;
+  background: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #fff;
+  transform: translateX(374px);
+  left: 50%;
+  top: 66px;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+  .label {
+    font-size: 12px;
+    padding-top: 5px;
+  }
+  &:hover {
+    color: #1677ff;
+    background: #fafafa;
+  }
+}
 
+::v-deep(.ant-drawer-bottom>.ant-drawer-content-wrapper)   {
+  height: calc(100% - 150px) !important;
+  background: red;
 
 }
+
 </style>

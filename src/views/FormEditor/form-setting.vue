@@ -22,10 +22,10 @@
         <DividerBorderType v-if="showParams('dividerValue')" :comp="selectComp"></DividerBorderType>
         <Position v-if="showParams('position')" :comp="selectComp"/>
         <Size v-if="showParams('size')" :comp="selectComp"/>
-
         <RateConfig v-if="selectComp.type=== 'Rate'" :comp="selectComp" />
       </div>
-      <div class="category-name" v-if="['Button'].includes(selectComp.type)">
+      <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
+      <div class="category-name" v-if="!['Button','Paging', 'Divider'].includes(selectComp.type)">
         表单验证 
       </div>
       <div class="content">
@@ -47,6 +47,8 @@
 </template>
 <script setup lang="ts">
 import { ref, watch, reactive } from 'vue'
+
+// 基础设置
 import Title from '@/components-form-setting/base/Title.vue'
 import Position from '@/components-form-setting/base/Position.vue'
 import Size from '@/components-form-setting/base/Size.vue'
@@ -65,6 +67,11 @@ import ValidationSystem from '@/components-form-setting/form-validation/Validati
 import ValidationCustom from '@/components-form-setting/form-validation/ValidationCustom.vue'
 import CustomText from '@/components-form-setting/form-validation/CustomText.vue'
 import NumberConfig from '@/components-form-setting/form-validation/NumberConfig.vue'
+
+// 数据设置
+import UseOtherDataList from '@/components-form-setting/data/UseOtherDataList.vue'
+
+// 全局设置
 import DisplaySerialNumber from '@/components-form-setting/common-global-configurations/DisplaySerialNumber.vue'
 import DisplayDescription from '@/components-form-setting/common-global-configurations/DisplayDescription.vue'
 
@@ -114,14 +121,21 @@ watch([() => props.selectComp, () => props.selectForm],
   border-bottom: 1px solid rgba(0, 0, 0, .06);
 }
 .setting-base {
-  padding: 15px 25px;
+  padding: 5px 25px;
 }
 .category-name {
-  height: 42px;
-  line-height: 42px;
+  height: 56px;
+  line-height: 56px;
   font-weight: 700;
   color: rgba(0, 0, 0, .65);
   font-size: 14px;
+  &::before {
+    content: '';
+    border-left: 3px solid #1677ff;
+    padding-left: 8px;
+    height: 10px;
+    width: 100px;
+  }
 }
 .border-top {
   margin-top: 20px;

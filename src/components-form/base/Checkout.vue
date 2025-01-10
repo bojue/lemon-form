@@ -16,7 +16,6 @@
         <CloseOutlined />
       </span>
     </template>
-
   </a-checkbox-group>
 </template>
 <script setup lang="ts">

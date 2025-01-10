@@ -5,6 +5,8 @@ import Name from '/src/assets/form/name.svg';
 import type Email from "@/components-form/contact-information/Email.vue";
 import TelePhone from '/src/assets/form/telePhone.svg';
 
+type ClassifyList = 'personal'
+
 interface CompConfig {
   name: string 
   type: string // 类型
@@ -15,6 +17,8 @@ interface CompConfig {
   pagingValue?: string // 分页内容
   defaultValue: string | null// 默认值
   dataList?: any[] // 列表数据，包括单选，多选，下拉选择
+  dataOtherList?: any[] // 其他数据
+  useOtherDataList?: boolean // 是否使用其他数据
   layoutType?: 'horizontal' | 'vertical' // 横向布局，纵向布局
   isRequired?: boolean // 必填
   placeholder?: string // 占位符
@@ -23,6 +27,8 @@ interface CompConfig {
   customErrorMessage?: string // 自定义报错
   formValidationFormat?: string // 表单校验格式
   formValidationFormatRegex?: string // 表单正则校验内容
+  classify?: ClassifyList[] // 分类
+  
 
   // 按钮
   buttonText?: string // 按钮文本
@@ -50,13 +56,26 @@ export const isLayoutType: CompType[] = [CompType.paging, CompType.divider] // �
 export const isIgnoreRequireType: CompType[] = [CompType.paging, CompType.divider, CompType.button] // 忽略类型
 export const isPlaceholderType: CompType[] = [CompType.input, CompType.textarea, CompType.number, CompType.date, CompType.time,CompType.url, 
   CompType.email,
-  CompType.phone, CompType.idCard, CompType.location,
+  CompType.phone, 
+  CompType.idCard, 
+  CompType.location,
+  CompType.wx,
+  CompType.telePhone,
+  CompType.phone,
+  CompType.name
+]
+export const isPersonalClassifyList = [  
+  CompType.email,
+  CompType.phone, 
+  CompType.idCard, 
+  CompType.location,
   CompType.wx,
   CompType.telePhone,
   CompType.phone,
   CompType.name,
   CompType.gender
 ]
+export const isGender = [CompType.gender]
 export const isRangePlaceholderType: CompType[]  = [CompType.dateRange, CompType.timeRange]
 export const isNumberType: CompType[] = [CompType.number]
 export const isRate: CompType[] = [CompType.rate]
@@ -64,7 +83,6 @@ export const isButton: CompType[] = [CompType.button]
 
 export const getCompConfig = (type: CompType) => {
   let compConfig: any = {}
-
   if(dataListType.includes(type)) {
     compConfig  = {
       ...compConfig,
@@ -82,6 +100,28 @@ export const getCompConfig = (type: CompType) => {
         value: '选项三',
         _index: 2,
       }]
+    }
+  }
+
+  if(isGender.includes(type)) {
+    compConfig = {
+      ...compConfig,
+      layoutType: 'vertical',
+      dataList: [{
+        label: '男',
+        value: '男',
+        _index: 0,
+      },{
+        label: '女',
+        value: '女',
+        _index: 1,
+      }],
+      dataOtherList:[ {
+        label: '暂不透露',
+        value: '暂不透露',
+        _index: 2,
+      }],
+      useOtherDataList: true,
     }
   }
 
@@ -169,6 +209,13 @@ export const getCompConfig = (type: CompType) => {
     }
   }
 
+  // Personal类型
+  if(isPersonalClassifyList.includes(type)) {
+    compConfig = {
+      ...compConfig,
+      classify: ['personal']
+    }
+  }
 
 
   return compConfig
@@ -176,7 +223,6 @@ export const getCompConfig = (type: CompType) => {
 }
 
 export const getCompPlaceHolderDataByType = (type: string) => {
-
   const placeholderObject: any = {
     Name: '请输入名称',
     Gender: '请选择性别',
