@@ -133,6 +133,12 @@ const BasicComponentList:CompItemType[] = [
     name: '评分',
     type: CompType.rate,
     icon: Icon.Rate
+  },
+  {
+    label: 'NPS',
+    name: 'NPS',
+    type: CompType.nps,
+    icon: Icon.NPS
   }
 ]
 

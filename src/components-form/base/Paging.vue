@@ -35,7 +35,7 @@
  const subTitle = ref(null)
  const subDescription = ref(null)
 
-  const compStore = useSelectCompStore()
+ const compStore = useSelectCompStore()
  
  interface Props {
   pagingValue: string

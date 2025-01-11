@@ -23,6 +23,7 @@
         <Position v-if="showParams('position')" :comp="selectComp"/>
         <Size v-if="showParams('size')" :comp="selectComp"/>
         <RateConfig v-if="selectComp.type=== 'Rate'" :comp="selectComp" />
+        <NPSConfig v-if="selectComp.type=== 'NPS'" :comp="selectComp" />
       </div>
       <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
       <div class="category-name" v-if="!['Button','Paging', 'Divider'].includes(selectComp.type)">
@@ -61,6 +62,7 @@ import PageSubDescription from '@/components-form-setting/base/PageSubDescriptio
 import DividerText from '@/components-form-setting/base/DividerText.vue'
 import LayoutType from '@/components-form-setting/base/LayoutType.vue'
 import RateConfig from '@/components-form-setting/base/RateConfig.vue'
+import NPSConfig from '@/components-form-setting/base/NPSConfig.vue'
 import DividerBorderType from '@/components-form-setting/base/DividerBorderType.vue'
 import Required from '@/components-form-setting/form-validation/Required.vue'
 import ValidationSystem from '@/components-form-setting/form-validation/ValidationFormat.vue'
@@ -121,7 +123,7 @@ watch([() => props.selectComp, () => props.selectForm],
   border-bottom: 1px solid rgba(0, 0, 0, .06);
 }
 .setting-base {
-  padding: 5px 25px;
+  padding: 5px 15px;
 }
 .category-name {
   height: 56px;

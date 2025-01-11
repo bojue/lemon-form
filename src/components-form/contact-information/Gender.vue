@@ -9,12 +9,6 @@
     :key="isSelected + _updateKey ">
     <template #label="{ label, subType, value, _index }" class="item list-item ">
       <div class="editor-item" contenteditable="true" @blur="changeValue($event, _index)">{{ label }}</div>
-      <span class="other-val" v-if="subType === 'other'">
-        <a-input :disabled="isDev" class="item-comp" :value="value" placeholder="待填表者更新" />
-      </span>
-      <span class="delete" v-if="dataList.length > 1" @click="deleteSubItem(_index)" :title="label">
-        <CloseOutlined />
-      </span>
     </template>
   </a-checkbox-group>
 </template>

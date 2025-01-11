@@ -23,6 +23,7 @@ import Address from '/src/assets/form/address.svg'
 import ID from '/src/assets/form/id.svg'
 import TelePhone from '/src/assets/form/telePhone.svg'
 import Preview from '/src/assets/form/preview.svg'
+import NPS from '/src/assets/form/nps.svg'
 
 export default {
   Checkout,
@@ -49,6 +50,7 @@ export default {
   Address,
   ID,
   TelePhone,
-  Preview
+  Preview,
+  NPS
 
 }

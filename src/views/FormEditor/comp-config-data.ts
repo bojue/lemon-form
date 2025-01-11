@@ -28,7 +28,10 @@ interface CompConfig {
   formValidationFormat?: string // 表单校验格式
   formValidationFormatRegex?: string // 表单正则校验内容
   classify?: ClassifyList[] // 分类
-  
+
+  // NPS满意度
+  startValue?: number // 开始值
+  startValueList?: number[] // 开始值List
 
   // 按钮
   buttonText?: string // 按钮文本
@@ -78,8 +81,9 @@ export const isPersonalClassifyList = [
 export const isGender = [CompType.gender]
 export const isRangePlaceholderType: CompType[]  = [CompType.dateRange, CompType.timeRange]
 export const isNumberType: CompType[] = [CompType.number]
-export const isRate: CompType[] = [CompType.rate]
 export const isButton: CompType[] = [CompType.button]
+export const isRate: CompType[] = [CompType.rate]
+export const isNPS: CompType[] = [CompType.nps]
 
 export const getCompConfig = (type: CompType) => {
   let compConfig: any = {}
@@ -214,6 +218,17 @@ export const getCompConfig = (type: CompType) => {
     compConfig = {
       ...compConfig,
       classify: ['personal']
+    }
+  }
+
+  // NPS组件
+  if(isNPS) {
+    compConfig = {
+      ...compConfig,
+      defaultValue: 0,
+      startValue: 0,
+      rateCount:5,
+      startValueList: [0,1]
     }
   }
 
