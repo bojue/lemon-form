@@ -1,13 +1,14 @@
 <template>
   <div class="setting" >
     <div class="comp-name">
-      <a-typography-title :level="5">
-        {{ selectComp?.name }} 
+      <a-typography-title class="title-val" :level="5">
+        <img :src="currCompIcon" class="compIcon" alt="">
+        <span class="name">  {{ selectComp?.name || selectComp?.type === 'Button' && '提交按钮' }} </span>
       </a-typography-title>
     </div>
     <div class="setting-base">
       <div class="category-name">
-        基础设置
+        基础设置 
       </div>
       <div class="content m-b-0">
         <Title v-if="showParams('name') && !showParams('isLayoutComp')" :comp="selectComp" :key="selectComp._selectedId "/>
@@ -16,6 +17,7 @@
         <PageSubTitle v-if="showParams('pageSubTitle')"  :comp="selectComp" :key="selectComp._selectedId "/>
         <PageSubDescription v-if="showParams('pageSubTitle')" :comp="selectComp" :key="selectComp._selectedId "/>
         <Placeholder v-if="showParams('placeholder')" :comp="selectComp" :key="selectComp._selectedId "/>
+        <AddressPlaceholder v-if="showParams('address_placeholder')" :comp="selectComp" :key="selectComp._selectedId "/>
         <RangePlaceholder v-if="showParams('placeholderRange')" :comp="selectComp" :key="selectComp._selectedId "/>
         <LayoutType v-if="showParams('layoutType')" :comp="selectComp"/>
         <DividerText v-if="showParams('dividerValue')" :comp="selectComp" ></DividerText>
@@ -24,9 +26,10 @@
         <Size v-if="showParams('size')" :comp="selectComp"/>
         <RateConfig v-if="selectComp.type=== 'Rate'" :comp="selectComp" />
         <NPSConfig v-if="selectComp.type=== 'NPS'" :comp="selectComp" />
+        <DataList v-if="showParams('dataList')" :comp="selectComp"/>
+        <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
       </div>
-      <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
-      <div class="category-name" v-if="!['Button','Paging', 'Divider'].includes(selectComp.type)">
+      <div class="category-name" v-if="selectComp?.type && !['Button','Paging', 'Divider'].includes(selectComp.type)">
         表单验证 
       </div>
       <div class="content">
@@ -47,7 +50,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, reactive } from 'vue'
+import { ref, watch, reactive, computed } from 'vue'
 
 // 基础设置
 import Title from '@/components-form-setting/base/Title.vue'
@@ -56,6 +59,7 @@ import Size from '@/components-form-setting/base/Size.vue'
 import ButtonText from '@/components-form-setting/base/ButtonText.vue'
 import Description from '@/components-form-setting/base/Description.vue'
 import Placeholder from '@/components-form-setting/base/Placeholder.vue'
+import AddressPlaceholder from '@/components-form-setting/base/AddressPlaceholder.vue'
 import RangePlaceholder from '@/components-form-setting/base/RangePlaceholder.vue'
 import PageSubTitle from '@/components-form-setting/base/PageSubTitle.vue'
 import PageSubDescription from '@/components-form-setting/base/PageSubDescription.vue'
@@ -72,6 +76,7 @@ import NumberConfig from '@/components-form-setting/form-validation/NumberConfig
 
 // 数据设置
 import UseOtherDataList from '@/components-form-setting/data/UseOtherDataList.vue'
+import DataList from '@/components-form-setting/data/DataList.vue'
 
 // 全局设置
 import DisplaySerialNumber from '@/components-form-setting/common-global-configurations/DisplaySerialNumber.vue'
@@ -79,6 +84,9 @@ import DisplayDescription from '@/components-form-setting/common-global-configur
 
 import { hasOwnPropertyFunction, verifyRegularityCompList } from '@/views/FormEditor/comp-config-data'
 import * as _ from 'lodash'
+
+import { CompListData } from '@/views/FormEditor/comp-data'
+import Icon from './comp-icon'
 
 
 interface Props {
@@ -89,6 +97,17 @@ interface Props {
 const props = defineProps<Props>()
 const selectComp = reactive(props.selectComp)
 const selectForm = reactive(props.selectForm)
+
+const currCompIcon = computed(() => {
+  let _list: any[] = []
+  CompListData.map(item =>{
+    _list = [..._list, ...item.children]})
+  const comp = _.filter(_list, {
+    type : selectComp.type
+  })?.[0]?.icon
+
+  return comp || selectComp?.type === 'Button' && Icon.Button
+})
 
 const showParams = (params: string) => {
   const bool = hasOwnPropertyFunction(selectComp, params)
@@ -111,16 +130,28 @@ watch([() => props.selectComp, () => props.selectForm],
 </script>
 
 <style>
+.comp-name {
+  .compIcon {
+    width: 18px;
+  }
 
+.name {
+  color: rgba(0, 0, 0, 0.65);
+  padding: 0 8px;
+}
 
+}
 
 .setting {
   background: #fafafa;
 }
 
 .comp-name {
-  padding: 15px 15px 10px;
+  padding: 10px 10px 0 15px;
   border-bottom: 1px solid rgba(0, 0, 0, .06);
+  .title-val {
+
+  }
 }
 .setting-base {
   padding: 5px 15px;

@@ -24,6 +24,7 @@ import ID from '/src/assets/form/id.svg'
 import TelePhone from '/src/assets/form/telePhone.svg'
 import Preview from '/src/assets/form/preview.svg'
 import NPS from '/src/assets/form/nps.svg'
+import Button from '/src/assets/form/button.svg'
 
 export default {
   Checkout,
@@ -51,6 +52,7 @@ export default {
   ID,
   TelePhone,
   Preview,
-  NPS
+  NPS,
+  Button
 
 }

@@ -128,6 +128,9 @@ const BasicComponentList:CompItemType[] = [
     type: CompType.url,
     icon: Icon.Url
   },
+]
+
+const RateComponentList: CompItemType[] = [
   {
     label: '评分',
     name: '评分',
@@ -298,6 +301,11 @@ export const CompListData:CompCategoryType[] = [{
   label: '基础',
   type: CompListType.basic,
   children: [...BasicComponentList]
+},{
+  name: '评分和满意度',
+  label: '评分和满意度',
+  type: CompListType.basic,
+  children: [...RateComponentList]
 },{
   name: '日期和时间',
   label: '日期和时间',

@@ -46,7 +46,7 @@
 
           <span class="add-item">
             <a-typography-text type="warning" @click="addItem('new')">
-              <ControlTwoTone class="icon" :style="{ fontSize: '16px', color: '#646a73' }" />
+              <PlusCircleTwoTone class="icon" :style="{ fontSize: '16px', color: '#646a73' }" />
               <span class="add-label">添加单项 </span>
             </a-typography-text>
           </span>
@@ -88,6 +88,12 @@
           <span>复制</span>
         </template>
         <CopyOutlined class="control" />
+      </a-tooltip>
+      <a-tooltip placement="left" @click="compControl($event, 'copy')">
+        <template #title>
+          <span>逻辑</span>
+        </template>
+        <BranchesOutlined class="control" />
       </a-tooltip>
       <a-tooltip placement="left" :color="'#f50'" @click="compControl($event, 'delete')">
         <template #title>
@@ -370,6 +376,10 @@ const checkAddOtherClass = () => {
 
 ::v-deep(.ant-input-affix-wrapper-disabled) {
   background: #ffffff !important;
+}
+
+::v-deep(.ant-select-disabled:where(.css-dev-only-do-not-override-17yhhjv).ant-select:not(.ant-select-customize-input) .ant-select-selector) {
+  background: #fff;
 }
 
 ::v-deep(.ant-divider-horizontal.ant-divider-with-text::before) {

@@ -1,22 +1,38 @@
 <template>
- <a-input v-model:value="props.value" placeholder="Basic usage" >
-  <template #prefix>
-        <user-outlined />
-      </template>
- </a-input>
+  <a-cascader v-model:value="props.value" style="margin-bottom: 10px;width:100%" :options="options"
+    :placeholder="props.address_placeholder"
+    :disabled="isDev" >
+    <template #prefix>
+      <!-- <StepBackwardOutlined /> -->
+    </template>
+  </a-cascader>
+  <a-input v-model:value="props.value" 
+    :placeholder="props.address_detail_placeholder"
+    :disabled="isDev">
+    <template #prefix>
+      <!-- <user-outlined />  -->
+    </template>
+  </a-input>
 </template>
 <script setup lang="ts">
+import { addressData } from '@/views/FormEditor/comp-address-data';
 import { ref, reactive } from 'vue'
+import { IdcardTwoTone } from '@ant-design/icons-vue';
 
-const radioStyle = reactive({
+interface Props {
+  id: string
+  address_placeholder: string
+  address_detail_placeholder: string
+  value: string
+  isDev: boolean
+}
 
-});
+const props = defineProps<Props>()
 
-const props = defineProps({
-  value: {
-    type: String
-  },
-})
+const options = ref([...addressData])
+
+
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+
 </style>

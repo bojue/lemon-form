@@ -20,7 +20,8 @@ import { DatePicker,
   Tooltip,
   Popconfirm,
   Drawer,
-  Modal
+  Modal,
+  Cascader
 } from 'ant-design-vue';
 
 import App from './App.vue'
@@ -43,6 +44,7 @@ app.use(Select);
 app.use(List);
 app.use(Drawer);
 app.use(Tooltip);
+app.use(Cascader);
 app.use(Popconfirm);
 
 app.use(Typography);

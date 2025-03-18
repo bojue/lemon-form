@@ -1,12 +1,19 @@
 <template>
   <div class="setting-item">
-    <a-typography-text type="secondary" class="block-title2">NPS取值范围</a-typography-text>
+    <a-typography-text type="secondary" class="block-title2">取值范围
+      <a-tooltip placement="top">
+        <template #title>
+          <span>开始值可以选择0，结束值最小值是3</span>
+        </template>
+        <QuestionCircleOutlined />
+    </a-tooltip>
+    </a-typography-text>
   </div>
   <div class="setting-item g-2">
-    <a-select v-model:value="comp.startValue" style="width: 100px" class="abs-item" @change="changeStartValue">
+    <a-select v-model:value="comp.startValue" style="width: 110px" class="abs-item" @change="changeStartValue">
       <a-select-option :value="item" v-for="item in comp.startValueList">{{ item }}</a-select-option>
     </a-select>
-    <a-select v-model:value="comp.rateCount" style="width: 100px" class="abs-item" @change="changeEndValue">
+    <a-select v-model:value="comp.rateCount" style="width: 110px" class="abs-item" @change="changeEndValue">
       <a-select-option :value="item.value" v-for="item in dataList">{{ item.name }}</a-select-option>
     </a-select>
   </div>
@@ -63,6 +70,7 @@ const changeEndValue = (event: any) => {
 .g-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
 }
 
 ::v-deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-radio-button-wrapper) {

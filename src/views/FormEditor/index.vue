@@ -10,6 +10,9 @@
     </div>
 
     <div class="content editor-content">
+      <div class="sidebar">
+
+      </div>
       <div class="comps">
         <div class="comp-category-item" v-for="compCategory in compList">
           <div class="category-title">
@@ -59,7 +62,7 @@
               </div> -->
             </div>
             <div class="form-body form-body-content">
-              <VueDraggable v-model="pageCompList" :animation="0" group="sevenBotForm" ghostClass="ghost"
+              <VueDraggable v-model="pageCompList" :animation="150" group="sevenBotForm" ghostClass="ghost"
                 handle=".handle"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
                 <template v-if="!pageCompList.length">
@@ -68,10 +71,12 @@
                     <div class="no-data-content" :class="[{
                       'dragenter': noDataContentRef === 'dragenter',
                     }]">
-                      <span class="text" v-if="noDataContentRef === 'dragenter'">
+                      <!-- <span class="text" v-if="noDataContentRef === 'dragenter'">
                         鼠标释放，即可完成创建
-                      </span>
-                      <span class="text" v-else>
+                      </span> -->
+                      <span class="text" :class="{
+                        'has-data': pageCompList.length
+                      }">
                         点击左侧题目 / 拖拽题目到此区域
                       </span>
 
@@ -278,8 +283,6 @@ const selectComp = (item: any) => {
     ...item
   })
   activeComp.value.id = item.id
-
-  console.log(item, item.id)
 }
 
 const updateDataListIndex = (index: number) => {
@@ -396,21 +399,23 @@ const onClose = () => {
 
 .editor-content {
   display: grid;
-  grid-template-columns: 270px 1fr 260px;
-  padding: 0 0 0 20px;
+  grid-template-columns:56px 270px 1fr 260px;
+  padding: 0 0 0 0px;
   height: calc(100% - 86px);
-  min-width: 1120px;
-  @media screen and (max-width: 1280px) {
-    grid-template-columns: 270px 1fr 260px;
+  @media(max-width: 1480px) {
+    grid-template-columns:56px 220px 1fr  220px;
     overflow-x: auto;
     .form {
       width: auto ;
-      min-width: calc(100% - 20px);
     }
-    
   }
-
-
+  @media(max-width: 1180px) {
+    grid-template-columns:56px 270px 1fr;
+    overflow-x: auto;
+    .form {
+      width: auto ;
+    }
+  }
 }
 
 .content {
@@ -426,7 +431,7 @@ const onClose = () => {
   }
 
   .comps {
-    padding: 0 30px 0 10px;
+    padding: 0 30px 0 20px;
     background: #fafafa;
   }
 
@@ -643,7 +648,7 @@ const onClose = () => {
   border-radius: 5px;
   cursor: pointer;
   border: 1px solid #fff;
-  transform: translateX(374px);
+  transform: translateX(388px);
   left: 50%;
   top: 66px;
   img {
@@ -664,6 +669,10 @@ const onClose = () => {
   height: calc(100% - 150px) !important;
   background: red;
 
+}
+
+.has-data {
+  background: red !important;
 }
 
 </style>

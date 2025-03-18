@@ -39,6 +39,14 @@ interface CompConfig {
   position?: 'left' | 'right' | 'center' // 按钮位置
   buttonIconShowBool?: boolean // 按钮图标
 
+  // 地址
+  address?: string[] // 地址
+  address_detail?: string // 详细地址
+  address_default?: string[] // 默认地址
+  address_detail_default?: string // 默认详细地址
+  address_placeholder?: string // 地址占位符
+  address_detail_placeholder?: string // 详细地址占位符
+
   // 扩展字段
   minValue?: number // 最小值
   maxValue?: number // 最大值
@@ -84,6 +92,7 @@ export const isNumberType: CompType[] = [CompType.number]
 export const isButton: CompType[] = [CompType.button]
 export const isRate: CompType[] = [CompType.rate]
 export const isNPS: CompType[] = [CompType.nps]
+export const isAddress: CompType[] = [CompType.address]
 
 export const getCompConfig = (type: CompType) => {
   let compConfig: any = {}
@@ -205,6 +214,7 @@ export const getCompConfig = (type: CompType) => {
   if(isButton.includes(type)) {
     compConfig = {
       ...compConfig,
+      type,
       title: '提交按钮',
       buttonText: '提交',
       size: 'large',
@@ -227,11 +237,23 @@ export const getCompConfig = (type: CompType) => {
       ...compConfig,
       defaultValue: 0,
       startValue: 0,
-      rateCount:5,
+      rateCount:10,
       startValueList: [0,1]
     }
   }
 
+  // 地址
+  if(isAddress.includes(type)) {
+    compConfig = {
+      ...compConfig,
+      address: [],
+      address_detail: '',
+      address_default: [],
+      address_detail_default: '',
+      address_placeholder: '请选择省/市/区',
+      address_detail_placeholder: '请输入详细地址',
+    }
+  }
 
   return compConfig
 
