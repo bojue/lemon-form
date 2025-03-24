@@ -1,5 +1,7 @@
 <template>
- <a-input :disabled="isDev" :title="isDev ? disableInputByDev : placeholder" class="item-comp" v-model="inputValue" 
+ <a-input 
+ :disabled="isDev" :title="isDev ? disableInputByDev : placeholder" class="item-comp" 
+ v-model:value="inputValue" 
  :placeholder="placeholder || '提示信息'" />
 </template>
 <script setup lang="ts">
@@ -9,7 +11,7 @@ import { disableInputByDev } from '@/views/FormEditor/comp-config-data'
 interface Props {
   id: string
   placeholder: string
-  value: string
+  value: string | null
   isDev: boolean
 }
 

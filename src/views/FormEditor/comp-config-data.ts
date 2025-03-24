@@ -29,6 +29,9 @@ interface CompConfig {
   formValidationFormatRegex?: string // 表单正则校验内容
   classify?: ClassifyList[] // 分类
 
+  // 值
+  value?: string | string[] | null // 值
+
   // NPS满意度
   startValue?: number // 开始值
   startValueList?: number[] // 开始值List
@@ -63,9 +66,13 @@ export const defaultConfig: CompConfig = {
 }
 
 export const dataListType: CompType[] = [CompType.checkout, CompType.radio, CompType.select] // 数组列表
-export const isLayoutType: CompType[] = [CompType.paging, CompType.divider] // 忽略类型
-export const isIgnoreRequireType: CompType[] = [CompType.paging, CompType.divider, CompType.button] // 忽略类型
-export const isPlaceholderType: CompType[] = [CompType.input, CompType.textarea, CompType.number, CompType.date, CompType.time,CompType.url, 
+export const isLayoutType: CompType[] = [CompType.paging, CompType.divider] 
+export const hasIgnoreRequireType: CompType[] = [CompType.paging, CompType.divider, CompType.button]  // 忽略类型
+export const hasDefaultValue: CompType[] = [
+  CompType.number, 
+  CompType.input
+] // 有默认值的组件
+export const hasPlaceholderType: CompType[] = [CompType.input, CompType.textarea, CompType.number, CompType.date, CompType.time,CompType.url, 
   CompType.email,
   CompType.phone, 
   CompType.idCard, 
@@ -96,6 +103,13 @@ export const isAddress: CompType[] = [CompType.address]
 
 export const getCompConfig = (type: CompType) => {
   let compConfig: any = {}
+  
+  if(hasDefaultValue.includes(type)){
+    compConfig = {
+      ...compConfig,
+      value: null
+    }
+  }
   if(dataListType.includes(type)) {
     compConfig  = {
       ...compConfig,
@@ -155,7 +169,7 @@ export const getCompConfig = (type: CompType) => {
     }
   }
 
-  if(!isIgnoreRequireType.includes(type)) {
+  if(!hasIgnoreRequireType.includes(type)) {
     compConfig = {
       ...compConfig,
       isRequired: true,
@@ -164,7 +178,7 @@ export const getCompConfig = (type: CompType) => {
     }
   }
 
-  if(isPlaceholderType.includes(type)) {
+  if(hasPlaceholderType.includes(type)) {
     compConfig = {
       ...compConfig,
       placeholder:  getCompPlaceHolderDataByType(type) || '请输入'
@@ -279,6 +293,8 @@ export const getDefaultConfig = (type: CompType) => {
     ...defaultConfig,
     ...compConfig
   }
+
+  console.log('configData',configData)
   
   return {...configData}
 }

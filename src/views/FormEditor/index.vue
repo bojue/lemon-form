@@ -194,7 +194,6 @@ const defaultFormConfig = {
 
 onMounted(() => {
   useCompStore.initGlobalFormConfig({ ...defaultFormConfig })
-
   // 组件初始化
   pageFooter.value = getDefaultConfig(CompType.button)
   pageFooter.value.id = uuidv4()

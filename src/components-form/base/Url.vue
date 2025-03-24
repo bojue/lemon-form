@@ -2,7 +2,7 @@
   <a-input 
   :disabled="isDev" 
   :title="isDev ? disableInputByDev : placeholder" 
-  v-model:value="props.value" 
+  v-model:value="value" 
   :placeholder="placeholder || '提示信息'" >
     <template #prefix>
         <ie-outlined />
@@ -21,6 +21,7 @@
 }
 
 const props = defineProps<Props>()
+const value = ref(props.value || null)
  
  </script>
  <style lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <a-input v-model:value="props.value" :placeholder="placeholder" >
+  <a-input v-model:value="value" :placeholder="placeholder" >
    <template #prefix>
        <img class="icon" :src="Email" alt="">
      </template>
@@ -11,11 +11,11 @@
  interface Props {
   id: string
   placeholder: string
-  value: string
+  value: string 
   isDev: boolean
 }
-
 const props = defineProps<Props>()
+const value = ref(props.value || null)
  </script>
  <style lang="scss" scoped>
  .icon {

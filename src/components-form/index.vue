@@ -192,7 +192,6 @@ const changeValue = (event: any, params: string) => {
     const value = hasDataBool ? innerText : ''
     compConfig[params] = value
   }
-
 }
 
 const updateParams = (params: string, value: any) => {
