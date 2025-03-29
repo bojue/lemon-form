@@ -1,7 +1,7 @@
 <template>
  <a-input 
  :disabled="isDev" :title="isDev ? disableInputByDev : placeholder" class="item-comp" 
- v-model:value="inputValue" 
+ v-model:value="value" 
  :placeholder="placeholder || '提示信息'" />
 </template>
 <script setup lang="ts">
@@ -16,9 +16,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const inputValue = ref(props.value)
-
-watch(() => props.value, (newValue) => inputValue.value = newValue)
+const value = ref(props.value || null)
 </script>
 <style lang="scss">
 </style>

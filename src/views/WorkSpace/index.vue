@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import LogoComp from './../../components/Logo.vue'
+import { getCurrentTime  } from '@/utils/currentTime'
 
 const router = useRouter()
 
@@ -9,6 +10,7 @@ const toEditor = (item: any) => {
   const url = `${item.id}/form-editor`
   router.push(url)
 }
+
 
 const formList = ref([{
   id:1,
@@ -73,7 +75,8 @@ const countList = ref([{
             </div>
             <div class="data" @click="toEditor(item)" :title="item.name">
               <a-typography-title :level="5">{{item.name }}</a-typography-title>
-              <a-typography-text type="secondary">{{ item.time }}</a-typography-text>
+              <!-- Mock数据使用当前时间 -->
+              <a-typography-text type="secondary">{{ getCurrentTime() }}</a-typography-text>
             </div>
 
             <span class="state">

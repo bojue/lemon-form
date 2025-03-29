@@ -26,6 +26,11 @@ import Preview from '/src/assets/form/preview.svg'
 import NPS from '/src/assets/form/nps.svg'
 import Button from '/src/assets/form/button.svg'
 
+// 编辑器Icon
+import Logic from '/src/assets/form-editor/logic.svg'
+import Theme from '/src/assets/form-editor/theme.svg'
+import Question from '/src/assets/form-editor/question.svg'
+
 export default {
   Checkout,
   Email,
@@ -53,6 +58,9 @@ export default {
   TelePhone,
   Preview,
   NPS,
-  Button
+  Button,
+  Logic,
+  Theme,
+  Question
 
 }

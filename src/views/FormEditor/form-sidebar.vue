@@ -1,0 +1,54 @@
+<template>
+  <div class="sidebar" >
+    <div class="item" v-for="item in classifyList">
+      <img class="icon" :src="item.icon" alt="">
+      <div class="label">{{ item.label }}</div>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+import { ref, watch, reactive, computed } from 'vue'
+import Icon from './comp-icon'
+
+interface ClassifyType {
+  label: string
+  icon: any
+  type: 'questionBank' | 'theme' | 'logic'
+}
+
+const classifyList = ref<ClassifyType[]>([{
+  label: '题库',
+  icon: Icon.Question,
+  type: 'questionBank'
+// }, {
+//   label: '主题',
+//   icon: Icon.Theme,
+//   type: 'theme'
+// }, {
+//   label: '逻辑',
+//   icon: Icon.Logic,
+//   type: 'logic',
+
+},])
+
+
+
+</script>
+
+<style>
+.sidebar {
+  font-size: 12px;
+  color: #314666;
+}
+
+.item {
+  text-align: center;
+  height: 50px;
+  padding: 10px;
+  display: block;
+  .icon {
+    width: 18px;
+    display: inline-block;
+  }
+}
+</style>

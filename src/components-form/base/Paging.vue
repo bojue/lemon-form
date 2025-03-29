@@ -5,10 +5,10 @@
         {{ pagingValue }}
       </span>
     </a-divider>
-    <div class="page-title border-radius" contenteditable="true" @input="changeValue($event, 'pageSubTitle')" ref="subTitle">
+    <div v-if="isDev || !isDev && pageSubTitle"  class="page-title border-radius" contenteditable="true" @input="changeValue($event, 'pageSubTitle')" ref="subTitle">
       {{pageSubTitle}}
     </div>
-    <div class="page-sub-description border-radius" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription">
+    <div v-if="isDev || !isDev && pageSubDescription" class="page-sub-description border-radius" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription">
       {{pageSubDescription}}
     </div>
 
@@ -38,6 +38,7 @@
  const compStore = useSelectCompStore()
  
  interface Props {
+  isDev: boolean
   pagingValue: string
   pageSubTitle: string 
   pageSubDescription: string

@@ -72,6 +72,8 @@ onMounted(() => {
     border-radius: 6px;
     width: 30px;
     text-align: center;
+    padding:0;
+    height: 30px;
     cursor: pointer;
     &:hover:not(.isDev),
     &.hoverChildrenIndex {

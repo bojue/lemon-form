@@ -2,17 +2,17 @@
   <div class="form-editor">
     <div class="nav-data">
       <div class="header">
+        <div class="callback" @click="callback()">
+          <img src="@/assets/form-editor/callback.svg" alt="">
+        </div>
         <div class="title-data">
           <span class="name">Vue动态表单</span>
           <a-typography-text type="secondary" class='time'>编辑于2024-11-03 09:12</a-typography-text>
         </div>
       </div>
     </div>
-
     <div class="content editor-content">
-      <div class="sidebar">
-
-      </div>
+      <SidebarComp/>
       <div class="comps">
         <div class="comp-category-item" v-for="compCategory in compList">
           <div class="category-title">
@@ -96,9 +96,7 @@
                   </div>
                 </template>
               </VueDraggable>
-      
             </div>
-
             <div class="form-footer" @click="selectComp(pageFooter)" :class="{
               'form-item': true,
               'active-comp': activeComp.id == pageFooter?.id
@@ -118,8 +116,8 @@
         </div>
 
       </div>
-      <CompSetting  v-if="activeComp.id" :key="activeComp.id + updateCompKey" :selectForm="selectForm"
-        :selectComp="getActiveComp()"></CompSetting>
+      <SettingComp  v-if="activeComp.id" :key="activeComp.id + updateCompKey" :selectForm="selectForm"
+        :selectComp="getActiveComp()"></SettingComp>
     </div>
   </div>
   <PreviewPage 
@@ -135,7 +133,8 @@ import { VueDraggable } from 'vue-draggable-plus'
 import { computed, h, onMounted, reactive, ref, watch, } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { CompListData, CompType, IgnoreLineNumberTypeList } from './comp-data'
-import CompSetting from '@/views/FormEditor/form-setting.vue'
+import SidebarComp from '@/views/FormEditor/form-sidebar.vue'
+import SettingComp from '@/views/FormEditor/form-setting.vue'
 import PreviewPage from '@/views/Preview/index.vue'
 import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
@@ -147,6 +146,7 @@ import { message } from 'ant-design-vue';
 
 import * as _ from 'lodash'
 import Icon from './comp-icon'
+import router from '@/router'
 
 interface ActiveCompType {
   type: 'component' | 'header'
@@ -354,6 +354,10 @@ const getActiveCompIndex = () => {
   return _.findIndex(pageCompList.value, (item: any) => item.id === activeComp.value.id)
 }
 
+const callback = () => {
+  router.go(-1)
+}
+
 
 const handleDragHandle = (e: any) => {
   e.preventDefault()
@@ -534,6 +538,7 @@ const onClose = () => {
       border:1px dashed #94b4ff;
       width: calc(100% - 0px);
       padding: 48px 50px;
+      height: 116px;
       text-align: center;
       margin: 2px 0;
       z-index: 0;
@@ -601,7 +606,6 @@ const onClose = () => {
       border-color: #1677ff;
       color: #1677ff;
       z-index: 1000;
-    
     }
 
   }
@@ -665,13 +669,21 @@ const onClose = () => {
 }
 
 ::v-deep(.ant-drawer-bottom>.ant-drawer-content-wrapper)   {
-  height: calc(100% - 150px) !important;
-  background: red;
+  height: calc(100% - 50px) !important;
 
 }
 
-.has-data {
-  background: red !important;
+.callback {
+  position: absolute;
+  left: 12px;
+  padding-top: 16px;
+  cursor: pointer;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 }
+
 
 </style>

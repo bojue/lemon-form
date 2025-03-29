@@ -20,16 +20,12 @@
         </span>
       </a-typography-title>
     </div>
-    <!-- <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
-
-    </div> -->
-
     <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
-      <a-typography-text type="secondary" v-if="component?.id !== selectedComp?.id && isDev">
+      <div type="secondary" v-if="component?.id !== selectedComp?.id && isDev">
         <div class="description">
           {{ component.description }}
         </div>
-      </a-typography-text>
+      </div>
       <a-textarea v-else :auto-size="{ minRows: 1, maxRows: 5 }" v-model:value="component.description"
         :placeholder="'请输入描述'" @change="changeValue($event, 'description')" allow-clear>
 
@@ -89,7 +85,7 @@
         </template>
         <CopyOutlined class="control" />
       </a-tooltip>
-      <a-tooltip placement="left" @click="compControl($event, 'copy')">
+      <a-tooltip placement="left" @click="compControl($event, 'logic')">
         <template #title>
           <span>逻辑</span>
         </template>
@@ -455,7 +451,9 @@ const checkAddOtherClass = () => {
   }
 
   .comp-item-description {
-    margin-bottom: 10px;
+    padding-bottom: 10px;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
   }
 }
 

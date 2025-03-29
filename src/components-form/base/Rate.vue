@@ -17,6 +17,11 @@ const props = defineProps<Props>()
 </script>
 <style lang="scss" scoped>
 
+.item {
+  text-align: left;
+  margin-left: -10px;
+}
+
 .ant-rate-star-zero{
   color: rgba(0,0,0,1) !important;
   filter:grayscale(0);

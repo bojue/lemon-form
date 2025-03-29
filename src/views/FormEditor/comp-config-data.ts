@@ -68,10 +68,6 @@ export const defaultConfig: CompConfig = {
 export const dataListType: CompType[] = [CompType.checkout, CompType.radio, CompType.select] // 数组列表
 export const isLayoutType: CompType[] = [CompType.paging, CompType.divider] 
 export const hasIgnoreRequireType: CompType[] = [CompType.paging, CompType.divider, CompType.button]  // 忽略类型
-export const hasDefaultValue: CompType[] = [
-  CompType.number, 
-  CompType.input
-] // 有默认值的组件
 export const hasPlaceholderType: CompType[] = [CompType.input, CompType.textarea, CompType.number, CompType.date, CompType.time,CompType.url, 
   CompType.email,
   CompType.phone, 
@@ -103,13 +99,6 @@ export const isAddress: CompType[] = [CompType.address]
 
 export const getCompConfig = (type: CompType) => {
   let compConfig: any = {}
-  
-  if(hasDefaultValue.includes(type)){
-    compConfig = {
-      ...compConfig,
-      value: null
-    }
-  }
   if(dataListType.includes(type)) {
     compConfig  = {
       ...compConfig,
