@@ -15,7 +15,7 @@
             'cursor-move': true,
             'form-item': true,
           }">
-            <FormComponent :key="item?.id" :component="item" :type="item?.type" :isDev="false">
+            <FormComponent :key="item.id" :component="item" :type="item.type" :isDev="false">
             </FormComponent>
           </div>
           <div class="form-footer" :class="{

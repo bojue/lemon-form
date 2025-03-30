@@ -99,9 +99,9 @@
             </div>
             <div class="form-footer" @click="selectComp(pageFooter)" :class="{
               'form-item': true,
-              'active-comp': activeComp.id == pageFooter?.id
+              'active-comp': activeComp.id === pageFooter.id
             }" :style="{
-              textAlign: pageFooter.position
+              'text-align': pageFooter.position || 'left'
             }">
               <a-button v-if="pageFooter.buttonIconShowBool" class="submit" type="primary" :icon="h(CheckOutlined)" :size="pageFooter.size"
                 :style="{ 'padding': getSize(), 'lineHeight': getLineheight() }">
@@ -155,9 +155,10 @@ interface ActiveCompType {
 
 interface FooterType {
   id: string 
-  size: number
+  size: string
   buttonText: string
-  position: string
+  position: 'left' | 'right' | 'center'
+  buttonIconShowBool: boolean
 }
 
 const openDraw = ref(false)
@@ -176,8 +177,8 @@ const getSize = () => {
 }
 
 const getLineheight = () => {
-  const data = pageFooter?.value
-  return data?.size == 'large' ? "40px" : (data?.size == "small" ? "24px" : "32px")
+  const data = pageFooter.value
+  return data.size == 'large' ? "40px" : (data.size == "small" ? "24px" : "32px")
 }
 
 const pageHeader = ref({}) // 顶部
@@ -185,9 +186,10 @@ const pageCompList = ref<any[]>([]) // 页面组件内容
 
 const pageFooter = ref<FooterType>({
   id: '',
-  size: 100,
+  size: 'large',
   position: 'left',
-  buttonText: '提交'
+  buttonText: '提交',
+  buttonIconShowBool: true,
 }) // 底部
 
 const currentComp = ref()

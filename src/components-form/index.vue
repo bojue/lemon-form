@@ -133,14 +133,14 @@ import TimeRangeComponent from '@/components-form/base/TimeRange.vue'
 import NameComponent from '@/components-form/contact-information/Name.vue'
 import GenderComponent from '@/components-form/contact-information/Gender.vue'
 import PhoneComponent from '@/components-form/contact-information/Phone.vue'
-import TelePhoneComponent from '@/components-form/contact-information/Telephone.vue'
+import TelePhoneComponent from '@/components-form/contact-information/TelePhone.vue'
 import IdCardComponent from '@/components-form/contact-information/IdCard.vue'
 import EmailComponent from '@/components-form/contact-information/Email.vue'
 import WXComponent from '@/components-form/contact-information/WX.vue'
 import AddressComponent from '@/components-form/contact-information/Address.vue'
 
 // 组件
-import BatchOperationData from '@/components/form/batchOperationData.vue'
+import BatchOperationData from '@/components/form/BatchOperationData.vue'
 
 import * as _ from 'lodash'
 import { useSelectCompStore } from '@/stores/selectCompStore'
@@ -150,8 +150,8 @@ import NPS from './base/NPS.vue'
 interface Props {
   component: any,
   type: string,
-  lineNumber: string
-  formConfig: any
+  lineNumber?: string
+  formConfig?: any
   selectedComp?: any
   isDev: boolean
 }
