@@ -150,7 +150,7 @@ import NPS from './base/NPS.vue'
 interface Props {
   component: any,
   type: string,
-  lineNumber: string,
+  lineNumber: string
   formConfig: any
   selectedComp?: any
   isDev: boolean

@@ -46,7 +46,7 @@
                 </div>
               </div>
         <div class="form" v-bind:class="{
-          'no-data': !pageCompList.length
+          'no-data': !pageCompList?.length
         }">
           <div class="body">
     
@@ -65,8 +65,8 @@
               <VueDraggable v-model="pageCompList" :animation="150" group="sevenBotForm" ghostClass="ghost"
                 handle=".handle"
                 class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
-                <template v-if="!pageCompList.length">
-                  <div v-if="!pageCompList.length" @dragenter="handleDragHandle" @mouseleave="handleDragHandle"
+                <template v-if="!pageCompList?.length">
+                  <div v-if="!pageCompList?.length" @dragenter="handleDragHandle" @mouseleave="handleDragHandle"
                     @dragleave="handleDragHandle">
                     <div class="no-data-content" :class="[{
                       'dragenter': noDataContentRef === 'dragenter',
@@ -90,7 +90,7 @@
                     'form-item': true,
                     'active-comp': activeComp.id == item?.id
                   }" @click="selectComp(item)">
-                    <FormComponent :key="item?.id + pageCompList.length" @compControl="compControl"
+                    <FormComponent :key="item?.id" @compControl="compControl"
                       @addItem="addItem($event, item, index)" :component="item" :formConfig="selectForm"
                       :type="item?.type" :isDev="isFormEditorDevBool" :selectedComp="getActiveComp()"></FormComponent>
                   </div>
@@ -153,6 +153,13 @@ interface ActiveCompType {
   id: string
 }
 
+interface FooterType {
+  id: string 
+  size: number
+  buttonText: string
+  position: string
+}
+
 const openDraw = ref(false)
 const compList = ref([...CompListData]) // 来源组件列表
 
@@ -174,8 +181,14 @@ const getLineheight = () => {
 }
 
 const pageHeader = ref({}) // 顶部
-const pageCompList = ref([]) // 页面组件内容
-const pageFooter = ref({}) // 底部
+const pageCompList = ref<any[]>([]) // 页面组件内容
+
+const pageFooter = ref<FooterType>({
+  id: '',
+  size: 100,
+  position: 'left',
+  buttonText: '提交'
+}) // 底部
 
 const currentComp = ref()
 const updateCompKey = ref()

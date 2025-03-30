@@ -58,7 +58,9 @@ interface CompConfig {
   isLayoutComp?: boolean // 布局组件
 }
 export const defaultConfig: CompConfig = {
+  name: '',
   type: '',
+  description: null,
   dataValue: null,
   defaultValue: null,
   customErrorMessage: '',

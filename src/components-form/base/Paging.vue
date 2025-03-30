@@ -46,7 +46,7 @@
  
  const props = defineProps<Props>()
 
- const changeValue = (event: any, params) => {
+ const changeValue = (event: any, params: any) => {
   const hasDataBool = event.target.innerText !== null &&  event.target.innerText !== '\n'
   if(!hasDataBool) {
     event.target.innerHTML = null

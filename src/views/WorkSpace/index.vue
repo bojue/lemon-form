@@ -85,7 +85,7 @@ const countList = ref([{
           </div>
           <div class="des">
             <div class="count-item" v-for="(countItem, index) in countList" >
-              <a-typography-text>{{item[countItem.value] }}</a-typography-text>
+              <!-- <a-typography-text>{{item[countItem.value] }}</a-typography-text> -->
               <a-typography-text class="label" type="secondary">{{countItem.label }}</a-typography-text>
             </div>
           </div>

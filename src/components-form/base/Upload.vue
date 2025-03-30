@@ -29,7 +29,7 @@ const props = defineProps<Props>()
 
 const fileList = ref(props.fileList)
 
-const handleChange = (e) => {
+const handleChange = (e: any) => {
   console.log(e)
 }
 
