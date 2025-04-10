@@ -302,7 +302,9 @@ const onClone = (element: any) => {
 const createCompByClick = (item: any) => {
   const createElement =  createByClickOrClone(item)
   pageCompList.value.splice(pageCompList.value.length, 0, { ...createElement })
+  updateCompLineNumber()
 }
+
 
 
 const selectComp = (item: any) => {
