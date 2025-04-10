@@ -25,8 +25,6 @@ const toProfile = () => {
         <div class="title">🍋 柠檬表单</div>
         <a-typography-text class="description">表单搭建，如此简单</a-typography-text>
       </div>
-
-
       <a-button type="primary" :size="size" class="toUseForm" @click="toProfile">免费使用</a-button>
     </div>
 </template>

@@ -26,7 +26,7 @@
         <Size v-if="showParams('size')" :comp="selectComp"/>
         <RateConfig v-if="selectComp.type=== 'Rate'" :comp="selectComp" />
         <NPSConfig v-if="selectComp.type=== 'NPS'" :comp="selectComp" />
-        <DataList v-if="showParams('dataList')" :comp="selectComp"/>
+        <DataList v-if="showParams('dataList')" :comp="selectComp" />
         <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
       </div>
       <div class="category-name" v-if="selectComp?.type && !['Button','Paging', 'Divider'].includes(selectComp.type)">

@@ -27,11 +27,13 @@
           <VueDraggable v-model="compCategory.children" :animation="0"
             :group="{ name: 'sevenBotForm', pull: 'clone', put: false }" :sort="false" :clone="onClone"
             class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded compList">
-            <div v-for="item in compCategory.children" class="cursor-move h-50px bg-gray-500/5 item" v-bind:class="{
+            <div v-for="item in compCategory.children" class="cursor-move h-50px bg-gray-500/5 item"
+            v-bind:class="{
               'person': compCategory.type === 'Personal Component',
               'advanced': compCategory.type === 'Advanced Component',
               'layout': compCategory.type === 'Layout Component'
-            }">
+            }"
+            @click="createCompByClick(item)">
               <img class="icon" :src="item.icon" alt="" v-if="item.icon">
               {{ item.label }}
             </div>
@@ -278,7 +280,9 @@ watch(pageCompList, (newValue) => {
 })
 
 
-const onClone = (element: any) => {
+
+
+const createByClickOrClone = (element: any) => {
   const defaultComp: any = getDefaultConfig(element.type)
   const item = {
     ...defaultComp,
@@ -289,6 +293,15 @@ const onClone = (element: any) => {
     name: element.name
   }
   return { ...item }
+}
+ 
+const onClone = (element: any) => {
+  return  createByClickOrClone(element)
+}
+
+const createCompByClick = (item: any) => {
+  const createElement =  createByClickOrClone(item)
+  pageCompList.value.splice(pageCompList.value.length, 0, { ...createElement })
 }
 
 
