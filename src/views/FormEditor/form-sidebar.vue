@@ -47,8 +47,14 @@ const classifyList = ref<ClassifyType[]>([{
   padding: 10px;
   display: block;
   .icon {
-    width: 18px;
+    width: 20px;
     display: inline-block;
+  }
+
+  .label {
+    margin-top: 5px;
+    height: 20px;
+    line-height: 20px;
   }
 }
 </style>

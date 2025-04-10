@@ -406,8 +406,8 @@ const onClose = () => {
 
 <style scoped lang="scss">
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   margin-top: -4px;
 }
 
@@ -456,7 +456,7 @@ const onClose = () => {
   /* background-image: url(/src/assets/form-editor/bg-body.png); */
 
   .category-title {
-    font-weight: 700;
+    font-weight: 600;
     color: rgba(0, 0, 0, .65);
     padding: 15px 0px 15px;
     font-size: 14px;
@@ -464,7 +464,7 @@ const onClose = () => {
   }
 
   .comps {
-    padding: 0 30px 0 20px;
+    padding: 0 20px 0 20px;
     background: #fafafa;
   }
 
@@ -478,16 +478,18 @@ const onClose = () => {
     .item {
       /* border: 1px solid #D7D9DC; */
       /* background: rgba(0, 102, 255, .08); */
-      height: 32px;
-      line-height: 32px;
+      height: 38px;
+      line-height: 38px;
       text-align: left;
       padding: 0px 2px 0 10px;
       border-radius: 5px;
       /* color: #141E31; */
       color: rgba(0, 0, 0, 0.45);
       font-size: 15px;
-      border: 1px solid #ebebeb;
+      font-weight: 400;
+      // border: 1px solid #ebebeb;
       background: #fff;
+      box-shadow: 1px 1px 4px #CCC;;
 
       /* &.person {
         background: #E6F8F5;
@@ -707,11 +709,13 @@ const onClose = () => {
   position: absolute;
   left: 12px;
   padding-top: 16px;
-  cursor: pointer;
+  cursor: pointer !important;
+
 
   img {
     width: 24px;
     height: 24px;
+    cursor: pointer;
   }
 }
 

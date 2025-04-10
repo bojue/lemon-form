@@ -1,6 +1,8 @@
 <template>
   <a-date-picker :disabled="isDev" :title="isDev ? disableInputByDev : placeholder"
-  class="item-comp" v-model:value="props.value" />
+  class="item-comp" 
+   :placeholder="placeholder"
+  v-model:value="props.value" />
 </template>
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
