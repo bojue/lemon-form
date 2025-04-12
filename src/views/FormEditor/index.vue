@@ -9,6 +9,14 @@
           <span class="name">Vue动态表单</span>
           <a-typography-text type="secondary" class='time'>编辑于2024-11-03 09:12</a-typography-text>
         </div>
+        <div class="control">
+          <div class="cont-item">
+            <a-button type="default">暂存</a-button>
+          </div>
+          <div class="cont-item">
+            <a-button type="primary">发布</a-button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="content editor-content">
@@ -46,11 +54,13 @@
                 <div class="label">
                   预览
                 </div>
+
               </div>
         <div class="form" v-bind:class="{
           'no-data': !pageCompList?.length
         }">
           <div class="body">
+            <a-watermark :content="selectForm?.displayWaterMark ?selectForm?.waterMarkText: ''">
     
             <div class="form-header">
               <!-- <div class="header-img"> <img src="/src/assets/background/bg.png"/></div> -->
@@ -73,9 +83,6 @@
                     <div class="no-data-content" :class="[{
                       'dragenter': noDataContentRef === 'dragenter',
                     }]">
-                      <!-- <span class="text" v-if="noDataContentRef === 'dragenter'">
-                        鼠标释放，即可完成创建
-                      </span> -->
                       <span class="text" :class="{
                         'has-data': pageCompList.length
                       }">
@@ -114,11 +121,12 @@
                 {{ pageFooter.buttonText || '提交' }}
               </a-button>
             </div>
+            </a-watermark>
           </div>
         </div>
 
       </div>
-      <SettingComp  v-if="activeComp.id" :key="activeComp.id + updateCompKey" :selectForm="selectForm"
+      <SettingComp v-if="selectForm" :currentCompId="activeComp.id" :key="activeComp.id + updateCompKey" :selectForm="selectForm"
         :selectComp="getActiveComp()"></SettingComp>
     </div>
   </div>
@@ -127,6 +135,8 @@
     :pageCompList="pageCompList"
     :pageFooter="pageFooter"
     @onClose="onClose"></PreviewPage>
+
+
 
 
 </template>
@@ -206,7 +216,10 @@ const selectForm = ref()
 
 const defaultFormConfig = {
   displayNumberSort: true,
-  displayDescription: true
+  displayDescription: true,
+  displayTitle: true,
+  displayWaterMark: true,
+  waterMarkText: '柠檬表单🍋',
 }
 
 onMounted(() => {
@@ -489,7 +502,9 @@ const onClose = () => {
       font-weight: 400;
       // border: 1px solid #ebebeb;
       background: #fff;
-      box-shadow: 1px 1px 4px #CCC;;
+      box-shadow: 1px 1px 4px #ccc;
+      box-shadow: 1px 1px 4px royalblue;
+      box-shadow: 1px 1px 4px silver;
 
       /* &.person {
         background: #E6F8F5;
@@ -629,8 +644,8 @@ const onClose = () => {
     color: #666;
     padding: 50px 100px;
     position: absolute;
-    top: 20px;
-    width: calc(100% - 40px);
+    top: -2px;
+    width: calc(100% - 0px);
 
 
     &:hover,
@@ -651,7 +666,7 @@ const onClose = () => {
     line-height: 90px;
     padding: 0 60px;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 30px;
 
   }
 
@@ -716,6 +731,17 @@ const onClose = () => {
     width: 24px;
     height: 24px;
     cursor: pointer;
+  }
+}
+.control {
+  position: absolute;
+  right: 6px;
+  top: 12px;
+  display: flex;
+  flex-grow: 2;
+  .cont-item {
+    cursor: pointer;
+    margin-right: 10px;
   }
 }
 

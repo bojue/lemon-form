@@ -2,12 +2,14 @@
   <div class="setting" >
     <div class="comp-name">
       <a-typography-title class="title-val" :level="5">
-        <img :src="currCompIcon" class="compIcon" alt="">
-        <span class="name">  {{ selectComp?.name || selectComp?.type === 'Button' && '提交按钮' }} </span>
+        <img v-if="currCompIcon" :src="currCompIcon" class="compIcon" alt="">
+        <span v-if="!currCompIcon" class="compIcon">🍋</span>
+        <span class="name">  {{ selectComp?.name || selectComp?.type === 'Button' && '提交按钮' || '表单配置' }} </span>
       </a-typography-title>
     </div>
     <div class="setting-base">
-      <div class="category-name">
+      <template v-if="currentCompId">  
+        <div class="category-name">
         基础设置 
       </div>
       <div class="content m-b-0">
@@ -39,12 +41,15 @@
         <ValidationCustom v-if="showParams('isCustomErrorMessage')" :comp="selectComp" />
         <CustomText v-if="selectComp?.isCustomErrorMessage" :comp="selectComp"/>
       </div>
+      </template>
       <div class="category-name">
         全局表单配置
       </div>
-      <div class="content">
+      <div class="content" v-if="selectForm">
+        <DisplayTitle :form="selectForm"/>
         <DisplaySerialNumber :form="selectForm"/>
         <DisplayDescription :form="selectForm"/>
+        <DisplayWaterMark :form="selectForm"/>
       </div>
     </div>
   </div>
@@ -79,8 +84,10 @@ import UseOtherDataList from '@/components-form-setting/data/UseOtherDataList.vu
 import DataList from '@/components-form-setting/data/DataList.vue'
 
 // 全局设置
+import DisplayWaterMark from '@/components-form-setting/common-global-configurations/displayWaterMark.vue'
 import DisplaySerialNumber from '@/components-form-setting/common-global-configurations/DisplaySerialNumber.vue'
 import DisplayDescription from '@/components-form-setting/common-global-configurations/DisplayDescription.vue'
+import DisplayTitle from '@/components-form-setting/common-global-configurations/displayTitle.vue'
 
 import { hasOwnPropertyFunction, verifyRegularityCompList } from '@/views/FormEditor/comp-config-data'
 import * as _ from 'lodash'
@@ -92,6 +99,7 @@ import Icon from './comp-icon'
 interface Props {
   selectComp: any
   selectForm: any
+  currentCompId: string
 }
 
 const props = defineProps<Props>()
@@ -103,7 +111,7 @@ const currCompIcon = computed(() => {
   CompListData.map(item =>{
     _list = [..._list, ...item.children]})
   const comp = _.filter(_list, {
-    type : selectComp.type
+    type : selectComp?.type
   })?.[0]?.icon
 
   return comp || selectComp?.type === 'Button' && Icon.Button
@@ -121,6 +129,7 @@ const showRegParams = () => {
 
 watch([() => props.selectComp, () => props.selectForm],
 ([newValue,newFormConfig]) => {
+    if(!selectComp) return
     selectComp.value = newValue
     selectForm.value = newFormConfig
   },

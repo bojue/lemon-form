@@ -5,10 +5,10 @@
         {{ pagingValue }}
       </span>
     </a-divider>
-    <div v-if="isDev || !isDev && pageSubTitle"  class="page-title border-radius" contenteditable="true" @input="changeValue($event, 'pageSubTitle')" ref="subTitle">
+    <div v-if="isDev || !isDev && pageSubTitle"  class="page-title border-radius" contenteditable="true" @blur="changeValue($event, 'pageSubTitle')" ref="subTitle">
       {{pageSubTitle}}
     </div>
-    <div v-if="isDev || !isDev && pageSubDescription" class="page-sub-description border-radius" contenteditable="true" @input="changeValue($event, 'pageSubDescription')" ref="subDescription">
+    <div v-if="isDev || !isDev && pageSubDescription" class="page-sub-description border-radius" contenteditable="true" @blur="changeValue($event, 'pageSubDescription')" ref="subDescription">
       {{pageSubDescription}}
     </div>
 
@@ -46,12 +46,18 @@
  
  const props = defineProps<Props>()
 
+ const handleKeyDown = (event) => {
+  
+ }
+
  const changeValue = (event: any, params: any) => {
   const hasDataBool = event.target.innerText !== null &&  event.target.innerText !== '\n'
   if(!hasDataBool) {
     event.target.innerHTML = null
   } 
   const data = event.target.innerText
+
+  console.log('event',data)
   if(params === 'pageSubTitle') {
     compStore.updateCurrentComp({
       pageSubTitle: data

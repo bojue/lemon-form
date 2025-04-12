@@ -491,6 +491,7 @@ const checkAddOtherClass = () => {
   padding: 5px 3px;
   border-bottom-right-radius: 6px;
   border-top-right-radius: 6px;
+  box-shadow: 1px 1px 3px silver;
 
   .control {
     padding: 10px 5px;

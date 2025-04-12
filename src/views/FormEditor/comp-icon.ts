@@ -30,6 +30,7 @@ import Button from '/src/assets/form/button.svg'
 import Logic from '/src/assets/form-editor/logic.svg'
 import Theme from '/src/assets/form-editor/theme.svg'
 import Question from '/src/assets/form-editor/question.svg'
+import Outline from '/src/assets/form-editor/Outline.svg'
 
 export default {
   Checkout,
@@ -61,6 +62,7 @@ export default {
   Button,
   Logic,
   Theme,
-  Question
+  Question,
+  Outline
 
 }

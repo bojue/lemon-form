@@ -13,7 +13,7 @@ import Icon from './comp-icon'
 interface ClassifyType {
   label: string
   icon: any
-  type: 'questionBank' | 'theme' | 'logic'
+  type: 'questionBank' | 'theme' | 'logic' | 'outline'
 }
 
 const classifyList = ref<ClassifyType[]>([{
@@ -21,9 +21,9 @@ const classifyList = ref<ClassifyType[]>([{
   icon: Icon.Question,
   type: 'questionBank'
 // }, {
-//   label: '主题',
-//   icon: Icon.Theme,
-//   type: 'theme'
+//   label: '大纲',
+//   icon: Icon.Outline,
+//   type: 'outline'
 // }, {
 //   label: '逻辑',
 //   icon: Icon.Logic,
