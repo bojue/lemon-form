@@ -1,5 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouterView } from 'vue-router'
+import { h } from 'vue'
 import HomeView from '../views/HomeView.vue'
+import WorkSpace from '../views/workspace/index.vue'
+import HomePageWorkSpace from '../views/workspace/homepage/index.vue'
+import MeWorkSpace from '../views/workspace/me/index.vue'
+import TemplateWorkSpace from '../views/workspace/template/index.vue'
+import FavoritesWorkSpace from '../views/workspace/favorites/index.vue'
+import RecycleWorkSpace from '../views/workspace/recycle/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,8 +19,55 @@ const router = createRouter({
     {
       path: '/workspace',
       name: 'workspace',
-      component: () => import('../views/WorkSpace/index.vue')
-    },
+      component: WorkSpace,
+
+      children: [    {
+        path: '', 
+        name: '',
+        component: { render: () => h(RouterView) }, // 嵌套路由视图
+        meta: {
+          title: '主页'
+        },
+        children: [    {
+          path: '', 
+          name: '',
+          component: HomePageWorkSpace,
+          meta: {
+            title: '主页'
+          }
+        },  {
+          path: 'me', 
+          name: 'me',
+          component: MeWorkSpace,
+          meta: {
+            title: '我的'
+          }
+        },
+        {
+          path: 'template', 
+          name: 'template',
+          component: TemplateWorkSpace,
+          meta: {
+            title: '模版'
+          }
+        },
+        {
+          path: 'favorites', 
+          name: 'favorites',
+          component: FavoritesWorkSpace,
+          meta: {
+            title: '收藏'
+          }
+        },{
+          path: 'recycle', 
+          name: 'recycle',
+          component: RecycleWorkSpace,
+          meta: {
+            title: '回收站'
+          }
+        }]
+      }
+    ]},
     {
       path: '/:id/form-editor',
       name: 'form-editor',
@@ -23,6 +77,11 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/Auth/login.vue')
     }
   ]
 })

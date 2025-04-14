@@ -2,7 +2,12 @@
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
+interface Props {
+  type: 'logo' | 'title'
+}
 const router = useRouter()
+const props = defineProps<Props>()
+
 
 
 const toProfile = () => {
@@ -13,12 +18,33 @@ const size = ref('large')
 </script>
 
 <template>
-  <a-typography-title :level="4" class="title">🍋 Lemon Form</a-typography-title>
+  <div class="logo">
+    <span class="icon" :class="{
+      logoIcon: type === 'logo'
+    }">🍋 </span>
+    <span class="logo-title"> Lemon Form</span>
+  </div>
 </template>
 
 <style lang="scss">
+.logo {
+  height: 40px;
+}
 .title {
   height: 60px !important;
   line-height: 60px !important;
+}
+
+.logoIcon {
+  font-size: 34px;
+}
+
+.logo-title {
+  position: absolute;
+  padding-left: 10px;
+  padding-top: 7px;
+  font-size: 20px;
+  font-weight: 500;
+  min-width: 160px;
 }
 </style>

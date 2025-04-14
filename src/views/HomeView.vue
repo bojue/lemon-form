@@ -9,6 +9,10 @@ const size = ref('large')
 const toProfile = () => {
   router.push('/workspace') // 跳转工作台
 }
+
+const toLogin = () => {
+  router.push('/login') // 跳转登录
+}
 </script>
 
 <template>
@@ -16,7 +20,10 @@ const toProfile = () => {
     <div class="nav">
       <nav>
         <LogoComp/>
-        <a-button type="primary" :size="size" class="toHome" @click="toProfile">进入工作台</a-button>
+        <div class="controls">
+          <a-button size="large" type="primary" class="login" @click="toLogin">登录</a-button>
+          <a-button type="default" :size="size" class="toHome" @click="toProfile">进入工作台</a-button>
+        </div>
       </nav>
     </div>
   </header>
@@ -25,7 +32,7 @@ const toProfile = () => {
         <div class="title">🍋 柠檬表单</div>
         <a-typography-text class="description">表单搭建，如此简单</a-typography-text>
       </div>
-      <a-button type="primary" :size="size" class="toUseForm" @click="toProfile">免费使用</a-button>
+      <a-button type="primary" :size="size" class="toUseForm" @click="toProfile">立即使用</a-button>
     </div>
 </template>
 
@@ -33,15 +40,18 @@ const toProfile = () => {
 <style scoped>
 header {
   max-height: 100vh;
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
-.toHome {
+.controls {
   position: absolute;
-  right: 100px;
+  right: 60px;
   top: 14px;
+  width: 190px;
+  display: flex;
+  flex-grow: 2;
+  justify-content: space-between;
 }
 
 .body {

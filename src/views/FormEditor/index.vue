@@ -11,10 +11,21 @@
         </div>
         <div class="control">
           <div class="cont-item">
-            <a-button type="default">暂存</a-button>
+
+            <a-button type="default">
+              <img class="btn-icon" src="@/assets/form-editor/save.svg" alt="">
+              <span class="name">
+                保存
+              </span>
+              </a-button>
           </div>
           <div class="cont-item">
-            <a-button type="primary">发布</a-button>
+            <a-button type="primary"> 
+              <img class="btn-icon" src="@/assets/form-editor/publish.svg" alt="">
+              <span class="name">
+                发布
+              </span>
+              </a-button>
           </div>
         </div>
       </div>
@@ -742,6 +753,23 @@ const onClose = () => {
   .cont-item {
     cursor: pointer;
     margin-right: 10px;
+
+  }
+  .btn-icon {
+    width: 18px;
+    padding: 0px;
+    margin-top: -2px;
+    filter: grayscale(1);
+  }
+
+  &:hover {
+    .btn-icon {
+      filter: grayscale(0);
+    }
+  }
+
+  .name {
+    padding: 0 4px;
   }
 }
 
