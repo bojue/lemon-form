@@ -145,7 +145,7 @@ const countList = ref([{
 
  .icon {
    img {
-     width: 36px;
+     width: 40px;
    }
  }
  .data {

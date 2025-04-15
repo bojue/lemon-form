@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import LogoIcon from '@/components/logoIcon.vue'
+
 
 interface Props {
   type: 'logo' | 'title'
@@ -19,9 +21,7 @@ const size = ref('large')
 
 <template>
   <div class="logo">
-    <span class="icon" :class="{
-      logoIcon: type === 'logo'
-    }">🍋 </span>
+    <LogoIcon :size="30"/>
     <span class="logo-title"> Lemon Form</span>
   </div>
 </template>

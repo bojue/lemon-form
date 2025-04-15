@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import LogoComp from './../components/Logo.vue'
+import LogoIcon from '@/components/logoIcon.vue'
 
 const router = useRouter()
 
@@ -19,7 +20,7 @@ const toLogin = () => {
   <header>
     <div class="nav">
       <nav>
-        <LogoComp/>
+        <!-- <LogoComp/> -->
         <div class="controls">
           <a-button size="large" type="primary" class="login" @click="toLogin">登录</a-button>
           <a-button type="default" :size="size" class="toHome" @click="toProfile">进入工作台</a-button>
@@ -29,7 +30,7 @@ const toLogin = () => {
   </header>
   <div class="body">
       <div class="header">
-        <div class="title">🍋 柠檬表单</div>
+        <div class="title"><LogoIcon/> 柠檬轻表单</div>
         <a-typography-text class="description">表单搭建，如此简单</a-typography-text>
       </div>
       <a-button type="primary" :size="size" class="toUseForm" @click="toProfile">立即使用</a-button>

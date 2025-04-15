@@ -10,10 +10,8 @@
       </div>
     </a-form-item>
     <a-form-item name="remember" :wrapper-col="{ span: 24 }">
-            <a-checkbox v-model:checked="formState.automaticLogon">未注册的手机号/邮箱将自动注册</a-checkbox>
-          </a-form-item>
-
- 
+      <a-checkbox v-model:checked="formState.automaticLogon">未注册的手机号/邮箱将自动注册</a-checkbox>
+    </a-form-item>
     <a-form-item >
       <a-button class="submit" type="primary" html-type="submit">登录</a-button>
     </a-form-item>

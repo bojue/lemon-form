@@ -4,15 +4,16 @@
   <div class="login-content">
     <div class="login">
       <div class="login-body">
-        <div class="title">欢迎使用柠檬表单</div>
+        <div class="title">欢迎使用<span class="lm">柠檬</span><span class="des">轻表单</span></div>
         <LoginForm/>
       </div>
+
     </div>
     <div class="description">
      <div class="content">
       <div class="title">
         <div class="mark">“</div>
-        Create a Lemon Form
+        Create A Lemon Form
         <div class="sub-title">
         <!-- <div class="des">
           🚀 3步极简创建 | 拖拽式操作 | 专业级表单功能
@@ -27,6 +28,9 @@
 
       </div>
      </div>
+     <span class="project-name-right">
+          Lemon Form
+        </span>
     </div>
   
   </div>
@@ -49,10 +53,14 @@ const props = defineProps<Props>()
 :deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-input-affix-wrapper >input.ant-input) {
   background: #f2f3f9;
 }
+
 .logo {
       position: absolute;
       top: 10px;
       left: 30px;
+      line-height: 50px;
+
+
     }
   .login-content {
     align-items: center;
@@ -82,12 +90,19 @@ const props = defineProps<Props>()
     }
 
 
+
   }
 
   .description {
     background: rgb(20, 86, 240);
+    // brown
+    // chocolate
     height: 100vh;
     position: relative;
+    overflow: hidden;
+    // border-left: 10px solid lightsteelblue;
+
+
 
     .content {
       position: absolute;
@@ -131,4 +146,5 @@ const props = defineProps<Props>()
   .icon-index {
     color: chartreuse;
   }
+
 </style>

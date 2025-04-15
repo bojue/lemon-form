@@ -20,6 +20,6 @@ const props = defineProps<Props>()
     line-height: 30px;
     font-weight: 500;
     font-size: 20px;
-    color: #1f2329;
+    color: #999;
   }
 </style>

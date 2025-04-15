@@ -2,8 +2,10 @@
 <template>
   <div class="side-bar">
     <div class="nav-icon">
-      <span class="icon">🍋</span>
-      <span class="title">柠檬表单</span>
+      <span class="icon">
+        <LogoIcon :size="30"/>
+      </span>
+      <span class="title">柠檬轻表单</span>
     </div>
     <div class="nav-data">
       <router-link 
@@ -26,6 +28,7 @@
 import { ref } from 'vue'
 import { RouterLink,useRouter } from 'vue-router'
 import Home from '@/assets/form-editor/home.svg'
+import LogoIcon from '@/components/logoIcon.vue'
 import Collection from '@/assets/form-editor/collcetion.svg'
 import Delete from '@/assets/form-editor/delete.svg'
 import Folder from '@/assets/form-editor/folder.svg'
@@ -84,7 +87,7 @@ const workspaceNavList = [{
       color: rgb(31, 35, 41);
       margin-left: 40px;
       position: absolute;
-      top: -12px;
+      top: -9px;
     }
   }
 }

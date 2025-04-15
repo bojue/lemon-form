@@ -28,7 +28,7 @@
       </template>
       <div class="body-content">
     
-        <a-watermark :content="formShowConfig.waterMarkBool ?'柠檬表单🍋': ''">
+        <a-watermark :content="formShowConfig.waterMarkBool ?'柠檬轻表单🍋': ''">
           <div class="comps" v-if="pageCompList.length">
             <div v-for="(item, index) in pageCompList" :key="item?.name" :class="{
               'cursor-move': true,

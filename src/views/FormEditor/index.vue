@@ -230,7 +230,7 @@ const defaultFormConfig = {
   displayDescription: true,
   displayTitle: true,
   displayWaterMark: true,
-  waterMarkText: '柠檬表单🍋',
+  waterMarkText: '柠檬轻表单🍋',
 }
 
 onMounted(() => {
