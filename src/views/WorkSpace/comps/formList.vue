@@ -43,7 +43,7 @@ import Storage from '@/assets/form-editor/storage.svg'
 import NoData from '@/components/NoData.vue'
 
 interface Props {
-  type: 'template'
+  type?: 'template'
 }
 
 const props = defineProps<Props>()

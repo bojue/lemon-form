@@ -3,7 +3,7 @@ import router from '@/router';
 import { ref } from 'vue'
 
 interface Props {
-  size: number 
+  size: number | number
   hiddenTitle?: boolean
 }
 

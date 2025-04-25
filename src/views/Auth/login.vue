@@ -37,7 +37,7 @@ import { ref, defineProps, reactive } from 'vue';
 import LoginForm from './comps/login-form.vue'
 import LogoComp from '@/components/Logo.vue'
 import router from '@/router';
-import { log } from 'console';
+
 
 interface Props {
   title: string

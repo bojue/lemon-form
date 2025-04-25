@@ -17,8 +17,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink, RouterView,useRouter } from 'vue-router'
-import NavComp from './comps/pageNav.vue'
-import RouteComp from './comps/route.vue'
+import NavComp from '@/views/WorkSpace/comps/pageNav.vue'
+import RouteComp from '@/views/WorkSpace/comps/route.vue'
 
 
 

@@ -46,7 +46,7 @@
  
  const props = defineProps<Props>()
 
- const handleKeyDown = (event) => {
+ const handleKeyDown = (event: any) => {
   
  }
 

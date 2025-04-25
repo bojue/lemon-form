@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import router from '@/router';
-import { log } from 'console';
+
 import { ref, defineProps, reactive, computed } from 'vue';
 
 interface FormState {
