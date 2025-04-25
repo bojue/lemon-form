@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ master ] # 触发分支（根据你的主分支名称调整）
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 获取完整提交历史（必要！）
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # 按需修改 Node 版本
+
+      - name: Install dependencies
+        run: npm ci # 使用 npm 或 yarn/pnpm
+
+      - name: Build project
+        run: npm run build # 构建命令（根据项目调整）
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist # 构建产物目录（按需修改）
