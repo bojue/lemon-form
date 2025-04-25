@@ -4,40 +4,18 @@
   <div class="login-content">
     <div class="login login-from">
       <div class="login-body">
-        <div class="title">欢迎使用<span class="lm">柠檬</span><span class="des">轻表单</span></div>
-        <LoginForm :type="'login'"/>
+        <div class="title">密码重置</div>
+        <RestPasswordForm/>
       </div>
 
-    </div>
-    <div class="description">
-     <div class="content">
-      <div class="title">
-        <div class="mark">“</div>
-        Create A Lemon Form
-        <div class="sub-title">
-        <!-- <div class="des">
-          🚀 3步极简创建 | 拖拽式操作 | 专业级表单功能
-        </div> -->
-        <span class="des white">
-          零门槛设计表单，30秒完成创建，小白也能轻松上手！
-        </span>
-        <div class="des"><span class="icon-index">✔</span> 精美模板一键套用</div>
-        <div class="des"><span class="icon-index">✔</span> 智能数据分析实时可见</div>
-        <div class="des"><span class="icon-index">✔</span> 消息实时通知</div>
-      </div>
-
-      </div>
-     </div>
     </div>
   
   </div>
 </template>
 <script setup lang="ts">
 import { ref, defineProps, reactive } from 'vue';
-import LoginForm from './comps/login-form.vue'
+import RestPasswordForm from './comps/reset-form.vue'
 import LogoComp from '@/components/Logo.vue'
-import router from '@/router';
-import { log } from 'console';
 
 interface Props {
   title: string
@@ -52,9 +30,6 @@ const props = defineProps<Props>()
 :deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-input-affix-wrapper >input.ant-input) {
   background: #f2f3f9;
 }
-.login-from {
-  position: relative;
-}
 .logo {
       top: 10px;
       left: 30px;
@@ -62,17 +37,19 @@ const props = defineProps<Props>()
       position: absolute;
 
     }
+
   .login-content {
     align-items: center;
     width: 100%;
     height: 100vh;
     background-color: #fff;
     display: grid;
-    grid-template-columns: 1fr 40%;
+    grid-template-columns: 100%;
   }
 
   .login {
     height: 100vh;
+    position: relative;
     .login-body {
       position: absolute;
       top: 50%;
@@ -86,8 +63,6 @@ const props = defineProps<Props>()
       font-weight: 500;
       color: #333333;
       margin-bottom: 16px;
-      height: 60px;
-      line-height: 60px;
     }
 
 
@@ -107,7 +82,7 @@ const props = defineProps<Props>()
 
     .content {
       position: absolute;
-      top: 50%;
+      top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
     }
@@ -120,7 +95,7 @@ const props = defineProps<Props>()
       width: 62px;
       border-radius: 50%;
       margin-left: -39px;
-      // padding-top: 26px;
+      padding-top: 26px;
 
     }
 
@@ -138,15 +113,7 @@ const props = defineProps<Props>()
         white-space: nowrap;  /* 强制不换行 */
         // color: gold;
         padding-left: 5px;
-        height: 46px;
-        line-height: 46px;
-        color: #fff;
       }
-      .white {
-        // color: gainsboro;
-      }
-
-
       .des1 {
         color: mediumaquamarine;
       }

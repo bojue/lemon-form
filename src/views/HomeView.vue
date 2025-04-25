@@ -61,6 +61,10 @@ header {
   margin-top: 150px;
   .header {
     font-size: 30px;
+
+    .title {
+      margin-bottom: 15px;
+    }
   }
   .description {
     margin: 30px 20px;

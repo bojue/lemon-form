@@ -3,7 +3,7 @@ import { h } from 'vue'
 import HomeView from '../views/HomeView.vue'
 import WorkSpace from '../views/workspace/index.vue'
 import HomePageWorkSpace from '../views/workspace/homepage/index.vue'
-import MeWorkSpace from '../views/workspace/me/index.vue'
+import Product from '../views/workspace/product/index.vue'
 import TemplateWorkSpace from '../views/workspace/template/index.vue'
 import FavoritesWorkSpace from '../views/workspace/favorites/index.vue'
 import RecycleWorkSpace from '../views/workspace/recycle/index.vue'
@@ -36,9 +36,9 @@ const router = createRouter({
             title: '主页'
           }
         },  {
-          path: 'me', 
-          name: 'me',
-          component: MeWorkSpace,
+          path: 'product', 
+          name: 'product',
+          component: Product,
           meta: {
             title: '我的'
           }
@@ -82,6 +82,16 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/Auth/login.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/Auth/register.vue')
+    },
+    {
+      path: '/reset',
+      name: 'reset',
+      component: () => import('../views/Auth/reset.vue')
     }
   ]
 })

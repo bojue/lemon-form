@@ -57,7 +57,8 @@ onMounted(() => {
 <style lang="scss">
 .nps-list {
   display: flex;
-  flex-basis: content
+  flex-basis: content;
+  flex-wrap: wrap;
 }
 .nps-item {
   display: inline-flex;
@@ -65,7 +66,9 @@ onMounted(() => {
   height: 30px;
   font-size: 22px;
   line-height: 30px;
-  margin-right: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-right: 4px;
   .item {
     color: #fff;
     background: #dee0e3;

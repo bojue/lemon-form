@@ -18,8 +18,9 @@
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
     "ant-design-vue": "^4.2.5",
+    "axios": "^1.8.4",
     "lodash": "^4.17.21",
-    "pinia": "^2.2.6",
+    "pinia": "^3.0.2",
     "uuid": "^11.0.2",
     "vue": "^3.5.12",
     "vue-draggable-plus": "^0.5.6",

@@ -11,7 +11,7 @@
         <img src="/src/assets/icon/form.svg"/>
       </div>
       <div class="data" @click="toEditor(item)" :title="item.name">
-        <a-typography-title :level="5">{{item.name }}</a-typography-title>
+        <a-typography-title class="label-text" :level="5">{{item.name }}</a-typography-title>
         <!-- Mock数据使用当前时间 -->
         <a-typography-text type="secondary">{{ getCurrentTime() }}</a-typography-text>
       </div>
@@ -22,8 +22,8 @@
     </div>
     <div class="des">
       <div class="count-item" v-for="(countItem, index) in countList" >
-        <!-- <a-typography-text>{{item[countItem.value] }}</a-typography-text> -->
         <a-typography-text class="label" type="secondary">{{countItem.label }}</a-typography-text>
+        <span class="data-val">{{ 42 || '-' }}</span>
       </div>
     </div>
   </div>
@@ -157,8 +157,8 @@ const countList = ref([{
  grid-template-columns: 1fr 1fr 1fr;
  .count-item {
    margin-top: 20px;
-   height: 60px;
-   line-height: 60px;
+   height: 45px;
+   line-height: 45px;
    display: grid;
    grid-template-rows: 20px 1fr;
    text-align: center;
@@ -166,8 +166,18 @@ const countList = ref([{
    .label {
      padding-top: 7px;
      font-size: 12px;
+    //  color:#151b26;
+   }
+   .data-val {
+      color: #151b26;
+      font-size: 13px;
    }
  }
+}
+.label-text {
+  color: #141a25;
+  font-weight: 400;
+  text-align: left;
 }
 
 </style>

@@ -39,6 +39,7 @@ const classifyList = ref<ClassifyType[]>([{
 .sidebar {
   font-size: 12px;
   color: #314666;
+  border-right: 1px solid rgb(232, 235, 238);
 }
 
 .item {

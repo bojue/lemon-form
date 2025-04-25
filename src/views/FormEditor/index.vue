@@ -132,8 +132,9 @@
                 {{ pageFooter.buttonText || '提交' }}
               </a-button>
             </div>
-            </a-watermark>
+      </a-watermark>
           </div>
+          
         </div>
 
       </div>
@@ -142,6 +143,7 @@
     </div>
   </div>
   <PreviewPage 
+    :selectForm="selectForm"
     :open="openDraw" 
     :pageCompList="pageCompList"
     :pageFooter="pageFooter"
@@ -393,6 +395,7 @@ const compControl = (controlType: string, value: any) => {
   updateCompLineNumber()
 }
 
+
 const getActiveComp = () => {
   // 组件列表
   const item = _.filter(pageCompList.value, (item: any) => item.id === activeComp.value.id)?.[0]
@@ -438,6 +441,7 @@ const onClose = () => {
 .form-editor {
   height: 100%;
   overflow: hidden;
+  min-width: 1260px;
 }
 
 .nav-data {
@@ -459,15 +463,15 @@ const onClose = () => {
   grid-template-columns:56px 270px 1fr 260px;
   padding: 0 0 0 0px;
   height: calc(100% - 86px);
-  @media(max-width: 1480px) {
+  @media(max-width: 1400px) {
     grid-template-columns:56px 220px 1fr  220px;
     overflow-x: auto;
     .form {
       width: auto ;
     }
   }
-  @media(max-width: 1180px) {
-    grid-template-columns:56px 270px 1fr;
+  @media(max-width: 1400px) {
+    grid-template-columns:56px 260px 1fr 250px;
     overflow-x: auto;
     .form {
       width: auto ;
@@ -502,6 +506,7 @@ const onClose = () => {
     .item {
       /* border: 1px solid #D7D9DC; */
       /* background: rgba(0, 102, 255, .08); */
+      cursor: pointer;
       height: 38px;
       line-height: 38px;
       text-align: left;
@@ -527,6 +532,13 @@ const onClose = () => {
         background: beige;
       } */
     }
+
+    &.hover {
+      .item {
+        color: #151b26 !important;
+      }
+    }
+
   }
 
   .editor {
@@ -583,7 +595,7 @@ const onClose = () => {
     /* background: #fff; */
     min-height: calc(100% - 10px);
     border-radius: 0px;
-    width: 700px;
+    width: 686px;
     position: absolute;
     transform: translateX(-50%);
     margin-left: 50%;
@@ -772,6 +784,7 @@ const onClose = () => {
     padding: 0 4px;
   }
 }
+
 
 
 </style>

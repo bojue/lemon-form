@@ -18,7 +18,9 @@ const toProfile = () => {
 
 <template>
 
-<img src="@/assets/logo.svg" :style="{
+<img src="@/assets/logo.svg"
+  :title="'返回首页'"
+  @click="toProfile" :style="{
   width: (size || defaultWidth) + 'px',
   height: (size || defaultWidth) + 'px',
 }" class="logo"/>

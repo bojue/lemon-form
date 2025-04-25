@@ -23,7 +23,9 @@ import { DatePicker,
   Modal,
   Cascader,
   Watermark,
-  Form
+  Form,
+  Alert,
+  Dropdown
 } from 'ant-design-vue';
 
 import App from './App.vue'
@@ -46,6 +48,7 @@ app.use(Select);
 app.use(List);
 app.use(Drawer);
 app.use(Tooltip);
+app.use(Alert);
 app.use(Cascader);
 app.use(Popconfirm);
 app.use(Watermark);
@@ -54,6 +57,7 @@ app.use(Form);
 app.use(Typography);
 app.use(DatePicker);
 app.use(Modal);
+app.use(Dropdown);
 
 app.use(createPinia())
 app.use(router)

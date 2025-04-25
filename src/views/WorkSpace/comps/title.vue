@@ -19,7 +19,10 @@ const props = defineProps<Props>()
   .category {
     line-height: 30px;
     font-weight: 500;
-    font-size: 20px;
-    color: #999;
+    font-size: 18px;
+    color: #141a25;
+    height: 44px;
+    line-height: 44px;
+
   }
 </style>

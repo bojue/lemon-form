@@ -8,6 +8,13 @@
       <span class="title">柠檬轻表单</span>
     </div>
     <div class="nav-data">
+      <div class="work-space">
+        <div class="nav-item nav-person">
+          <img class="img-icon" :src="selectWorkSpace.icon" alt="">
+          <span class="name"> {{ selectWorkSpace.title }}</span>
+        </div>
+
+      </div>
       <router-link 
         v-for="item in workspaceNavList" 
         :key="item.route"
@@ -28,23 +35,29 @@
 import { ref } from 'vue'
 import { RouterLink,useRouter } from 'vue-router'
 import Home from '@/assets/form-editor/home.svg'
-import LogoIcon from '@/components/logoIcon.vue'
+import LogoIcon from '@/components/logoHasTitleIcon.vue'
 import Collection from '@/assets/form-editor/collcetion.svg'
 import Delete from '@/assets/form-editor/delete.svg'
 import Folder from '@/assets/form-editor/folder.svg'
 import Storage from '@/assets/form-editor/storage.svg'
 import Template from '@/assets/form-editor/template.svg'
+import Person from '@/assets/form-editor/person.svg'
+import Title from '@/components-form-setting/base/Title.vue';
+import type { title } from 'process'
 
-
+const selectWorkSpace = {
+  icon: Person,
+  title: '我的空间',
+}
 
 const workspaceNavList = [{
   title: '主页',
   icon: Home,
   route: '/workspace'
 },{
-  title: '我的空间',
+  title: '项目开发',
   icon: Folder,
-  route: '/workspace/me'
+  route: '/workspace/product'
 },
 {
   title: '模版库',
@@ -74,7 +87,7 @@ const workspaceNavList = [{
     position: relative;
     height: 36px;
     line-height: 36px;
-    margin-bottom: 40px;
+    margin-bottom: 18px;
     .icon {
       font-size: 26px;
       position: absolute;
@@ -87,7 +100,7 @@ const workspaceNavList = [{
       color: rgb(31, 35, 41);
       margin-left: 40px;
       position: absolute;
-      top: -9px;
+      top: 2px;
     }
   }
 }
@@ -121,9 +134,10 @@ const workspaceNavList = [{
     line-height: 40px;
     padding: 0 20px;
     border-radius: 5px;
+    margin: 6px 0;
     text-decoration: none;
     cursor: pointer;
-    color: #1f2329;
+    color: #666;
     &.router-link-exact-active {
       .img-icon {
         filter: grayscale(0);
@@ -138,7 +152,7 @@ const workspaceNavList = [{
     }
     &:hover, &.router-link-exact-active  {
       background: rgba(20, 86, 240, 0.1);
-      color: rgb(20, 86, 240);
+      color: #2468f2;
     }
     .img-icon {
       filter: grayscale(1);
@@ -149,6 +163,23 @@ const workspaceNavList = [{
     }
   }
 
+  
+}
+.work-space {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+.nav-person {
+  .img-icon { 
+    width: 24px !important;
+    height: 24px;
+    padding: 5px;
+    border-radius: 5px;
+    background: #1677ff;
+    filter: grayscale(0) !important;
+  }
 }
 
 </style>

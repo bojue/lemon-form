@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -16,6 +17,9 @@ export default defineConfig({
     }
   },
   server: {
-    host: '0.0.0.0'
-  }
+    host: '0.0.0.0',
+    port: 3000, // 设置端口
+    open: true, // 自动打开浏览器
+  },
+
 })

@@ -4,11 +4,12 @@
     <div class="body">
       <RouteComp/>
       <div class="page-content">
+        <NavComp/>
         <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </div>
     </div>
   </div>
@@ -16,8 +17,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink, RouterView,useRouter } from 'vue-router'
-
+import NavComp from './comps/pageNav.vue'
 import RouteComp from './comps/route.vue'
+
 
 
 const router = useRouter()
@@ -50,6 +52,7 @@ const toEditor = (item: any) => {
   padding:20px 16px;
   background: #fafafa;
   height: 100%;
+  border-right: 1px solid #e6e6e8;
   .nav-icon {
     position: relative;
     height: 36px;
@@ -63,18 +66,18 @@ const toEditor = (item: any) => {
     }
     .title {
       font-weight: 500;
-      font-size: 16px;
+      font-size: 18px;
       color: rgb(31, 35, 41);
       margin-left: 40px;
       position: absolute;
-      top: -12px;
+      top: 2px;
     }
   }
 
 }
 
 .page-content {
-  padding: 20px;
+  padding: 0px 20px;
 }
 
 </style>
