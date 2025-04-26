@@ -21,7 +21,7 @@
       </a-typography-title>
     </div>
     <div class="comp-item-description" v-if="displaySection && formConfig?.displayDescription">
-      <div type="secondary" v-if="component?.id !== selectedComp?.id && isDev">
+      <div type="secondary" v-if="component?.id !== selectedComp?.id && isDev || renderType">
         <div class="description">
           {{ component.description }}
         </div>
@@ -154,6 +154,7 @@ interface Props {
   formConfig?: any
   selectedComp?: any
   isDev: boolean
+  renderType?: 'preview'
 }
 
 
