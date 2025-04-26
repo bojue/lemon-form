@@ -153,6 +153,8 @@ watch([() => props.selectComp, () => props.selectForm],
 
 .setting {
   background: #fafafa;
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 .comp-name {

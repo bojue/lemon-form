@@ -494,6 +494,8 @@ const onClose = () => {
   .comps {
     padding: 0 20px 0 20px;
     background: #fafafa;
+    max-height: 100%;
+    overflow-y: auto;
   }
 
   .compList {
