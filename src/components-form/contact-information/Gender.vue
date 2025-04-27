@@ -102,33 +102,25 @@ const radioStyle = ref({
   display: block;
 }
 
-.editor-item {
-  outline: none;
-  &:active,&:focus {
-    border:1px solid #e0e0e0;
-    padding: 0px 12px 0px 34px;
-    border-radius: 6px;
-  }
-}
+
 
 ::v-deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-checkbox-disabled+span) {
   color: #000;
 }
 
-::v-deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-checkbox+span ) {
-  width: 100%;
-  margin-left: -20px;
-  .editor-item {
-    width: 100%;
-    padding-left: 35px;
-    &:active,&:focus, &:hover {
-      // background: red !important;
-    }
-  }
-}
 
 ::v-deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-checkbox .ant-checkbox-input) {
   display: inline;
+}
+
+.editor-item {
+  outline: none;
+  margin-left: 15px;
+  &:active,&:focus {
+    border:1px solid #e0e0e0;
+    padding: 0px 12px 0px 10px;
+    border-radius: 6px;
+  }
 }
 
 

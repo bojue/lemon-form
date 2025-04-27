@@ -46,7 +46,7 @@ watch(
 </script>
 <style lang="scss" scoped>
 .handle {
-  display: inline-block;
+  display: flex;
   height: 36px;
 
   img {
@@ -76,7 +76,7 @@ watch(
   height: 36px;
   line-height: 36px;
   img {
-    margin-top: -26px;
+    margin-top: 0px;
   }
 }
 </style>

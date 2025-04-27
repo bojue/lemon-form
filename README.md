@@ -1,31 +1,10 @@
-# lemon-form
+# Lemon Form 柠檬表单
 
+**Lemon Form** is a lightweight, flexible, and easy-to-use form management library built with Vue.js and TypeScript.
 
-1. [在线预览](https://bojue.github.io/lemon-form)
-2. [Github](https://github.com/bojue/lemon-form)
+**柠檬表单** 是一个轻量级、灵活且易于使用的表单管理库，基于 Vue.js 和 TypeScript 构建。
 
-## 开发
+## 🌐 Languages / 语言
 
-```shell
-git clone https://github.com/bojue/lemon-form.git
-cd lemon-form
-yarn  // or npm i 
-npm run dev
-```
-
-## 启动
-
-打开浏览器：http://localhost:3000/
-
-
-预览DEMO截图
-
-![Image](https://github.com/user-attachments/assets/82639dbe-6201-451c-9343-891ee0764742)
-![Image](https://github.com/user-attachments/assets/b33ffe25-929d-4d0c-918c-cbdc081d24c0)
-![Image](https://github.com/user-attachments/assets/e72288eb-7b79-48ca-ac07-e90553eefc6e)
-
-![Image](https://github.com/user-attachments/assets/28e037da-312f-4135-9663-d999c39af3d2)
-
-## License
-
-使用[MIT](LICENSE)协议
+- [English Documentation](./README.en.md)
+- [简体中文文档](./README.zh-CN.md)

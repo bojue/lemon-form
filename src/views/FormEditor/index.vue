@@ -11,6 +11,14 @@
         </div>
         <div class="control">
           <div class="cont-item">
+            <a-button type="default" @click="toGithub">
+              <img class="btn-icon" src="@/assets/form-editor/github.svg" alt="">
+              <span class="name">
+                GitHub
+              </span>
+              </a-button>
+            </div>
+          <div class="cont-item">
 
             <a-button type="default">
               <img class="btn-icon" src="@/assets/form-editor/save.svg" alt="">
@@ -27,6 +35,7 @@
               </span>
               </a-button>
           </div>
+
         </div>
       </div>
     </div>
@@ -149,9 +158,6 @@
     :pageFooter="pageFooter"
     @onClose="onClose"></PreviewPage>
 
-
-
-
 </template>
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus'
@@ -165,6 +171,7 @@ import FormComponent from '@/components-form/index.vue'
 import { getDefaultConfig } from '@/views/FormEditor/comp-config-data';
 import { useSelectCompStore } from '@/stores/selectCompStore'
 import { useRoute, createRouter } from 'vue-router';
+import { toGithub } from '@/utils/toGithub'
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 
@@ -253,6 +260,7 @@ const isFormEditorDevBool = computed(() => {
 const initDataState = () => {
   noDataContentRef.value = ''
 }
+
 
 
 // 更新选中组件数据

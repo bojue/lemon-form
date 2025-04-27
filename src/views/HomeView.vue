@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import LogoComp from './../components/Logo.vue'
+import { toGithub } from '@/utils/toGithub'
 import LogoIcon from '@/components/logoIcon.vue'
 
 const router = useRouter()
@@ -14,6 +15,8 @@ const toProfile = () => {
 const toLogin = () => {
   router.push('/login') // 跳转登录
 }
+
+
 </script>
 
 <template>
@@ -34,6 +37,12 @@ const toLogin = () => {
         <a-typography-text class="description">表单搭建，如此简单</a-typography-text>
       </div>
       <a-button type="primary" :size="size" class="toUseForm" @click="toProfile">立即使用</a-button>
+      <a-button type="default" @click="toGithub" :size="size">
+        <span class="github">
+          GitHub
+        </span>
+        <img src="https://img.shields.io/github/stars/bojue/lemon-form.svg?style=social" class="giticon" alt="">
+      </a-button>
     </div>
 </template>
 
@@ -73,6 +82,12 @@ header {
 
   .toUseForm {
     margin: 20px;
+  }
+  .github {
+    padding: 0 10px;
+  }
+  .giticon {
+    margin-top: -5px;
   }
 }
 </style>
