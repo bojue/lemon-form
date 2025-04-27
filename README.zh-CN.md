@@ -17,45 +17,10 @@
 npm install lemon-form
 # 或
 yarn add lemon-form
+
+npm run dev
 ```
 
-## 🚀 快速开始
-
-以下是如何在项目中使用柠檬表单的示例：
-
-```vue
-<template>
-  <LemonForm :model="formData" :rules="formRules">
-    <LemonInput v-model="formData.name" label="姓名" />
-    <LemonInput v-model="formData.email" label="邮箱" type="email" />
-    <LemonButton @click="submitForm">提交</LemonButton>
-  </LemonForm>
-</template>
-
-<script>
-import { ref } from 'vue';
-
-export default {
-  setup() {
-    const formData = ref({
-      name: '',
-      email: '',
-    });
-
-    const formRules = {
-      name: [{ required: true, message: '姓名是必填项。' }],
-      email: [{ required: true, type: 'email', message: '邮箱格式无效。' }],
-    };
-
-    const submitForm = () => {
-      console.log('表单已提交', formData.value);
-    };
-
-    return { formData, formRules, submitForm };
-  },
-};
-</script>
-```
 
 ## 📖 文档
 

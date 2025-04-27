@@ -18,45 +18,11 @@ Install Lemon Form using npm or yarn:
 npm install lemon-form
 # or
 yarn add lemon-form
+
+npm run dev
 ```
 
-## 🚀 Quick Start
 
-Here's an example of how to use Lemon Form in your project:
-
-```vue
-<template>
-  <LemonForm :model="formData" :rules="formRules">
-    <LemonInput v-model="formData.name" label="Name" />
-    <LemonInput v-model="formData.email" label="Email" type="email" />
-    <LemonButton @click="submitForm">Submit</LemonButton>
-  </LemonForm>
-</template>
-
-<script>
-import { ref } from 'vue';
-
-export default {
-  setup() {
-    const formData = ref({
-      name: '',
-      email: '',
-    });
-
-    const formRules = {
-      name: [{ required: true, message: 'Name is required.' }],
-      email: [{ required: true, type: 'email', message: 'Invalid email.' }],
-    };
-
-    const submitForm = () => {
-      console.log('Form submitted', formData.value);
-    };
-
-    return { formData, formRules, submitForm };
-  },
-};
-</script>
-```
 
 ## 📖 Documentation
 
