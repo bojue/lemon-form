@@ -31,7 +31,7 @@
         <div class="ask">
           <div class="info ">
             <ul>
-              <li v-for="item in ['私有化部署', '定制开发', '技术培训']">
+              <li v-for="item in ['私有化部署', '定制开发', 'Web Studio H5编辑器 （🚀 预告产品）']">
                 {{ item }}
               </li>
             </ul>
@@ -181,7 +181,7 @@ import { toZhiHuJT } from '@/utils/toGithub'
 }
 
 .layout-3 {
-  background: tomato;
+  background: yellow;
   left: 220px;
   bottom: 50px;
   width: 100px;
