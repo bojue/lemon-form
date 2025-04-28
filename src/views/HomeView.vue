@@ -5,6 +5,7 @@ import LogoComp from './../components/Logo.vue'
 import { toGithub } from '@/utils/toGithub'
 import LogoIcon from '@/components/logoIcon.vue'
 import QuestionCard from '@/components/QuestionCard.vue'
+import NewIssue from '@/components/NewIssue.vue'
 
 const router = useRouter()
 
@@ -45,6 +46,7 @@ const toLogin = () => {
         <img src="https://img.shields.io/github/stars/bojue/lemon-form.svg?style=social" class="giticon" alt="">
       </a-button>
       <QuestionCard/>
+      <NewIssue/>
 
     </div>
 </template>

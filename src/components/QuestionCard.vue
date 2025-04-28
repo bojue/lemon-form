@@ -9,8 +9,7 @@
         </div>
         <div class="ask">
           <span class="per">
-            借用开源前辈<span class="auth" title="TDengine核心开发、涛思数据创始人">Jeff Tao
-            </span>的一句话：
+            借用前辈的一句话：
           </span>
 
           <div class="info">
@@ -18,6 +17,9 @@
             在作出开源的决定时，我认为开源就一定要将最核心的代码开源，因为只有给用户带来真正的价值，将自己的技术创新、绝招完全展现给大家，才能获得开发者的喜爱。
             <span class="info-aft">”</span>
           </div>
+        </div>
+        <div class="zhihu"  @click="toZhiHuJT">
+          <img src="https://picx.zhimg.com/v2-94a17171b6df162e14cad00f33f4447b_xl.jpg?source=32738c0c&needBackground=1" alt="">
         </div>
       </div>
     </div>
@@ -45,6 +47,7 @@
 </template>
 <script setup lang="ts">
 import { ref, h } from 'vue';
+import { toZhiHuJT } from '@/utils/toGithub'
 
 
 </script>
@@ -115,7 +118,8 @@ import { ref, h } from 'vue';
 .auth {
   font-size: 16px;
   font-weight: 500;
-  color: #000;
+  color:#1677ff;
+  cursor: pointer;
 }
 
 .auth-info {
@@ -139,6 +143,17 @@ import { ref, h } from 'vue';
   ul {
     height: 30px;
     line-height: 30px;
+  }
+}
+
+.zhihu {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+  img {
+    width: 50px;
+    height: 50px;
   }
 }
 
