@@ -4,6 +4,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import LogoComp from './../components/Logo.vue'
 import { toGithub } from '@/utils/toGithub'
 import LogoIcon from '@/components/logoIcon.vue'
+import QuestionCard from '@/components/QuestionCard.vue'
 
 const router = useRouter()
 
@@ -43,6 +44,8 @@ const toLogin = () => {
         </span>
         <img src="https://img.shields.io/github/stars/bojue/lemon-form.svg?style=social" class="giticon" alt="">
       </a-button>
+      <QuestionCard/>
+
     </div>
 </template>
 
@@ -90,4 +93,5 @@ header {
     margin-top: -5px;
   }
 }
+
 </style>
