@@ -1,26 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-import LogoComp from './../components/Logo.vue'
-import { toGithub } from '@/utils/toGithub'
-import LogoIcon from '@/components/logoIcon.vue'
-import QuestionCard from '@/components/QuestionCard.vue'
-import NewIssue from '@/components/NewIssue.vue'
-
-const router = useRouter()
-
-const size = ref('large')
-const toProfile = () => {
-  router.push('/workspace') // 跳转工作台
-}
-
-const toLogin = () => {
-  router.push('/login') // 跳转登录
-}
-
-
-</script>
-
 <template>
   <header>
     <div class="nav">
@@ -45,11 +22,41 @@ const toLogin = () => {
         </span>
         <img src="https://img.shields.io/github/stars/bojue/lemon-form.svg?style=social" class="giticon" alt="">
       </a-button>
+      <QuestionTitle title="为什么选择【柠檬轻表单】"/>
+      <SelectLearn/>
+      <QuestionTitle title="你可能感兴趣的问题"/>
       <QuestionCard/>
       <NewIssue/>
 
     </div>
 </template>
+
+
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import LogoComp from './../components/Logo.vue'
+import { toGithub } from '@/utils/toGithub'
+import LogoIcon from '@/components/logoIcon.vue'
+import SelectLearn from '@/components/SelectLearn.vue'
+import QuestionCard from '@/components/QuestionCard.vue'
+import QuestionTitle from '@/components/QuestionTitle.vue'
+import NewIssue from '@/components/NewIssue.vue'
+
+const router = useRouter()
+
+const size = ref('large')
+const toProfile = () => {
+  router.push('/workspace') // 跳转工作台
+}
+
+const toLogin = () => {
+  router.push('/login') // 跳转登录
+}
+
+
+</script>
 
 
 <style scoped>

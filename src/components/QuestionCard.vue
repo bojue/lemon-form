@@ -56,12 +56,12 @@ import { toZhiHuJT } from '@/utils/toGithub'
 
 <style scoped lang="scss">
 .open {
+  position: relative;
   text-align: center;
   text-align: -webkit-center;
   max-width: 100%;
   display: flex;
   justify-content: center;
-  margin: 20px;
 
   .open-content-bg {
     padding: 0px;
@@ -69,7 +69,7 @@ import { toZhiHuJT } from '@/utils/toGithub'
     background: black;
     width: 400px;
     transform: rotate(0deg); 
-    margin: 70px 25px 0 ;
+    margin: 10px 25px 0 ;
     height: 210px;
   }
 
