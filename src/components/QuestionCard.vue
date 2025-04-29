@@ -5,16 +5,18 @@
       <div class="open-content">
         <span class="layout-3"></span>
         <div class="question">
-          作为商业产品，你们为什么开源?
+          作为可商业产品，为什么选择开源?
         </div>
         <div class="ask">
           <span class="per">
             借用前辈的一句话：
           </span>
 
-          <div class="info">
+          <div class="info zh">
             <span class="info-bef">“</span>
-            在作出开源的决定时，我认为开源就一定要将最核心的代码开源，因为只有给用户带来真正的价值，将自己的技术创新、绝招完全展现给大家，才能获得开发者的喜爱。
+            开源就一定要将
+            <span class="core">最核心</span>
+            的代码开源，只有给用户带来真正的价值，将自己的技术创新、绝招完全展现给大家，才能获得开发者的喜爱。
             <span class="info-aft">”</span>
           </div>
         </div>
@@ -31,7 +33,7 @@
         <div class="ask">
           <div class="info ">
             <ul>
-              <li v-for="item in ['私有化部署', '定制开发', 'Web Studio H5编辑器 （🚀 预告产品）']">
+              <li v-for="item in ['私有化部署', '定制开发','表单高级特性（🚀 低代码方向）', 'Web Studio H5编辑器 （🚀 预告产品）']">
                 {{ item }}
               </li>
             </ul>
@@ -56,7 +58,7 @@ import { toZhiHuJT } from '@/utils/toGithub'
 .open {
   text-align: center;
   text-align: -webkit-center;
-  width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: center;
   margin: 20px;
@@ -110,6 +112,7 @@ import { toZhiHuJT } from '@/utils/toGithub'
   .per {
     display: inline-block;
     margin-bottom: 10px;
+    color:#aaa;
   }
 }
 
@@ -140,6 +143,10 @@ import { toZhiHuJT } from '@/utils/toGithub'
 }
 
 .info {
+  &.zh {
+    margin-top: 2px;
+    line-height: 28px;
+  }
   ul {
     height: 30px;
     line-height: 30px;
@@ -197,6 +204,13 @@ import { toZhiHuJT } from '@/utils/toGithub'
   bottom: -30px;
   left: 340px;
   background: #fff;
-  border:10px solid forestgreen;
+  border:10px solid darkorange;
+}
+.core {
+  display: inline-block;
+  font-size: 20px;
+  color:#fff;
+  background: slateblue;
+  padding: 2px 8px;
 }
 </style>
