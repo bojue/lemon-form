@@ -46,11 +46,14 @@ const props = defineProps<Props>()
   text-align: center;
 }
 .benefits-grid {
+  padding: 28px 0;
   width: 850px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 50px;
-  
+  @media(max-height: 1200px) {
+    padding: 10px 0;
+  }
 }
 .benefit-item {
   // padding: 20px 42px; 
@@ -79,15 +82,15 @@ const props = defineProps<Props>()
     span {
       padding: 2px 4px;
     }
-    .col-1 {
-      color:blue;
-    }
-    .col-2 {
-      color:darkcyan;
-    }
-    .col-3 {
-      color:saddlebrown;
-    }
+    // .col-1 {
+    //   color:blue;
+    // }
+    // .col-2 {
+    //   color:darkcyan;
+    // }
+    // .col-3 {
+    //   color:saddlebrown;
+    // }
   }
 }
 

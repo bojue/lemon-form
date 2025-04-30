@@ -25,7 +25,7 @@ const props = defineProps<Props>()
     display: inline-block;
     width: 850px;
     text-align: left;
-    color: #2468f2;
+    color: #777;
   }
 }
 

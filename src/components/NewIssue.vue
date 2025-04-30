@@ -15,9 +15,9 @@ const toIssue = () => {
 
 .issue {
   margin: 50px;
-  color: #0969da;
+  color: mediumblue;
   text-decoration: underline;
-  opacity: 0.5;
+  opacity: 0.7;
   cursor: pointer;
   &:hover {
     opacity: 1;

@@ -26,7 +26,7 @@
       <SelectLearn/>
       <QuestionTitle title="你可能感兴趣的问题"/>
       <QuestionCard/>
-      <NewIssue/>
+      <!-- <NewIssue/> -->
 
     </div>
 </template>
@@ -80,6 +80,9 @@ header {
   text-align: center;
   margin: 30px 0;
   margin-top: 150px;
+  @media(max-height: 1200px) {
+    margin-top: 0px;
+  }
   .header {
     font-size: 30px;
 
