@@ -9,7 +9,6 @@
 
 ![image](https://github.com/user-attachments/assets/ba8f1494-3cab-4053-a672-fdb7da88d1c3)
 
-#### DEMO截图
 
 
 ## ✨ 为什么选择柠檬轻表单
