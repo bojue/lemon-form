@@ -39,39 +39,27 @@ npm run dev
 
 #### 1. 编辑器模块
 ```js
-- src/views
-  - FormEditor //  编辑器模块
-
-    // 编辑器config部分
-    - comp-address-data.ts // 地址组件config数据
-    - comp-data.ts // 组件库数据
-    - comp-icon.ts // 组件库icon管理问题
-
-    // 布局部分
-    - form-sidebar.vue // 编辑器Sidebar
-    - form-setting.vue // 编辑器配置文件
-    - index.vue // 入口文件，编辑器容器组件
-    
-```
-
-#### 2. Form表单组件库
-```js
-- src/components-form
-  - advanced // 高级组件
-  - base // 基础组件，Form组件
-  - business // 业务组件
-  - contact-information // 联系方式，信息组件，比如微信
-
-```
-
-#### 3. Form表单配置组件库
-```js
-- src/components-form-setting
-  - base // 基础属性
-  - common-global-configurations // 全局属性
-  - data // 数据属性
-  - form-validation // 表单校验属性
-  - logical-settings // 逻辑配置
+src/
+├── views/                # 编辑器模块
+│   ├── FormEditor/       # 主编辑器容器
+│   │   ├── comp-address-data.ts  # 地址组件配置
+│   │   ├── comp-data.ts        # 组件库元数据
+│   │   ├── comp-icon.ts        # 图标管理系统
+│   │   ├── form-sidebar.vue    # 侧边栏配置项
+│   │   └── form-setting.vue    # 属性配置面板
+│   └── index.vue           # 编辑器入口
+│
+├── components-form/      # 表单组件库
+│   ├── advanced/         # 高级组件（如动态表单）
+│   ├── base/             # 基础表单元素
+│   ├── business/         # 业务专用组件
+│   └── contact-info/     # 联系方式组件
+│
+└── components-form-setting/ # 表单配置项
+    ├── base/              # 基础属性配置
+    ├── global/            # 全局配置项
+    ├── validation/        # 校验规则配置
+    └── logic/             # 逻辑控制配置
 
 ```
 
