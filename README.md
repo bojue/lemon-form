@@ -25,10 +25,9 @@
 通过 npm 或 yarn 安装柠檬表单：
 
 ```bash
-npm install lemon-form
-# 或
-yarn add lemon-form
-
+git clone git@github.com:bojue/lemon-form.git
+cd lemon-form
+yarn 
 npm run dev
 ```
 
