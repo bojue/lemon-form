@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router'
 import { h } from 'vue'
 import HomeView from '../views/HomeView.vue'
-import WorkSpace from '../views/workspace/index.vue'
-import HomePageWorkSpace from '../views/workspace/homepage/index.vue'
-import Product from '../views/workspace/product/index.vue'
-import TemplateWorkSpace from '../views/workspace/template/index.vue'
-import FavoritesWorkSpace from '../views/workspace/favorites/index.vue'
-import RecycleWorkSpace from '../views/workspace/recycle/index.vue'
+import WorkSpace from '../views/WorkSpace/index.vue'
+import HomePageWorkSpace from '../views/WorkSpace/homepage/index.vue'
+import Product from '../views/WorkSpace/product/index.vue'
+import TemplateWorkSpace from '../views/WorkSpace/template/index.vue'
+import FavoritesWorkSpace from '../views/WorkSpace/favorites/index.vue'
+import RecycleWorkSpace from '../views/WorkSpace/recycle/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
