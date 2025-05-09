@@ -68,7 +68,8 @@ import { toZhiHuJT } from '@/utils/toGithub'
   .open-content-bg {
     padding: 0px;
     border-radius: 10px;
-    background: black;
+    // background: black;
+    background: radial-gradient(black, transparent);
     width: 400px;
     transform: rotate(0deg); 
     margin: 10px 25px 0 ;
@@ -82,7 +83,7 @@ import { toZhiHuJT } from '@/utils/toGithub'
     padding: 20px;
     width: 400px;
     height: 210px;
-    transform: rotate(-3deg);
+    transform: rotate(-2deg);
     border:1px solid black;
     transform-origin: top left;
     position: relative;

@@ -18,9 +18,9 @@
       <a-button type="primary" :size="size" class="toUseForm" @click="toProfile">立即使用</a-button>
       <a-button type="default" @click="toGithub" :size="size">
         <span class="github">
-          GitHub
+          GitHub仓库
         </span>
-        <img src="https://img.shields.io/github/stars/bojue/lemon-form.svg?style=social" class="giticon" alt="">
+        <!-- <img src="https://img.shields.io/github/stars/bojue/lemon-form.svg?style=social" class="giticon" alt=""> -->
       </a-button>
       <QuestionTitle title="为什么选择【柠檬轻表单】"/>
       <SelectLearn/>
