@@ -7,6 +7,7 @@ import Product from '../views/WorkSpace/product/index.vue'
 import TemplateWorkSpace from '../views/WorkSpace/template/index.vue'
 import FavoritesWorkSpace from '../views/WorkSpace/favorites/index.vue'
 import RecycleWorkSpace from '../views/WorkSpace/recycle/index.vue'
+import PathNotFound from '../views/ErrorPage/404.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -92,7 +93,8 @@ const router = createRouter({
       path: '/reset',
       name: 'reset',
       component: () => import('../views/Auth/reset.vue')
-    }
+    },
+    { path: '/:pathMatch(.*)*', component: PathNotFound },
   ]
 })
 

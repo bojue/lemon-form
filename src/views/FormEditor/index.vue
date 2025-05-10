@@ -420,7 +420,8 @@ const getActiveCompIndex = () => {
 }
 
 const callback = () => {
-  router.go(-1)
+  // router.go(-1)
+  router.push('/workspace/product')
 }
 
 
