@@ -37,7 +37,7 @@ const formState = reactive<FormState>({
 
 
 interface Props {
-  title: string
+  title?: string
 }
 
 const props = defineProps<Props>()

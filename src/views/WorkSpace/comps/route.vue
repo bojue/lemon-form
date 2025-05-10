@@ -42,8 +42,6 @@ import Folder from '@/assets/form-editor/folder.svg'
 import Storage from '@/assets/form-editor/storage.svg'
 import Template from '@/assets/form-editor/template.svg'
 import Person from '@/assets/form-editor/person.svg'
-import Title from '@/components-form-setting/base/Title.vue';
-import type { title } from 'process'
 
 const selectWorkSpace = {
   icon: Person,

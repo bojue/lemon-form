@@ -84,10 +84,10 @@ import UseOtherDataList from '@/components-form-setting/data/UseOtherDataList.vu
 import DataList from '@/components-form-setting/data/DataList.vue'
 
 // 全局设置
-import DisplayWaterMark from '@/components-form-setting/common-global-configurations/displayWaterMark.vue'
+import DisplayWaterMark from '@/components-form-setting/common-global-configurations/DisplayWaterMark.vue'
 import DisplaySerialNumber from '@/components-form-setting/common-global-configurations/DisplaySerialNumber.vue'
 import DisplayDescription from '@/components-form-setting/common-global-configurations/DisplayDescription.vue'
-import DisplayTitle from '@/components-form-setting/common-global-configurations/displayTitle.vue'
+import DisplayTitle from '@/components-form-setting/common-global-configurations/DisplayTitle.vue'
 
 import { hasOwnPropertyFunction, verifyRegularityCompList } from '@/views/FormEditor/comp-config-data'
 import * as _ from 'lodash'

@@ -1,7 +1,7 @@
 <template>
   <div class="support-content">
     <div class="support">
-      <LogoIcon size="18" />
+      <LogoIcon :size="18" />
       <span class="des">
         柠檬轻表单 提供技术支持
       </span>

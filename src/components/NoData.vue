@@ -11,8 +11,8 @@
 import { ref, h } from 'vue';
 
 interface Props {
-  type: 'template'
-  des: string
+  type?: 'template'
+  des?: string
 }
 const props = defineProps<Props>()
 

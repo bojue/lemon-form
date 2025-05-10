@@ -23,7 +23,7 @@
     <div class="des">
       <div class="count-item" v-for="(countItem, index) in countList" >
         <a-typography-text class="label" type="secondary">{{countItem.label }}</a-typography-text>
-        <span class="data-val">{{ 42 || '-' }}</span>
+        <span class="data-val">{{ defCount || '-' }}</span>
       </div>
     </div>
   </div>
@@ -47,7 +47,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-
+const defCount = ref(42)
 
 const router = useRouter()
 

@@ -61,7 +61,7 @@ const formState = reactive<FormState>({
 
 
 interface Props {
-  title: string
+  titleValue?: string
   type: 'register' | 'login'
 }
 

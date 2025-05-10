@@ -5,7 +5,7 @@
     <div class="login login-from">
       <div class="login-body">
         <div class="title">欢迎使用<span class="lm">柠檬</span><span class="des">轻表单</span></div>
-        <LoginForm :type="'login'"/>
+        <LoginForm type="login"/>
       </div>
 
     </div>
