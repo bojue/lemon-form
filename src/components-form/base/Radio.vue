@@ -2,12 +2,12 @@
   <a-space direction="vertical">
     <a-radio-group :value="dataValue"  :disabled="isDev" size="large">
     <a-radio  :key="isSelected + _updateKey" v-for="(item, _index) of dataList" :value="item" class="list-item" :style="layoutType === 'vertical' || isSelected ? radioVerticalStyle : radioStyle">
-      <div class="editor-item"  @blur="changeValue($event, _index)" contenteditable="true">{{ item.label }}</div>
+      <div class="editor-item"  @blur="changeValue($event, _index)" :contenteditable="!isPreviewRender" >{{ item.label }}</div>
       <span class="other-val" v-if="item.subType === 'other'">
         <a-input :disabled="isDev" class="item-comp" v-model="item.value" 
         placeholder="其他选项内容自定义" />
       </span>
-      <span class="delete" v-if="dataList.length > 1" @click="deleteSubItem(_index)" :title="item.label">
+      <span class="delete" v-if="dataList.length > 1 && !isPreviewRender" @click="deleteSubItem(_index)" :title="item.label">
         <CloseOutlined />
       </span>
     </a-radio>
@@ -25,6 +25,7 @@ interface Props {
   layoutType: string
   isDev: boolean
   isSelected: boolean
+  isPreviewRender?: boolean 
 }
 
 

@@ -32,7 +32,11 @@
       </a-textarea>
     </div>
     <div class="component">
-      <component :key="currentComp" :isSelected="component?.id === selectedComp?.id" :isDev="isDev"
+      <component 
+        :key="currentComp" 
+        :isSelected="component?.id === selectedComp?.id"
+        :isPreviewRender="renderType === 'preview'" 
+        :isDev="isDev"
         :is="getCompConfig(props.type).comp" v-bind="component"></component>
     </div>
     <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()">

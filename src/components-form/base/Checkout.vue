@@ -8,11 +8,11 @@
     }"
     :key="isSelected + _updateKey">
     <template #label="{ label, subType, value, _index }" class="item list-item ">
-      <div class="editor-item" contenteditable="true" @blur="changeValue($event, _index)">{{ label }}</div>
+      <div class="editor-item" :contenteditable="!isPreviewRender" @blur="changeValue($event, _index)">{{ label }}</div>
       <span class="other-val" v-if="subType === 'other'">
         <a-input :disabled="isDev" class="item-comp" :value="value" placeholder="待填表者更新" />
       </span>
-      <span class="delete" v-if="dataList.length > 1" @click="deleteSubItem(_index)" :title="label">
+      <span class="delete" v-if="dataList.length > 1 && !isPreviewRender" @click="deleteSubItem(_index)" :title="label">
         <CloseOutlined />
       </span>
     </template>
@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { v4 as uuidv4  } from 'uuid'
+import { render } from 'vue'
 
 interface Props {
   dataList: Array<any>
@@ -28,6 +29,7 @@ interface Props {
   layoutType: string
   isDev: boolean
   isSelected: boolean
+  isPreviewRender?: boolean
 }
 
 const props = defineProps<Props>()
