@@ -30,6 +30,7 @@
         <NPSConfig v-if="selectComp.type=== 'NPS'" :comp="selectComp" />
         <DataList v-if="showParams('dataList')" :comp="selectComp" />
         <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
+        <SignCreateImgType v-if="showParams('sign_create_type')" :comp="selectComp"/>
       </div>
       <div class="category-name" v-if="selectComp?.type && !['Button','Paging', 'Divider'].includes(selectComp.type)">
         表单验证 
@@ -78,6 +79,7 @@ import ValidationSystem from '@/components-form-setting/form-validation/Validati
 import ValidationCustom from '@/components-form-setting/form-validation/ValidationCustom.vue'
 import CustomText from '@/components-form-setting/form-validation/CustomText.vue'
 import NumberConfig from '@/components-form-setting/form-validation/NumberConfig.vue'
+import SignCreateImgType from '@/components-form-setting/data/SignCreateImgType.vue'
 
 // 数据设置
 import UseOtherDataList from '@/components-form-setting/data/UseOtherDataList.vue'
