@@ -30,11 +30,12 @@
               <FormComponent
                 v-if="!['Paging'].includes(item.type) || (['Paging'].includes(item.type) && formShowConfig.displayPaging)"
                 :renderType="'preview'"
-                :key="item.id" 
+                :key="item.id + previewType" 
                 :component="item" 
                 :type="item.type" 
                 :isDev="false"
-                :formConfig="selectForm">
+                :formConfig="selectForm"
+                :previewType="previewType">
               </FormComponent>
             </div>
             <div class="form-footer" :class="{

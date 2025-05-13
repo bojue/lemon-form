@@ -232,33 +232,36 @@ const PersonalComponentList: CompItemType[] = [
     name: '地址',
     type: CompType.address,
     icon: Icon.Address
-  },
+  }
 ]
 
 // 高级
-const AdvancedComponentList = [  {
-  label: 'NPS',
-  name: 'NPS',
-  type: CompType.nps
-},  {
-  label: '排序',
-  name: '排序',
-  type: CompType.sort
-},{
-  label: '定位',
-  name: '定位',
-  type: CompType.location
-},{
-  label: '流水号',
-  name: '流水号',
-  type: CompType.serialNumber
-}, {
-  label: '富文本',
-  name: '富文本',
-  type: CompType.editor
-},{
+const AdvancedComponentList = [  
+//   {
+//   label: 'NPS',
+//   name: 'NPS',
+//   type: CompType.nps
+// },  {
+//   label: '排序',
+//   name: '排序',
+//   type: CompType.sort
+// },{
+//   label: '定位',
+//   name: '定位',
+//   type: CompType.location
+// },{
+//   label: '流水号',
+//   name: '流水号',
+//   type: CompType.serialNumber
+// }, {
+//   label: '富文本',
+//   name: '富文本',
+//   type: CompType.editor
+// },
+{
   label: '电子签名',
   name: '电子签名',
+  icon: Icon.Sign,
   type: CompType.electronicSignature
 }]
 
@@ -323,13 +326,13 @@ export const CompListData:CompCategoryType[] = [{
   tooltip: '提供常见的个人信息配置，同时方便后期数据统计',
   children: [...PersonalComponentList]
 },
-//{
-//   name: '高级',
-//   label: '高级',
-//   type: CompListType.advanced,
-//   children: []
-//   //  [...AdvancedComponentList]
-// }, {
+{
+  name: '高级',
+  label: '高级',
+  type: CompListType.advanced,
+  children: [...AdvancedComponentList]
+}, 
+// {
 //   name: '通用',
 //   label: '通用',
 //   type: CompListType.common,

@@ -152,6 +152,7 @@
     </div>
   </div>
   <PreviewPage 
+    v-if="openDraw"
     :selectForm="selectForm"
     :open="openDraw" 
     :pageCompList="pageCompList"

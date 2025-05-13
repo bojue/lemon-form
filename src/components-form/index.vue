@@ -37,6 +37,7 @@
         :isSelected="component?.id === selectedComp?.id"
         :isPreviewRender="renderType === 'preview'" 
         :isDev="isDev"
+        :previewType="previewType"
         :is="getCompConfig(props.type).comp" v-bind="component"></component>
     </div>
     <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()">
@@ -146,6 +147,9 @@ import AddressComponent from '@/components-form/contact-information/Address.vue'
 // 组件
 import BatchOperationData from '@/components/form/BatchOperationData.vue'
 
+// 高级
+import SignComponent from '@/components-form/advanced/Sign.vue'
+
 import * as _ from 'lodash'
 import { useSelectCompStore } from '@/stores/selectCompStore'
 import { v4 as uuidv4 } from 'uuid';
@@ -159,6 +163,7 @@ interface Props {
   selectedComp?: any
   isDev: boolean
   renderType?: 'preview'
+  previewType?: 'Phone' | 'PC'
 }
 
 
@@ -237,6 +242,7 @@ function getTypeToComponent(type: string) {
     // 评分和满意度
     Rate: RateComponent,
     NPS: NPSComponent,
+    ElectronicSignature: SignComponent,
 
     // 联系信息
     Name: NameComponent,

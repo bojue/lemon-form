@@ -50,12 +50,16 @@ interface CompConfig {
   address_placeholder?: string // 地址占位符
   address_detail_placeholder?: string // 详细地址占位符
 
+  // 电子签名
+  sign_create_type: 'png' | 'jpg'
+
   // 扩展字段
   minValue?: number // 最小值
   maxValue?: number // 最大值
 
   // 布局组件
   isLayoutComp?: boolean // 布局组件
+  
 }
 export const defaultConfig: CompConfig = {
   name: '',
@@ -98,6 +102,7 @@ export const isButton: CompType[] = [CompType.button]
 export const isRate: CompType[] = [CompType.rate]
 export const isNPS: CompType[] = [CompType.nps]
 export const isAddress: CompType[] = [CompType.address]
+export const isSign: CompType[] = [CompType.electronicSignature]
 
 export const getCompConfig = (type: CompType) => {
   let compConfig: any = {}
@@ -257,6 +262,14 @@ export const getCompConfig = (type: CompType) => {
       address_detail_default: '',
       address_placeholder: '请选择省/市/区',
       address_detail_placeholder: '请输入详细地址',
+    }
+  }
+
+  // 电子签名
+  if(isSign.includes(type)) {
+    compConfig = {
+      ...compConfig,
+      sign_create_type: 'png'
     }
   }
 

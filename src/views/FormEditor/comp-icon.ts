@@ -25,6 +25,7 @@ import TelePhone from '/src/assets/form/telePhone.svg'
 import Preview from '/src/assets/form/preview.svg'
 import NPS from '/src/assets/form/nps.svg'
 import Button from '/src/assets/form/button.svg'
+import Sign from '/src/assets/form/sign.svg'
 
 // 编辑器Icon
 import Logic from '/src/assets/form-editor/logic.svg'
@@ -63,6 +64,7 @@ export default {
   Logic,
   Theme,
   Question,
-  Outline
+  Outline,
+  Sign
 
 }
