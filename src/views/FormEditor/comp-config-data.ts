@@ -51,7 +51,7 @@ interface CompConfig {
   address_detail_placeholder?: string // 详细地址占位符
 
   // 电子签名
-  sign_create_type: 'png' | 'jpg'
+  sign_create_type?: 'png' | 'jpg'
 
   // 扩展字段
   minValue?: number // 最小值

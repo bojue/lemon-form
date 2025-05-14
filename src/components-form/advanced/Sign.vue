@@ -32,7 +32,7 @@ const contList = [{
   type: 'redo'
 },]
 
-const control = (type: 'clear' | 'undo' | 'redo') => {
+const control = (type: 'clear' | 'undo' | 'redo' | string) => {
   switch(type) {
     case 'clear':
       signature.value.clear()
