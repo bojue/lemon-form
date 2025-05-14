@@ -19,8 +19,7 @@
       <div class="body-content" :class="{
         phone: previewType === 'Phone',
       }">
-
-        <a-watermark :content="selectForm?.displayWaterMark ? '柠檬轻表单🍋' : ''">
+        <a-watermark :content="selectForm?.displayWaterMark ? selectForm?.waterMarkText || '' : ''">
           <a-alert class="alert" message="预览状态无法提交" type="warning" show-icon closable/>
           <div class="comps" v-if="pageCompList.length">
             <div v-for="(item, index) in pageCompList" :key="item?.name" :class="{

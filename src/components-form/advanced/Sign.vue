@@ -65,8 +65,8 @@ const initData = () => {
     scale: 2,
     minWidth: 4,
     maxWidth: 10,
-    color: '#1890ff',
-    bgColor: '#efefef'
+    color: '#333',
+    bgColor: '#f6f8fa'
   });
 }
 
