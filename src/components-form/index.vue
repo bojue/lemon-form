@@ -129,6 +129,7 @@ import TimeComponent from '@/components-form/base/Time.vue'
 import DividerComponent from '@/components-form/base/Divider.vue'
 import PagingComponent from '@/components-form/base/Paging.vue'
 import RateComponent from '@/components-form/base/Rate.vue'
+import SelectRateComponent from '@/components-form/base/SelectRate.vue'
 import NPSComponent from '@/components-form/base/NPS.vue'
 import UploadComponent from '@/components-form/base/Upload.vue'
 import SwitchComponent from '@/components-form/base/Switch.vue'
@@ -256,6 +257,7 @@ function getTypeToComponent(type: string) {
     Phone: PhoneComponent,
     TelePhone: TelePhoneComponent,
     Address: AddressComponent,
+    SelectRate: SelectRateComponent,
   }
   const comp = compsObject[type]
   return comp

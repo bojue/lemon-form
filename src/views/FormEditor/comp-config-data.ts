@@ -102,7 +102,7 @@ export const isRangePlaceholderType: CompType[]  = [CompType.dateRange, CompType
 export const isNumberType: CompType[] = [CompType.number]
 export const isButton: CompType[] = [CompType.button]
 export const isRate: CompType[] = [CompType.rate]
-export const isNPS: CompType[] = [CompType.nps]
+export const isNPS: CompType[] = [CompType.nps, CompType.selectRate]
 export const isAddress: CompType[] = [CompType.address]
 export const isSign: CompType[] = [CompType.electronicSignature]
 

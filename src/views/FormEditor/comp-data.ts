@@ -34,6 +34,7 @@ export enum CompType {
 
   // 高级组件
   rate = 'Rate', // 评分
+  selectRate = 'SelectRate', // 下拉评分
   nps = 'NPS', // nps
   electronicSignature = 'ElectronicSignature', // 电子签名
   location = 'Location', // 位置信息
@@ -132,11 +133,17 @@ const RateComponentList: CompItemType[] = [
     icon: Icon.Rate
   },
   {
+    label: '下拉评分',
+    name: '下拉评分',
+    type: CompType.selectRate,
+    icon: Icon.Select
+  },
+  {
     label: 'NPS',
     name: 'NPS',
     type: CompType.nps,
     icon: Icon.NPS
-  }
+  },
 ]
 
 const TimeComponentList: CompItemType[] = [

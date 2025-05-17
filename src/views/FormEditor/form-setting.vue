@@ -27,7 +27,7 @@
         <Position v-if="showParams('position')" :comp="selectComp"/>
         <Size v-if="showParams('size')" :comp="selectComp"/>
         <RateConfig v-if="selectComp.type=== 'Rate'" :comp="selectComp" />
-        <NPSConfig v-if="selectComp.type=== 'NPS'" :comp="selectComp" />
+        <NPSConfig v-if="['NPS', 'SelectRate'].includes(selectComp.type)" :comp="selectComp" />
         <DataList v-if="showParams('dataList')" :comp="selectComp" />
         <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
         <SignCreateImgType v-if="showParams('sign_create_type')" :comp="selectComp"/>
