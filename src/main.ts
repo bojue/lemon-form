@@ -25,7 +25,7 @@ import { DatePicker,
   Watermark,
   Form,
   Alert,
-  Dropdown
+  Dropdown,
 } from 'ant-design-vue';
 
 import App from './App.vue'

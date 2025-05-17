@@ -116,18 +116,12 @@ const BasicComponentList:CompItemType[] = [
     type: CompType.textarea,
     icon: Icon.TextArea
   },
-  {
-    label: '上传',
-    name: '上传',
-    type: CompType.upload,
-    icon: Icon.Upload
-  },
-  {
-    label: '网址',
-    name: '网址',
-    type: CompType.url,
-    icon: Icon.Url
-  },
+    {
+    label: '下拉组件',
+    name: '下拉组件',
+    type: CompType.select,
+    icon: Icon.TextArea
+  }
 ]
 
 const RateComponentList: CompItemType[] = [
@@ -232,7 +226,13 @@ const PersonalComponentList: CompItemType[] = [
     name: '地址',
     type: CompType.address,
     icon: Icon.Address
-  }
+  },  
+  {
+    label: '网址',
+    name: '网址',
+    type: CompType.url,
+    icon: Icon.Url
+  },
 ]
 
 // 高级
@@ -258,6 +258,12 @@ const AdvancedComponentList = [
 //   name: '富文本',
 //   type: CompType.editor
 // },
+{
+  label: '上传',
+  name: '上传',
+  type: CompType.upload,
+  icon: Icon.Upload
+},
 {
   label: '电子签名',
   name: '电子签名',

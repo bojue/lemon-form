@@ -1,4 +1,5 @@
 <template>
+
   <a-checkbox-group :value="dataValue" :options="dataList"
     :disabled="isDev"
     :style="layoutType === 'vertical' || isSelected ? radioVerticalStyle : radioStyle" 
@@ -35,6 +36,7 @@ interface Props {
 const props = defineProps<Props>()
 const _updateKey = ref('')
 
+
 const updateKey = () => {
   _updateKey.value = uuidv4()
 }
@@ -43,6 +45,8 @@ const deleteSubItem = (index: number) => {
   props.dataList.splice(index, 1)
   updateKey()
 }
+
+
 
 const changeValue = (event: any, index: number) => {
   const { innerHTML, innerText } = event.target

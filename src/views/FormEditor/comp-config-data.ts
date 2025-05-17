@@ -1,8 +1,6 @@
 
 import { CompType } from "./comp-data"
-import Placeholder from '@/components-form-setting/base/Placeholder.vue';
 import Name from '/src/assets/form/name.svg';
-import type Email from "@/components-form/contact-information/Email.vue";
 import TelePhone from '/src/assets/form/telePhone.svg';
 
 type ClassifyList = 'personal'
@@ -61,6 +59,9 @@ interface CompConfig {
   isLayoutComp?: boolean // 布局组件
   
 }
+
+export const HasSettingTypeList = ['Radio', 'Checkout', 'Select']
+
 export const defaultConfig: CompConfig = {
   name: '',
   type: '',
@@ -82,7 +83,8 @@ export const hasPlaceholderType: CompType[] = [CompType.input, CompType.textarea
   CompType.wx,
   CompType.telePhone,
   CompType.phone,
-  CompType.name
+  CompType.name,
+  CompType.select,
 ]
 export const isPersonalClassifyList = [  
   CompType.email,
@@ -286,6 +288,7 @@ export const getCompPlaceHolderDataByType = (type: string) => {
     IDCard: '请输入身份证',
     Email: '请输入邮件',
     WX: '请输入微信',
+    Select: '请选择',
   }
 
   return placeholderObject[type]

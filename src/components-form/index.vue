@@ -43,7 +43,7 @@
     <div class="active-comp-setting" v-if="compConfig.id === selectedComp?.id && !isIgnoreEditor()">
 
       <div class="bottom-setting">
-        <div class="data-list-setting" v-if="['Radio', 'Checkout'].includes(compConfig.type)">
+        <div class="data-list-setting" v-if="HasSettingTypeList.includes(compConfig.type)">
 
           <span class="add-item">
             <a-typography-text type="warning" @click="addItem('new')">
@@ -118,6 +118,7 @@
 import { ref, computed, watch, defineEmits } from 'vue'
 // 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
+import SelectComponent from '@/components-form/base/Select.vue'
 import CheckoutComponent from '@/components-form/base/Checkout.vue'
 import InputComponent from '@/components-form/base/Input.vue'
 import TextareaComponent from '@/components-form/base/Textarea.vue'
@@ -153,7 +154,8 @@ import SignComponent from '@/components-form/advanced/Sign.vue'
 import * as _ from 'lodash'
 import { useSelectCompStore } from '@/stores/selectCompStore'
 import { v4 as uuidv4 } from 'uuid';
-import NPS from './base/NPS.vue'
+import { HasSettingTypeList } from '@/views/FormEditor/comp-config-data'
+
 
 interface Props {
   component: any,
@@ -238,6 +240,7 @@ function getTypeToComponent(type: string) {
     Upload: UploadComponent,
     Divider: DividerComponent,
     Paging: PagingComponent,
+    Select: SelectComponent,
 
     // 评分和满意度
     Rate: RateComponent,
