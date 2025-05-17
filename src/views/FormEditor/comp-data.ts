@@ -120,7 +120,7 @@ const BasicComponentList:CompItemType[] = [
     label: '下拉组件',
     name: '下拉组件',
     type: CompType.select,
-    icon: Icon.TextArea
+    icon: Icon.Select
   }
 ]
 

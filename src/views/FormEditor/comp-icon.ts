@@ -5,6 +5,7 @@ import Date from '/src/assets/form/date.svg'
 import DateRange from '/src/assets/form/dateRange.svg'
 import Input from '/src/assets/form/input.svg'
 import Radio from '/src/assets/form/radio.svg'
+import Select from '/src/assets/form/select.svg'
 import Text from '/src/assets/form/text.svg'
 import TextArea from '/src/assets/form/textarea.svg'
 import Url from '/src/assets/form/url.svg'
@@ -36,6 +37,7 @@ import Outline from '/src/assets/form-editor/Outline.svg'
 export default {
   Checkout,
   Email,
+  Select,
   Switch,
   Date,
   DateRange,
