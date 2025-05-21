@@ -7,7 +7,7 @@
 
 [OnLine 在线预览](https://bojue.github.io/lemon-form)
 
-![image](https://github.com/user-attachments/assets/ba8f1494-3cab-4053-a672-fdb7da88d1c3)
+![image](https://github.com/user-attachments/assets/8afe0a8b-3147-4769-8aa0-4077723b093b)
 
 
 
