@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { addressData } from '@/views/FormEditor/comp-address-data';
 import { ref, reactive } from 'vue'
-import { IdcardTwoTone } from '@ant-design/icons-vue';
+
 
 interface Props {
   id: string
