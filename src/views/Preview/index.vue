@@ -43,14 +43,14 @@
             :style="{
               'text-align': pageFooter.position || 'left'
             }">
-              <a-button v-if="pageFooter.buttonIconShowBool" class="submit" type="primary"
+              <a-button 
+                :icon="pageFooter.buttonIconShowBool ? h(CheckOutlined): null"
+                class="submit" 
+                type="primary"
                 :size="pageFooter.size" :style="{ 'padding': getSize(), 'lineHeight': getLineheight() }">
                 {{ pageFooter.buttonText || '提交' }}
               </a-button>
-              <a-button v-else class="submit" type="primary" :size="pageFooter.size"
-                :style="{ 'padding': getSize(), 'lineHeight': getLineheight() }">
-                {{ pageFooter.buttonText || '提交' }}
-              </a-button>
+
             </div>
           </div>
           <div v-else class="no-data">
@@ -89,7 +89,7 @@
 </template>
 <script setup lang="ts">
 type PreviewType = 'Phone' | 'PC'
-import { ref, reactive } from 'vue';
+import { ref, reactive, h } from 'vue';
 import SupportComp from '@/components/Support.vue'
 import type { DrawerProps } from 'ant-design-vue';
 import { CheckOutlined } from '@ant-design/icons-vue';

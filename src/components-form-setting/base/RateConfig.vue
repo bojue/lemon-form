@@ -1,10 +1,9 @@
 <template>
   <div class="setting-item h-50">
     <a-typography-text type="secondary" class="block-title2">图标</a-typography-text>
-
   </div>
   <div>
-    <a-radio-group v-model:value="comp.rateCharacter">
+    <a-radio-group class="rate-character-icon" v-model:value="comp.rateCharacter">
       <a-radio-button v-for="item in imgList" :key="item" :value="item"
         @click="changeRateCharacter(item)">{{ item }}</a-radio-button>
     </a-radio-group>
@@ -81,8 +80,8 @@ const changeHalf = (event: any) => {
 .comp {
   margin-bottom: 10px;
 }
-
-::v-deep(:where(.css-dev-only-do-not-override-17yhhjv).ant-radio-button-wrapper) {
-  width: 42px;
+.rate-character-icon {
+  display: flex;
+  flex: 0 0 auto;
 }
 </style>

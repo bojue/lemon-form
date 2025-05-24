@@ -132,11 +132,10 @@
             }" :style="{
               'text-align': pageFooter.position || 'left'
             }">
-              <a-button v-if="pageFooter.buttonIconShowBool" class="submit" type="primary" :icon="h(CheckOutlined)" :size="pageFooter.size"
-                :style="{ 'padding': getSize(), 'lineHeight': getLineheight() }">
-                {{ pageFooter.buttonText || '提交' }}
-              </a-button>
-              <a-button v-else class="submit" type="primary" :size="pageFooter.size"
+              <a-button  
+                class="submit" type="primary" 
+                :icon="pageFooter.buttonIconShowBool ? h(CheckOutlined): null" 
+                :size="pageFooter.size"
                 :style="{ 'padding': getSize(), 'lineHeight': getLineheight() }">
                 {{ pageFooter.buttonText || '提交' }}
               </a-button>
@@ -239,7 +238,7 @@ const defaultFormConfig = {
   displayNumberSort: true,
   displayDescription: true,
   displayTitle: true,
-  displayWaterMark: true,
+  displayWaterMark: false,
   waterMarkText: '柠檬轻表单🍋',
 }
 
@@ -530,9 +529,13 @@ const onClose = () => {
       font-weight: 400;
       // border: 1px solid #ebebeb;
       background: #fff;
-      box-shadow: 1px 1px 4px #ccc;
-      box-shadow: 1px 1px 4px royalblue;
-      box-shadow: 1px 1px 4px silver;
+      // box-shadow: 1px 1px 4px #ccc;
+      // box-shadow: 1px 1px 4px royalblue;
+      border: 1px solid #e7e7e7;
+      &:hover {
+        border-color: royalblue;
+      }
+      // box-shadow: 1px 1px 4px silver;
 
       /* &.person {
         background: #E6F8F5;
