@@ -13,6 +13,7 @@
         基础设置 
       </div>
       <div class="content m-b-0">
+        <FormTitle v-if="selectComp.type === 'FormTitle'" :comp="selectComp" :key="selectComp._selectedId "/>
         <Title v-if="showParams('name') && !showParams('isLayoutComp')" :comp="selectComp" :key="selectComp._selectedId "/>
         <ButtonText v-if="showParams('buttonText')" :comp="selectComp" :key="selectComp._selectedId "/>
         <Description v-if="showParams('description')" :comp="selectComp" :key="selectComp._selectedId "/>
@@ -26,13 +27,13 @@
         <DividerBorderType v-if="showParams('dividerValue')" :comp="selectComp"></DividerBorderType>
         <Position v-if="showParams('position')" :comp="selectComp"/>
         <Size v-if="showParams('size')" :comp="selectComp"/>
-        <RateConfig v-if="selectComp.type=== 'Rate'" :comp="selectComp" />
-        <NPSConfig v-if="['NPS', 'SelectRate'].includes(selectComp.type)" :comp="selectComp" />
+        <RateConfig v-if="selectComp?.type=== 'Rate'" :comp="selectComp" />
+        <NPSConfig v-if="['NPS', 'SelectRate'].includes(selectComp?.type)" :comp="selectComp" />
         <DataList v-if="showParams('dataList')" :comp="selectComp" />
         <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
         <SignCreateImgType v-if="showParams('sign_create_type')" :comp="selectComp"/>
       </div>
-      <div class="category-name" v-if="selectComp?.type && !['Button','Paging', 'Divider'].includes(selectComp.type)">
+      <div class="category-name" v-if="selectComp?.type && !['Button','Paging', 'Divider', 'FormTitle'].includes(selectComp?.type)">
         表单验证 
       </div>
       <div class="content">
@@ -60,6 +61,7 @@ import { ref, watch, reactive, computed } from 'vue'
 
 // 基础设置
 import Title from '@/components-form-setting/base/Title.vue'
+import FormTitle from '@/components-form-setting/base/FormTitle.vue'
 import Position from '@/components-form-setting/base/Position.vue'
 import Size from '@/components-form-setting/base/Size.vue'
 import ButtonText from '@/components-form-setting/base/ButtonText.vue'
@@ -126,7 +128,7 @@ const showParams = (params: string) => {
 
 const showRegParams = () => {
   const compList = verifyRegularityCompList()
-  return compList.includes(selectComp.type)
+  return compList.includes(selectComp?.type)
 }
 
 watch([() => props.selectComp, () => props.selectForm],
@@ -168,6 +170,7 @@ watch([() => props.selectComp, () => props.selectForm],
 }
 .setting-base {
   padding: 5px 15px;
+  overflow-x: hidden;
 }
 .category-name {
   height: 56px;

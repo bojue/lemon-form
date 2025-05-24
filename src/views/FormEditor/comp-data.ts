@@ -1,5 +1,9 @@
 import Icon from './comp-icon'
 export enum CompType {
+  // form表单
+  formTitle = 'FormTitle', // 表单标题
+
+  // 基础组件
   input = 'Input',
   textarea = 'Textarea',
   number = 'Number',

@@ -3,6 +3,7 @@
     <div class="nav-data">
       <div class="header">
         <div class="callback" @click="callback()">
+
           <img src="@/assets/form-editor/callback.svg" alt="">
         </div>
         <div class="title-data">
@@ -16,31 +17,30 @@
               <span class="name">
                 GitHub
               </span>
-              </a-button>
-            </div>
+            </a-button>
+          </div>
           <div class="cont-item">
-
             <a-button type="default">
               <img class="btn-icon" src="@/assets/form-editor/save.svg" alt="">
               <span class="name">
                 保存
               </span>
-              </a-button>
+            </a-button>
           </div>
           <div class="cont-item">
-            <a-button type="primary"> 
+            <a-button type="primary">
               <img class="btn-icon" src="@/assets/form-editor/publish.svg" alt="">
               <span class="name">
                 发布
               </span>
-              </a-button>
+            </a-button>
           </div>
 
         </div>
       </div>
     </div>
     <div class="content editor-content">
-      <SidebarComp/>
+      <SidebarComp />
       <div class="comps">
         <div class="comp-category-item" v-for="compCategory in compList">
           <div class="category-title">
@@ -50,18 +50,16 @@
                 <span>{{ compCategory.tooltip }}</span>
               </template>
               <QuestionCircleOutlined />
-          </a-tooltip>
+            </a-tooltip>
           </div>
           <VueDraggable v-model="compCategory.children" :animation="0"
             :group="{ name: 'sevenBotForm', pull: 'clone', put: false }" :sort="false" :clone="onClone"
             class="flex flex-col gap-2 p-4 w-300px bg-gray-500/5 rounded compList">
-            <div v-for="item in compCategory.children" class="cursor-move h-50px bg-gray-500/5 item"
-            v-bind:class="{
+            <div v-for="item in compCategory.children" class="cursor-move h-50px bg-gray-500/5 item" v-bind:class="{
               'person': compCategory.type === 'Personal Component',
               'advanced': compCategory.type === 'Advanced Component',
               'layout': compCategory.type === 'Layout Component'
-            }"
-            @click="createCompByClick(item)">
+            }" @click="createCompByClick(item)">
               <img class="icon" :src="item.icon" alt="" v-if="item.icon">
               {{ item.label }}
             </div>
@@ -70,93 +68,101 @@
       </div>
       <div class="editor">
         <div class="preview-control" title="预览" @click="preview">
-                <img :src="Icon.Preview" alt="">
-                <div class="label">
-                  预览
-                </div>
+          <img :src="Icon.Preview" alt="">
+          <div class="label">
+            预览
+          </div>
 
-              </div>
+        </div>
         <div class="form" v-bind:class="{
           'no-data': !pageCompList?.length
         }">
           <div class="body">
-            <a-watermark :content="selectForm?.displayWaterMark ?selectForm?.waterMarkText: ''">
-    
-            <div class="form-header">
-              <!-- <div class="header-img"> <img src="/src/assets/background/bg.png"/></div> -->
-              <!-- <div class="title" >
-                <div class="title-val">每日健康打开表单</div>
-              </div>
-              <div class="description">
-                <div class="description-value">
-                  为了你的健康，希望你每天定时打卡登记，感谢你的参与！
+            <a-watermark :content="selectForm?.displayWaterMark ? selectForm?.waterMarkText : ''">
+              <div class="form-header" @click="selectComp(pageHeader)" :class="{
+                'form-item': true,
+                'active-comp': activeComp.id === pageHeader.id
+              }">
+                <div class="header-img" v-if="pageHeader.titleImageShow">
+                  <img :src="getImageUrl(pageHeader.titleImageUrl)" />
                 </div>
-              </div> -->
-            </div>
-            <div class="form-body form-body-content">
-              <VueDraggable v-model="pageCompList" :animation="150" group="sevenBotForm" ghostClass="ghost"
-                handle=".handle"
-                class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
-                <template v-if="!pageCompList?.length">
-                  <div v-if="!pageCompList?.length" @dragenter="handleDragHandle" @mouseleave="handleDragHandle"
-                    @dragleave="handleDragHandle">
-                    <div class="no-data-content" :class="[{
-                      'dragenter': noDataContentRef === 'dragenter',
-                    }]">
-                      <span class="text" :class="{
-                        'has-data': pageCompList.length
-                      }">
-                        点击左侧题目 / 拖拽题目到此区域
-                      </span>
-
+                <section class="title-section">
+                  <div class="title"  :style="{
+                      'margin': pageHeader.titleSize === 'large' ? '16px' : (pageHeader.titleSize === 'middle' ? '10px' : '6px'),
+                    }" >
+                    <div class="title-val"  :style="{
+                      'font-size': pageHeader.titleSize === 'large' ? '36px' : (pageHeader.titleSize === 'middle' ? '24px' : '18px'),
+                    }">{{ pageHeader.titleValue }}</div>
+                  </div>
+                  <div class="description" v-if="pageHeader.titleDescriptionShow">
+                    <div class="description-value" :style="{
+                      'text-align': pageHeader.titleDescriptionPosition || 'center'
+                    }">
+                      {{ pageHeader.titleDescription }}
                     </div>
                   </div>
-                </template>
+                </section>
 
-                <template v-else>
-                  <div v-for="(item, index) in pageCompList" :key="item?.name" :class="{
-                    'cursor-move': true,
-                    'form-item': true,
-                    'active-comp': activeComp.id == item?.id
-                  }" @click="selectComp(item)">
-                    <FormComponent :key="item?.id" @compControl="compControl"
-                      @addItem="addItem($event, item, index)" :component="item" :formConfig="selectForm"
-                      :type="item?.type" :isDev="isFormEditorDevBool" :selectedComp="getActiveComp()"></FormComponent>
-                  </div>
-                </template>
-              </VueDraggable>
-            </div>
-            <div class="form-footer" @click="selectComp(pageFooter)" :class="{
-              'form-item': true,
-              'active-comp': activeComp.id === pageFooter.id
-            }" :style="{
-              'text-align': pageFooter.position || 'left'
-            }">
-              <a-button  
-                class="submit" type="primary" 
-                :icon="pageFooter.buttonIconShowBool ? h(CheckOutlined): null" 
-                :size="pageFooter.size"
-                :style="{ 'padding': getSize(), 'lineHeight': getLineheight() }">
-                {{ pageFooter.buttonText || '提交' }}
-              </a-button>
-            </div>
-      </a-watermark>
+              </div>
+              <div class="form-body form-body-content">
+                <div class="comp-list-content">
+                  <VueDraggable v-model="pageCompList" :animation="150" group="sevenBotForm" ghostClass="ghost"
+                    handle=".handle"
+                    class="flex flex-col gap-2 p-4 w-300px max-h-350px m-auto bg-gray-500/5 rounded overflow-auto form-body">
+                    <template v-if="!pageCompList?.length">
+                      <div v-if="!pageCompList?.length" @dragenter="handleDragHandle" @mouseleave="handleDragHandle"
+                        @dragleave="handleDragHandle">
+                        <div class="no-data-content" :class="[{
+                          'dragenter': noDataContentRef === 'dragenter',
+                        }]">
+                          <span class="text" :class="{
+                            'has-data': pageCompList.length
+                          }">
+                            点击左侧题目 / 拖拽题目到此区域
+                          </span>
+
+                        </div>
+                      </div>
+                    </template>
+
+                    <template v-else>
+                      <div v-for="(item, index) in pageCompList" :key="item?.name" :class="{
+                        'cursor-move': true,
+                        'form-item': true,
+                        'active-comp': activeComp.id == item?.id
+                      }" @click="selectComp(item)">
+                        <FormComponent :key="item?.id" @compControl="compControl"
+                          @addItem="addItem($event, item, index)" :component="item" :formConfig="selectForm"
+                          :type="item?.type" :isDev="isFormEditorDevBool" :selectedComp="getActiveComp()">
+                        </FormComponent>
+                      </div>
+                    </template>
+                  </VueDraggable>
+                </div>
+              </div>
+              <div class="form-footer" @click="selectComp(pageFooter)" :class="{
+                'form-item': true,
+                'active-comp': activeComp.id === pageFooter.id
+              }" :style="{
+                'text-align': pageFooter.position || 'left'
+              }">
+                <a-button class="submit" type="primary" :icon="pageFooter.buttonIconShowBool ? h(CheckOutlined) : null"
+                  :size="pageFooter.size" :style="{ 'padding': getSize(), 'lineHeight': getLineHeight() }">
+                  {{ pageFooter.buttonText || '提交' }}
+                </a-button>
+              </div>
+            </a-watermark>
           </div>
-          
+
         </div>
 
       </div>
-      <SettingComp v-if="selectForm" :currentCompId="activeComp.id" :key="activeComp.id + updateCompKey" :selectForm="selectForm"
-        :selectComp="getActiveComp()"></SettingComp>
+      <SettingComp v-if="selectForm" :currentCompId="activeComp.id" :key="activeComp.id + updateCompKey"
+        :selectForm="selectForm" :selectComp="getActiveComp()"></SettingComp>
     </div>
   </div>
-  <PreviewPage 
-    v-if="openDraw"
-    :selectForm="selectForm"
-    :open="openDraw" 
-    :pageCompList="pageCompList"
-    :pageFooter="pageFooter"
-    @onClose="onClose"></PreviewPage>
+  <PreviewPage v-if="openDraw" :selectForm="selectForm" :open="openDraw" :pageCompList="pageCompList"
+    :pageFooter="pageFooter" @onClose="onClose"></PreviewPage>
 
 </template>
 <script setup lang="ts">
@@ -185,8 +191,22 @@ interface ActiveCompType {
   id: string
 }
 
+interface HeaderType {
+  type: string,
+  id: string
+  titleValue: string
+  titleSize: string
+  titleDescription: string
+  titleImageUrl: string
+  titleDescriptionShow: boolean
+  titleImageShow: boolean
+  defUrl: string
+  titleDescriptionPosition: string
+}
+
+
 interface FooterType {
-  id: string 
+  id: string
   size: string
   buttonText: string
   position: 'left' | 'right' | 'center'
@@ -208,13 +228,24 @@ const getSize = () => {
   return data?.size == 'large' ? "0 26px" : (data?.size == "small" ? "0 10px" : "0 16px")
 }
 
-const getLineheight = () => {
+const getLineHeight = () => {
   const data = pageFooter.value
   return data.size == 'large' ? "40px" : (data.size == "small" ? "24px" : "32px")
 }
 
-const pageHeader = ref({}) // 顶部
 const pageCompList = ref<any[]>([]) // 页面组件内容
+const pageHeader = ref<HeaderType>({
+  id: '',
+  titleValue: '标题名称',
+  titleSize: 'middle',
+  titleDescription: '柠檬轻表单，Github仓库已免费开源，感谢你的使用！',
+  titleImageUrl: 'bg.png',
+  defUrl: 'bg.png',
+  type: '',
+  titleDescriptionShow: true,
+  titleImageShow: true,
+  titleDescriptionPosition: 'center'
+})
 
 const pageFooter = ref<FooterType>({
   id: '',
@@ -245,6 +276,8 @@ const defaultFormConfig = {
 onMounted(() => {
   useCompStore.initGlobalFormConfig({ ...defaultFormConfig })
   // 组件初始化
+  pageHeader.value = getDefaultConfig(CompType.formTitle, true)
+  pageHeader.value.id = uuidv4()
   pageFooter.value = getDefaultConfig(CompType.button)
   pageFooter.value.id = uuidv4()
 
@@ -260,8 +293,6 @@ const isFormEditorDevBool = computed(() => {
 const initDataState = () => {
   noDataContentRef.value = ''
 }
-
-
 
 // 更新选中组件数据
 const updateCompByChange = (compConfig: any) => {
@@ -313,9 +344,6 @@ watch(pageCompList, (newValue) => {
   updateCompLineNumber()
 })
 
-
-
-
 const createByClickOrClone = (element: any) => {
   const defaultComp: any = getDefaultConfig(element.type)
   const item = {
@@ -328,13 +356,13 @@ const createByClickOrClone = (element: any) => {
   }
   return { ...item }
 }
- 
+
 const onClone = (element: any) => {
-  return  createByClickOrClone(element)
+  return createByClickOrClone(element)
 }
 
 const createCompByClick = (item: any) => {
-  const createElement =  createByClickOrClone(item)
+  const createElement = createByClickOrClone(item)
   pageCompList.value.splice(pageCompList.value.length, 0, { ...createElement })
   updateCompLineNumber()
 }
@@ -346,6 +374,8 @@ const selectComp = (item: any) => {
     ...item
   })
   activeComp.value.id = item.id
+
+  console.log("当前选中组件：", item)
 }
 
 const updateDataListIndex = (index: number) => {
@@ -395,10 +425,10 @@ const compControl = (controlType: string, value: any) => {
     pageCompList.value.splice(index + 1, 0, { ...newComp })
   }
   if (controlType === 'delete') {
-    const deleteComp =  pageCompList.value.splice(index, 1)
+    const deleteComp = pageCompList.value.splice(index, 1)
     activeComp.value.id = pageCompList.value[index - 1]?.id
     deleteSuccess(deleteComp?.[0]?.name)
-  } 
+  }
   initDataState()
   updateCompLineNumber()
 }
@@ -413,6 +443,9 @@ const getActiveComp = () => {
   if (activeComp.value.id === pageFooter.value.id) {
     return pageFooter.value
   }
+  if (activeComp.value.id === pageHeader.value.id) {
+    return pageHeader.value
+  }
 }
 
 const getActiveCompIndex = () => {
@@ -422,6 +455,16 @@ const getActiveCompIndex = () => {
 const callback = () => {
   // router.go(-1)
   router.push('/workspace/product')
+}
+
+const getImageUrl = (imgUrl: string) => {
+  try {
+    return new URL(`/src/assets/background/${imgUrl}`, import.meta.url).href;
+  } catch (e) {
+    // @ts-ignore
+    const defaultUrl = pageHeader?.defUrl
+    return new URL(`/src/assets/background/${defaultUrl}`, import.meta.url).href;
+  }
 }
 
 
@@ -469,21 +512,25 @@ const onClose = () => {
 
 .editor-content {
   display: grid;
-  grid-template-columns:56px 270px 1fr 260px;
+  grid-template-columns: 56px 270px 1fr 260px;
   padding: 0 0 0 0px;
   height: calc(100% - 86px);
+
   @media(max-width: 1400px) {
-    grid-template-columns:56px 220px 1fr  220px;
+    grid-template-columns: 56px 220px 1fr 220px;
     overflow-x: auto;
+
     .form {
-      width: auto ;
+      width: auto;
     }
   }
+
   @media(max-width: 1400px) {
-    grid-template-columns:56px 260px 1fr 250px;
+    grid-template-columns: 56px 260px 1fr 250px;
     overflow-x: auto;
+
     .form {
-      width: auto ;
+      width: auto;
     }
   }
 }
@@ -532,9 +579,11 @@ const onClose = () => {
       // box-shadow: 1px 1px 4px #ccc;
       // box-shadow: 1px 1px 4px royalblue;
       border: 1px solid #e7e7e7;
+
       &:hover {
         border-color: royalblue;
       }
+
       // box-shadow: 1px 1px 4px silver;
 
       /* &.person {
@@ -579,10 +628,10 @@ const onClose = () => {
 
     .form-header {
       padding: 0;
-
+      margin-bottom: 10px;
       img {
         width: 100%;
-        height: 250px;
+        height: 220px;
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
       }
@@ -592,7 +641,6 @@ const onClose = () => {
         font-size: 18px;
         color: rgba(0, 0, 0, 0.8);
         font-weight: 600;
-        margin-top: 40px;
         margin-bottom: 10px;
       }
 
@@ -617,10 +665,10 @@ const onClose = () => {
     display: grid;
     padding-bottom: 10px;
 
-    .sortable-chosen:not(.active-comp){
+    .sortable-chosen:not(.active-comp) {
       background: aliceblue;
       border-radius: 4px;
-      border:1px dashed #94b4ff;
+      border: 1px dashed #94b4ff;
       width: calc(100% - 0px);
       padding: 48px 50px;
       height: 116px;
@@ -654,7 +702,7 @@ const onClose = () => {
     border-top: 1px dashed #ccc; */
     /* border: 1px dashed #1677ff; */
     /* background: lightyellow; */
-    background:aliceblue;
+    background: aliceblue;
     /* darkseagreen; */
     border-radius: 5px;
     position: relative;
@@ -704,13 +752,13 @@ const onClose = () => {
     line-height: 90px;
     padding: 0 60px;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 20px;
 
   }
 
   ::v-deep(.form-footer) {
     .submit {
-    
+
       max-width: 100%;
       white-space: nowrap;
       /* 不换行 */
@@ -724,7 +772,7 @@ const onClose = () => {
 
 .preview-control {
   position: fixed;
-  box-shadow: 0 0 6px rgba(0,0,0,.08);
+  box-shadow: 0 0 6px rgba(0, 0, 0, .08);
   color: #666;
   width: 50px;
   height: 55px;
@@ -739,21 +787,24 @@ const onClose = () => {
   transform: translateX(388px);
   left: 50%;
   top: 66px;
+
   img {
     width: 24px;
     height: 24px;
   }
+
   .label {
     font-size: 12px;
     padding-top: 5px;
   }
+
   &:hover {
     color: #1677ff;
     background: #fafafa;
   }
 }
 
-::v-deep(.ant-drawer-bottom>.ant-drawer-content-wrapper)   {
+::v-deep(.ant-drawer-bottom>.ant-drawer-content-wrapper) {
   height: calc(100% - 50px) !important;
 
 }
@@ -771,17 +822,20 @@ const onClose = () => {
     cursor: pointer;
   }
 }
+
 .control {
   position: absolute;
   right: 6px;
   top: 12px;
   display: flex;
   flex-grow: 2;
+
   .cont-item {
     cursor: pointer;
     margin-right: 10px;
 
   }
+
   .btn-icon {
     width: 18px;
     padding: 0px;
@@ -800,6 +854,26 @@ const onClose = () => {
   }
 }
 
+.form-header {
+  margin: 0;
 
+  .title {
+    height: 42px;
+    line-height: 42px;
 
+    .title-val {
+      font-size: 20px;
+    }
+  }
+
+  .description-value {
+    color: rgba(0, 0, 0, 0.45);
+    margin: 8px 0 30px 0;
+  }
+}
+
+.comp-list-content {
+  position: relative;
+  min-height: 130px;
+}
 </style>

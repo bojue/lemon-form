@@ -59,4 +59,8 @@ const props = defineProps<Props>()
   margin-bottom: 20px;
 }
 
+.h-32 {
+  height: 32px;
+}
+
 </style>

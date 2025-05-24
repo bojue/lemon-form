@@ -34,6 +34,13 @@ interface CompConfig {
   startValue?: number // 开始值
   startValueList?: number[] // 开始值List
 
+  // 标题
+  titleValue: string
+  titleSize: string
+  titleDescription: string
+  titleImageUrl: string
+
+
   // 按钮
   buttonText?: string // 按钮文本
   size?: 'large' | 'middle' | 'small' // 按钮大小
@@ -100,6 +107,7 @@ export const isPersonalClassifyList = [
 export const isGender = [CompType.gender]
 export const isRangePlaceholderType: CompType[]  = [CompType.dateRange, CompType.timeRange]
 export const isNumberType: CompType[] = [CompType.number]
+export const isFormTitle: CompType[] = [CompType.formTitle]
 export const isButton: CompType[] = [CompType.button]
 export const isRate: CompType[] = [CompType.rate]
 export const isNPS: CompType[] = [CompType.nps, CompType.selectRate]
@@ -221,6 +229,22 @@ export const getCompConfig = (type: CompType) => {
       rateAllowHalf: false,
     }
   }
+
+  // 标题
+  if(isFormTitle.includes(type)) {
+    compConfig = {
+      type,
+      titleValue: '标题名称',
+      titleSize: 'middle',
+      titleDescription: '柠檬轻表单，Github仓库已免费开源，感谢你的使用！',
+      titleImageUrl: 'bg.png',
+      titleDescriptionShow: true,
+      titleImageShow: true,
+      titleDescriptionPosition: 'center'
+    } 
+
+    return compConfig
+  }
   
   // 按钮
   if(isButton.includes(type)) {
@@ -294,16 +318,31 @@ export const getCompPlaceHolderDataByType = (type: string) => {
   return placeholderObject[type]
 }
 
-export const getDefaultConfig = (type: CompType) => {
-  const compConfig = getCompConfig(type)
-  const configData = {
-    ...defaultConfig,
-    ...compConfig
+export const getDefaultConfig = (type: CompType | CompType[], ignoreDefault: boolean = false) => {
+  let configData = ignoreDefault ? {} :{
+    ...defaultConfig
+  }
+  if(Array.isArray(type)) {
+    type.map((itemType) => {
+      const compConfig = getCompConfig(itemType)
+      configData = {
+        ...configData,
+        ...compConfig
+      }
+    })
+
+  } else {
+    const compConfig = getCompConfig(type)
+    configData = {
+      ...configData,
+      ...compConfig
+    }
+
+    console.log('compConfig',compConfig)
   }
 
-  console.log('configData',configData)
-  
   return {...configData}
+
 }
 
 export const disableInputByDev = '编辑模式不支持输入'
