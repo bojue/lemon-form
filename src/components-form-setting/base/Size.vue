@@ -10,18 +10,10 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref }  from 'vue'
 import { useSelectCompStore  } from '@/stores/selectCompStore'
+import { textOrButtonSizeData } from '../setting-config-data'
 
 const compStore = useSelectCompStore()
-const orientationList = ref([{
-  name: "小",
-  value: 'small'
-}, {
-  name: '中',
-  value: 'middle'
-}, {
-  name: "大",
-  value: 'large'
-}])
+const orientationList = ref([...textOrButtonSizeData])
 
 
 

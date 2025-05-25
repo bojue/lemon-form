@@ -10,18 +10,10 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref }  from 'vue'
 import { useSelectCompStore  } from '@/stores/selectCompStore'
+import { optionData } from '../setting-config-data'
 
 const compStore = useSelectCompStore()
-const orientationList = ref([{
-  name: "左",
-  value: 'left'
-}, {
-  name: '中',
-  value: 'center'
-}, {
-  name: "右",
-  value: 'right'
-}])
+const orientationList = ref([...optionData])
 
 const handleChangeInput = (event: any) => {
   const data = event.target.value 

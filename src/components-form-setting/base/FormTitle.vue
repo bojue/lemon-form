@@ -62,29 +62,12 @@
 import { defineProps,watch, computed, defineEmits, ref, onMounted }  from 'vue'
 import { useSelectCompStore  } from '@/stores/selectCompStore'
 import Description from '@/components-form-setting/base/Description.vue';
+import { optionData, textOrButtonSizeData } from '../setting-config-data';
 
 const compStore: any = useSelectCompStore()
-const orientationList = ref([{
-  name: "小",
-  value: 'small'
-}, {
-  name: '中',
-  value: 'middle'
-}, {
-  name: "大",
-  value: 'large'
-}])
+const orientationList = ref([...textOrButtonSizeData])
 
-const positionList = ref([{
-  name: "左",
-  value: 'left'
-}, {
-  name: '中',
-  value: 'center'
-}, {
-  name: "右",
-  value: 'right'
-}])
+const positionList = ref([...optionData])
 
 const handleChangeInput = (event: any, params?: string) => {
   const data = event.target.value 
