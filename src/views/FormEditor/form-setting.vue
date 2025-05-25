@@ -164,9 +164,10 @@ watch([() => props.selectComp, () => props.selectForm],
 .comp-name {
   padding: 10px 10px 0 15px;
   border-bottom: 1px solid rgba(0, 0, 0, .06);
-  .title-val {
-
-  }
+  top:0;
+  position: sticky;
+  z-index: 10;
+  background: #fff;
 }
 .setting-base {
   padding: 5px 15px;

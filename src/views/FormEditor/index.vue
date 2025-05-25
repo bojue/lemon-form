@@ -578,7 +578,8 @@ const onClose = () => {
       background: #fff;
       // box-shadow: 1px 1px 4px #ccc;
       // box-shadow: 1px 1px 4px royalblue;
-      border: 1px solid #e7e7e7;
+      // border: 1px solid #e7e7e7;
+      border: 1px solid silver;
 
       &:hover {
         border-color: royalblue;
