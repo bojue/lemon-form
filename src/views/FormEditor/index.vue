@@ -523,6 +523,8 @@ const onClose = () => {
     .form {
       width: auto;
     }
+
+
   }
 
   @media(max-width: 1400px) {
@@ -533,6 +535,10 @@ const onClose = () => {
       width: auto;
     }
   }
+
+      ::v-deep(.content .compList .item) {
+      font-size: 14px;
+    }
 }
 
 .content {
@@ -576,26 +582,15 @@ const onClose = () => {
       font-weight: 400;
       // border: 1px solid #ebebeb;
       background: #fff;
-      // box-shadow: 1px 1px 4px #ccc;
-      // box-shadow: 1px 1px 4px royalblue;
-      // border: 1px solid #e7e7e7;
       border: 1px solid silver;
 
       &:hover {
         border-color: royalblue;
       }
 
-      // box-shadow: 1px 1px 4px silver;
-
-      /* &.person {
-        background: #E6F8F5;
-      }
-      &.advanced {
-        background: linen ;
-      }
-      &.layout {
-        background: beige;
-      } */
+        @media(max-width: 1400px) {
+          font-size: 14px;
+        }
     }
 
     &.hover {
