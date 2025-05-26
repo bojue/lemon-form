@@ -83,10 +83,10 @@ const changeSelect = (event: any, param?: string) => {
   })
 }
 
-const changeValue = (event: any) => {
+const changeValue = (event: any, param?: string) => {
   const data = event
   compStore.updateCurrentComp({
-    buttonIconShowBool: data
+    [param || 'buttonIconShowBool']: data
   })
 }
 

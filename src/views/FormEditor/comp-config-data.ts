@@ -35,10 +35,10 @@ interface CompConfig {
   startValueList?: number[] // 开始值List
 
   // 标题
-  titleValue: string
-  titleSize: string
-  titleDescription: string
-  titleImageUrl: string
+  titleValue?: string
+  titleSize?: string
+  titleDescription?: string
+  titleImageUrl?: string
 
 
   // 按钮

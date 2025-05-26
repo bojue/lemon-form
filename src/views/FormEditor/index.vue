@@ -96,10 +96,8 @@
                   </div>
                   <div class="description" v-if="pageHeader.titleDescriptionShow">
                     <div class="description-value" :style="{
-                      'text-align': pageHeader.titleDescriptionPosition || 'center'
-                    }">
-                      {{ pageHeader.titleDescription }}
-                    </div>
+                      'text-align': pageHeader.titleDescriptionPosition
+                    }"> {{ pageHeader.titleDescription }}</div>
                   </div>
                 </section>
 
@@ -201,7 +199,7 @@ interface HeaderType {
   titleDescriptionShow: boolean
   titleImageShow: boolean
   defUrl: string
-  titleDescriptionPosition: string
+  titleDescriptionPosition: 'left' | 'right' | 'center'
 }
 
 
@@ -276,8 +274,10 @@ const defaultFormConfig = {
 onMounted(() => {
   useCompStore.initGlobalFormConfig({ ...defaultFormConfig })
   // 组件初始化
+  // @ts-ignore
   pageHeader.value = getDefaultConfig(CompType.formTitle, true)
   pageHeader.value.id = uuidv4()
+  // @ts-ignore
   pageFooter.value = getDefaultConfig(CompType.button)
   pageFooter.value.id = uuidv4()
 
