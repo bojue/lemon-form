@@ -79,11 +79,15 @@
         }">
           <div class="body">
             <a-watermark :content="selectForm?.displayWaterMark ? selectForm?.waterMarkText : ''">
-              <div class="form-header" @click="selectComp(pageHeader)" :class="{
-                'form-item': true,
-                'active-comp': activeComp.id === pageHeader.id
-              }">
-                <div class="header-img" v-if="pageHeader.titleImageShow">
+              <div 
+                v-if="globalData && globalData.displayTitle"
+                class="form-header" 
+                @click="selectComp(pageHeader)" 
+                :class="{
+                  'form-item': true,
+                  'active-comp': activeComp.id === pageHeader.id
+                }">
+                <div class="header-img" v-if="pageHeader.titleImageShow ">
                   <img :src="getImageUrl(pageHeader.titleImageUrl)" />
                 </div>
                 <section class="title-section">
@@ -138,7 +142,9 @@
                   </VueDraggable>
                 </div>
               </div>
-              <div class="form-footer" @click="selectComp(pageFooter)" :class="{
+              <div class="form-footer" @click="selectComp(pageFooter)"
+              v-if="globalData && globalData.displayBtn"
+               :class="{
                 'form-item': true,
                 'active-comp': activeComp.id === pageFooter.id
               }" :style="{
@@ -178,6 +184,7 @@ import { useRoute, createRouter } from 'vue-router';
 import { toGithub } from '@/utils/toGithub'
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
+import { toRef } from 'pinia'
 
 
 import * as _ from 'lodash'
@@ -213,6 +220,7 @@ interface FooterType {
 
 const openDraw = ref(false)
 const compList = ref([...CompListData]) // 来源组件列表
+const globalData = ref({})
 
 /**
  * 编辑器编辑内容
@@ -267,12 +275,14 @@ const defaultFormConfig = {
   displayNumberSort: true,
   displayDescription: true,
   displayTitle: true,
+  displayBtn: true,
   displayWaterMark: false,
   waterMarkText: '柠檬轻表单🍋',
 }
 
 onMounted(() => {
-  useCompStore.initGlobalFormConfig({ ...defaultFormConfig })
+  const data = useCompStore.initGlobalFormConfig({ ...defaultFormConfig })
+  globalData.value = useCompStore.currentGlobalFormConfig
   // 组件初始化
   // @ts-ignore
   pageHeader.value = getDefaultConfig(CompType.formTitle, true)
@@ -582,8 +592,6 @@ const onClose = () => {
       font-weight: 400;
       // border: 1px solid #ebebeb;
       background: #fff;
-      border: 1px solid silver;
-
       &:hover {
         border-color: royalblue;
       }

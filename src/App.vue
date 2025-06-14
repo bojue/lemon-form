@@ -9,5 +9,7 @@ const size = ref('large')
 </template>
 
 <style scoped>
-
+#app{
+  /* background: linear-gradient(180deg,transparent,#fff, #fff, #fff)  yellow; */
+}
 </style>

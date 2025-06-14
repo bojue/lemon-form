@@ -1,5 +1,6 @@
 <template>
-  <header>
+  <div class="home">
+      <header>
     <div class="nav">
       <nav>
         <!-- <LogoComp/> -->
@@ -20,7 +21,6 @@
         <span class="github">
           GitHub仓库
         </span>
-        <!-- <img src="https://img.shields.io/github/stars/bojue/lemon-form.svg?style=social" class="giticon" alt=""> -->
       </a-button>
       <QuestionTitle title="为什么选择【柠檬轻表单】"/>
       <SelectLearn/>
@@ -29,6 +29,8 @@
       <!-- <NewIssue/> -->
 
     </div>
+  </div>
+
 </template>
 
 
@@ -104,6 +106,10 @@ header {
   .giticon {
     margin-top: -5px;
   }
+}
+.home {
+  height: 100%;
+  background: linear-gradient(180deg,transparent, #fff, #fff, #fff, #fff)  cornflowerblue;
 }
 
 </style>
