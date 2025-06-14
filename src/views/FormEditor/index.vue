@@ -184,7 +184,6 @@ import { useRoute, createRouter } from 'vue-router';
 import { toGithub } from '@/utils/toGithub'
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
-import { toRef } from 'pinia'
 
 
 import * as _ from 'lodash'
@@ -220,7 +219,7 @@ interface FooterType {
 
 const openDraw = ref(false)
 const compList = ref([...CompListData]) // 来源组件列表
-const globalData = ref({})
+const globalData = ref()
 
 /**
  * 编辑器编辑内容
