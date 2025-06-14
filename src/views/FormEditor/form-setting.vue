@@ -49,6 +49,7 @@
       </div>
       <div class="content" v-if="selectForm">
         <DisplayTitle :form="selectForm"/>
+        <DisplayBtn :form="selectForm"/>
         <DisplaySerialNumber :form="selectForm"/>
         <DisplayDescription :form="selectForm"/>
         <DisplayWaterMark :form="selectForm"/>
@@ -92,6 +93,7 @@ import DisplayWaterMark from '@/components-form-setting/common-global-configurat
 import DisplaySerialNumber from '@/components-form-setting/common-global-configurations/DisplaySerialNumber.vue'
 import DisplayDescription from '@/components-form-setting/common-global-configurations/DisplayDescription.vue'
 import DisplayTitle from '@/components-form-setting/common-global-configurations/DisplayTitle.vue'
+import DisplayBtn from '@/components-form-setting/common-global-configurations/DisplayBtn.vue'
 
 import { hasOwnPropertyFunction, verifyRegularityCompList } from '@/views/FormEditor/comp-config-data'
 import * as _ from 'lodash'
