@@ -14,9 +14,9 @@
       </div>
       <div class="content m-b-0">
         <FormTitle v-if="selectComp.type === 'FormTitle'" :comp="selectComp" :key="selectComp._selectedId "/>
-        <Title v-if="showParams('name') && !showParams('isLayoutComp')" :comp="selectComp" :key="selectComp._selectedId "/>
+        <Title v-if="showParams('name') && !showParams('isLayoutComp') && !['FormTitle'].includes(selectComp.type)" :comp="selectComp" :key="selectComp._selectedId "/>
         <ButtonText v-if="showParams('buttonText')" :comp="selectComp" :key="selectComp._selectedId "/>
-        <Description v-if="showParams('description')" :comp="selectComp" :key="selectComp._selectedId "/>
+        <Description v-if="showParams('description') && !['FormTitle'].includes(selectComp.type)"s :comp="selectComp" :key="selectComp._selectedId "/>
         <PageSubTitle v-if="showParams('pageSubTitle')"  :comp="selectComp" :key="selectComp._selectedId "/>
         <PageSubDescription v-if="showParams('pageSubTitle')" :comp="selectComp" :key="selectComp._selectedId "/>
         <Placeholder v-if="showParams('placeholder')" :comp="selectComp" :key="selectComp._selectedId "/>
@@ -33,7 +33,7 @@
         <UseOtherDataList v-if="showParams('useOtherDataList')" :comp="selectComp"/>
         <SignCreateImgType v-if="showParams('sign_create_type')" :comp="selectComp"/>
       </div>
-      <div class="category-name" v-if="selectComp?.type && !['Button','Paging', 'Divider', 'FormTitle'].includes(selectComp?.type)">
+      <div class="category-name" v-if="selectComp?.type && !JustShowCompType.includes(selectComp?.type)">
         表单验证 
       </div>
       <div class="content">
@@ -48,7 +48,7 @@
         全局表单配置
       </div>
       <div class="content" v-if="selectForm">
-        <DisplayTitle :form="selectForm"/>
+        <!-- <DisplayTitle :form="selectForm"/> -->
         <DisplayBtn :form="selectForm"/>
         <DisplaySerialNumber :form="selectForm"/>
         <DisplayDescription :form="selectForm"/>
@@ -62,7 +62,9 @@ import { ref, watch, reactive, computed } from 'vue'
 
 // 基础设置
 import Title from '@/components-form-setting/base/Title.vue'
-import FormTitle from '@/components-form-setting/base/FormTitle.vue'
+import FormTitle from '@/components-form-setting/show/FormTitle.vue'
+import Video from '@/components-form-setting/show/Video.vue'
+import Image from '@/components-form-setting/show/Image.vue'
 import Position from '@/components-form-setting/base/Position.vue'
 import Size from '@/components-form-setting/base/Size.vue'
 import ButtonText from '@/components-form-setting/base/ButtonText.vue'
@@ -97,7 +99,7 @@ import DisplayBtn from '@/components-form-setting/common-global-configurations/D
 
 import { hasOwnPropertyFunction, verifyRegularityCompList } from '@/views/FormEditor/comp-config-data'
 import * as _ from 'lodash'
-
+import { JustShowCompType } from '@/views/FormEditor/comp-data'
 import { CompListData } from '@/views/FormEditor/comp-data'
 import Icon from './comp-icon'
 

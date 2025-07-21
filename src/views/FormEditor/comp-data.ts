@@ -49,6 +49,11 @@ export enum CompType {
   boolean = "Boolean", // 常见组件
   satisfactionLevel = "SatisfactionLevel", // 满意度
   annualIncome = "AnnualIncome", // 年收入
+
+  // 显示组件
+  imgText = 'ImgText', // 图文
+  video = 'Video', // 视频  
+  title = 'Title', // 表单标题
 }
 
 export const IgnoreLineNumberTypeList = [
@@ -72,6 +77,7 @@ enum CompListType {
   layout = "Layout Component",
   business = "Business Component",
   common = "Common Component",
+  show = "Show Component",
 }
 
 // 组件分类列表类型
@@ -82,6 +88,41 @@ interface CompCategoryType {
   tooltip?: string
   children: CompItemType[]
 }
+
+export const JustShowCompType: string[] = [
+  CompType.formTitle,
+  CompType.divider,
+  CompType.paging,
+  CompType.button,
+]
+
+// 显示组件
+const ShowComponentList: CompItemType[] = [
+  {
+    label: '标题',
+    name: '标题',
+    type: CompType.formTitle,
+    icon: Icon.Title
+  },
+  // {
+  //   label: '图片',
+  //   name: '图片',
+  //   type: CompType.img,
+  //   icon: Icon.Img
+  // },
+  //   {
+  //   label: '视频',
+  //   name: '视频',
+  //   type: CompType.video,
+  //   icon: Icon.Video
+  // },
+  //   {
+  //   label: '图文',
+  //   name: '图文',
+  //   type: CompType.imgText,
+  //   icon: Icon.ImgText
+  // },
+]
 
 // 基础组件
 const BasicComponentList:CompItemType[] = [
@@ -317,6 +358,11 @@ const CommonComponentList = [
 
 // 组件列表
 export const CompListData:CompCategoryType[] = [{
+  name: '展示',
+  label: '展示',
+  type: CompListType.show,
+  children: [...ShowComponentList]
+},{
   name: '基础',
   label: '基础',
   type: CompListType.basic,

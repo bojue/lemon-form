@@ -78,7 +78,7 @@ export const defaultConfig: CompConfig = {
   customErrorMessage: '',
   title: '',
 }
-
+export const isFormTitle: CompType[] = [CompType.formTitle]
 export const dataListType: CompType[] = [CompType.checkout, CompType.radio, CompType.select] // 数组列表
 export const isLayoutType: CompType[] = [CompType.paging, CompType.divider] 
 export const hasIgnoreRequireType: CompType[] = [CompType.paging, CompType.divider, CompType.button]  // 忽略类型
@@ -107,7 +107,6 @@ export const isPersonalClassifyList = [
 export const isGender = [CompType.gender]
 export const isRangePlaceholderType: CompType[]  = [CompType.dateRange, CompType.timeRange]
 export const isNumberType: CompType[] = [CompType.number]
-export const isFormTitle: CompType[] = [CompType.formTitle]
 export const isButton: CompType[] = [CompType.button]
 export const isRate: CompType[] = [CompType.rate]
 export const isNPS: CompType[] = [CompType.nps, CompType.selectRate]
@@ -337,8 +336,6 @@ export const getDefaultConfig = (type: CompType | CompType[], ignoreDefault: boo
       ...configData,
       ...compConfig
     }
-
-    console.log('compConfig',compConfig)
   }
 
   return {...configData}
