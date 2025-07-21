@@ -34,6 +34,12 @@ import Theme from '/src/assets/form-editor/theme.svg'
 import Question from '/src/assets/form-editor/question.svg'
 import Outline from '/src/assets/form-editor/Outline.svg'
 
+// 显示组件
+import Title from '/src/assets/form-editor/title.svg'
+import ImgText from '/src/assets/form-editor/img.svg'
+import Video from '/src/assets/form-editor/video.svg'
+import Img from '/src/assets/form-editor/img.svg'
+
 export default {
   Checkout,
   Email,
@@ -67,6 +73,11 @@ export default {
   Theme,
   Question,
   Outline,
-  Sign
+  Sign,
+  // 显示
+  ImgText,
+  Video,
+  Img,
+  Title
 
 }

@@ -116,6 +116,11 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch, defineEmits } from 'vue'
+// 显示组件
+import ImageComponent from '@/components-form/show/Image.vue'
+import VideoComponent from '@/components-form/show/Video.vue'
+import FormTitleComponent from '@/components-form/show/FormTitle.vue'
+
 // 基础组件
 import RadioComponent from '@/components-form/base/Radio.vue'
 import SelectComponent from '@/components-form/base/Select.vue'
@@ -156,6 +161,7 @@ import * as _ from 'lodash'
 import { useSelectCompStore } from '@/stores/selectCompStore'
 import { v4 as uuidv4 } from 'uuid';
 import { HasSettingTypeList } from '@/views/FormEditor/comp-config-data'
+import { JustShowCompType } from '@/views/FormEditor/comp-data'
 
 
 interface Props {
@@ -223,10 +229,16 @@ const handleBatchOperation = (isOk: boolean, dataList: any[]) => {
   }
 }
 
-const displaySection = computed(() => !['Divider', 'Paging'].includes(props.type))
+const displaySection = computed(() => !['Divider', 'Paging', 'FormTitle'].includes(props.type))
 
 function getTypeToComponent(type: string) {
   const compsObject: any = {
+    // 显示组件
+    Img: ImageComponent,
+    Video: VideoComponent,
+    FormTitle: FormTitleComponent,
+    
+    // 基础组件
     Radio: RadioComponent,
     Input: InputComponent,
     Textarea: TextareaComponent,
@@ -269,7 +281,7 @@ const compControl = (event: any, type: string) => {
 }
 
 const isIgnoreEditor = () => {
-  return ['Divider', 'Paging'].includes(props.type)
+  return JustShowCompType.includes(props.type)
 }
 
 const addItem = (type: string) => {

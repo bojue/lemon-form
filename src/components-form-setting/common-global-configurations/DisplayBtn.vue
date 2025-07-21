@@ -5,7 +5,7 @@
       表单按钮
       <a-tooltip placement="top">
         <template #title>
-          <span>是否启动表单标题</span>
+          <span>是否启动表单按钮</span>
         </template>
         <QuestionCircleOutlined />
     </a-tooltip>

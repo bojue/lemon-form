@@ -13,7 +13,7 @@
     placeholder="请输入图片URL" 
     v-model:value="comp.titleImageUrl"
     @Input="handleChangeInput($event, 'titleImageUrl')"
-    :maxlength="100"
+    :maxlength="400"
   ></a-input>
 
   <a-typography-text type="secondary" class="block-title">表单标题</a-typography-text>
@@ -27,7 +27,7 @@
 
     <div class="setting-item h-50">
     <a-typography-text type="secondary" class="block-title2">标题大小</a-typography-text>
-    <a-select v-model:value="comp.titleSize" style="width: 120px" class="abs-r" @change="changeSelect">
+    <a-select v-model:value="comp.titleSize" style="width: 120px" class="abs-r" @change="changeSelect($event, 'titleSize')">
       <a-select-option :value="item.value" v-for="item in orientationList">{{ item.name }}</a-select-option>
     </a-select>
   </div>

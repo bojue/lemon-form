@@ -109,7 +109,12 @@ header {
 }
 .home {
   height: 100%;
-  background: linear-gradient(180deg,transparent, #fff, #fff, #fff, #fff)  cornflowerblue;
+  background: linear-gradient(180deg,transparent, #fff, #fff, #fff, #fff)  #7aff0c40;
+  /* background: linear-gradient(180deg,transparent, #fff, #fff, #fff, #fff)  yellowgreen; */
+  /* background: linear-gradient(-45deg,#fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff,
+   #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #ffda0c, #fff70c, #c2ff0c, #7aff0c,#fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff, #fff,
+   #fff, #fff) ; */
+
 }
 
 </style>

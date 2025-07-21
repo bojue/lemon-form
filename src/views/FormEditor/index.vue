@@ -79,33 +79,7 @@
         }">
           <div class="body">
             <a-watermark :content="selectForm?.displayWaterMark ? selectForm?.waterMarkText : ''">
-              <div 
-                v-if="globalData && globalData.displayTitle"
-                class="form-header" 
-                @click="selectComp(pageHeader)" 
-                :class="{
-                  'form-item': true,
-                  'active-comp': activeComp.id === pageHeader.id
-                }">
-                <div class="header-img" v-if="pageHeader.titleImageShow ">
-                  <img :src="getImageUrl(pageHeader.titleImageUrl)" />
-                </div>
-                <section class="title-section">
-                  <div class="title"  :style="{
-                      'margin': pageHeader.titleSize === 'large' ? '16px' : (pageHeader.titleSize === 'middle' ? '10px' : '6px'),
-                    }" >
-                    <div class="title-val"  :style="{
-                      'font-size': pageHeader.titleSize === 'large' ? '36px' : (pageHeader.titleSize === 'middle' ? '24px' : '18px'),
-                    }">{{ pageHeader.titleValue }}</div>
-                  </div>
-                  <div class="description" v-if="pageHeader.titleDescriptionShow">
-                    <div class="description-value" :style="{
-                      'text-align': pageHeader.titleDescriptionPosition
-                    }"> {{ pageHeader.titleDescription }}</div>
-                  </div>
-                </section>
-
-              </div>
+     
               <div class="form-body form-body-content">
                 <div class="comp-list-content">
                   <VueDraggable v-model="pageCompList" :animation="150" group="sevenBotForm" ghostClass="ghost"
@@ -184,7 +158,6 @@ import { useRoute, createRouter } from 'vue-router';
 import { toGithub } from '@/utils/toGithub'
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
-import { toRef } from 'pinia'
 
 
 import * as _ from 'lodash'
@@ -220,7 +193,7 @@ interface FooterType {
 
 const openDraw = ref(false)
 const compList = ref([...CompListData]) // 来源组件列表
-const globalData = ref({})
+const globalData = ref()
 
 /**
  * 编辑器编辑内容
@@ -274,7 +247,6 @@ const selectForm = ref()
 const defaultFormConfig = {
   displayNumberSort: true,
   displayDescription: true,
-  displayTitle: true,
   displayBtn: true,
   displayWaterMark: false,
   waterMarkText: '柠檬轻表单🍋',
@@ -384,8 +356,6 @@ const selectComp = (item: any) => {
     ...item
   })
   activeComp.value.id = item.id
-
-  console.log("当前选中组件：", item)
 }
 
 const updateDataListIndex = (index: number) => {
@@ -453,9 +423,6 @@ const getActiveComp = () => {
   if (activeComp.value.id === pageFooter.value.id) {
     return pageFooter.value
   }
-  if (activeComp.value.id === pageHeader.value.id) {
-    return pageHeader.value
-  }
 }
 
 const getActiveCompIndex = () => {
@@ -465,16 +432,6 @@ const getActiveCompIndex = () => {
 const callback = () => {
   // router.go(-1)
   router.push('/workspace/product')
-}
-
-const getImageUrl = (imgUrl: string) => {
-  try {
-    return new URL(`/src/assets/background/${imgUrl}`, import.meta.url).href;
-  } catch (e) {
-    // @ts-ignore
-    const defaultUrl = pageHeader?.defUrl
-    return new URL(`/src/assets/background/${defaultUrl}`, import.meta.url).href;
-  }
 }
 
 
