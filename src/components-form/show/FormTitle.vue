@@ -77,6 +77,7 @@ onMounted(() => {
 }
 
 .title-section {
+  margin: 30px 0;
   .title {
     margin: 10px 0 !important;
   }

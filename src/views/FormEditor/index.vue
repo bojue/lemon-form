@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="content editor-content">
-      <SidebarComp />
+      <SidebarComp @selectSideItemType="selectSideItemType" :currentSideItemType="currentSideItemType" />
       <div class="comps">
         <div class="comp-category-item" v-for="compCategory in compList">
           <div class="category-title">
@@ -79,7 +79,6 @@
         }">
           <div class="body">
             <a-watermark :content="selectForm?.displayWaterMark ? selectForm?.waterMarkText : ''">
-     
               <div class="form-body form-body-content">
                 <div class="comp-list-content">
                   <VueDraggable v-model="pageCompList" :animation="150" group="sevenBotForm" ghostClass="ghost"
@@ -191,9 +190,15 @@ interface FooterType {
   buttonIconShowBool: boolean
 }
 
+const currentSideItemType = ref('questionBank') // 当前侧边栏选中类型
+
 const openDraw = ref(false)
 const compList = ref([...CompListData]) // 来源组件列表
 const globalData = ref()
+
+const selectSideItemType = (item: string) => {
+  currentSideItemType.value = item
+}
 
 /**
  * 编辑器编辑内容
@@ -247,6 +252,7 @@ const selectForm = ref()
 const defaultFormConfig = {
   displayNumberSort: true,
   displayDescription: true,
+  displayTitle: true,
   displayBtn: true,
   displayWaterMark: false,
   waterMarkText: '柠檬轻表单🍋',
@@ -356,6 +362,8 @@ const selectComp = (item: any) => {
     ...item
   })
   activeComp.value.id = item.id
+
+  console.log("当前选中组件：", item)
 }
 
 const updateDataListIndex = (index: number) => {
@@ -423,6 +431,9 @@ const getActiveComp = () => {
   if (activeComp.value.id === pageFooter.value.id) {
     return pageFooter.value
   }
+  if (activeComp.value.id === pageHeader.value.id) {
+    return pageHeader.value
+  }
 }
 
 const getActiveCompIndex = () => {
@@ -432,6 +443,16 @@ const getActiveCompIndex = () => {
 const callback = () => {
   // router.go(-1)
   router.push('/workspace/product')
+}
+
+const getImageUrl = (imgUrl: string) => {
+  try {
+    return new URL(`/src/assets/background/${imgUrl}`, import.meta.url).href;
+  } catch (e) {
+    // @ts-ignore
+    const defaultUrl = pageHeader?.defUrl
+    return new URL(`/src/assets/background/${defaultUrl}`, import.meta.url).href;
+  }
 }
 
 

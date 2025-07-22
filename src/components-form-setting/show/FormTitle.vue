@@ -51,7 +51,7 @@
     :maxlength="200"
   ></a-textarea>
   <div class="setting-item h-50">
-    <a-typography-text type="secondary" class="block-title2">位置</a-typography-text>
+    <a-typography-text type="secondary" class="block-title2">位置(标题+描述)</a-typography-text>
     <a-select v-model:value="comp.titleDescriptionPosition" style="width: 120px" class="abs-r" @change="changeSelect($event, 'titleDescriptionPosition')">
       <a-select-option :value="item.value" v-for="item in positionList">{{ item.name }}</a-select-option>
     </a-select>

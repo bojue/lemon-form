@@ -137,7 +137,9 @@ const showRegParams = () => {
 
 watch([() => props.selectComp, () => props.selectForm],
 ([newValue,newFormConfig]) => {
-    if(!selectComp) return
+    if(!selectComp) {
+      return 
+    }
     selectComp.value = newValue
     selectForm.value = newFormConfig
   },
