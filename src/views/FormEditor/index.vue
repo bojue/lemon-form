@@ -3,7 +3,6 @@
     <div class="nav-data">
       <div class="header">
         <div class="callback" @click="callback()">
-
           <img src="@/assets/form-editor/callback.svg" alt="">
         </div>
         <div class="title-data">
@@ -42,7 +41,15 @@
     <div class="content editor-content">
       <SidebarComp @selectSideItemType="selectSideItemType" :currentSideItemType="currentSideItemType" />
       <div class="comps">
-        <div class="comp-category-item" v-for="compCategory in compList">
+        <template v-if="currentSideItemType === 'theme'">
+          <div class="theme">
+            <div class="theme-item" v-for="item in themeList" :key="item.url" @click="selectThemeImg(item.url)">
+              <img :src="getImageUrl(item.url)" alt="">
+            </div>
+          </div>
+        </template>
+        <template v-if="currentSideItemType === 'questionBank'">
+                <div class="comp-category-item" v-for="compCategory in compList">
           <div class="category-title">
             {{ compCategory.name }}
             <a-tooltip placement="top" v-if="compCategory.tooltip">
@@ -65,8 +72,9 @@
             </div>
           </VueDraggable>
         </div>
+        </template>
       </div>
-      <div class="editor">
+      <div class="editor" :style="{ 'background-image': `url(${getImageUrl(selectForm?.bgImgUrl)})` }">
         <div class="preview-control" title="预览" @click="preview">
           <img :src="Icon.Preview" alt="">
           <div class="label">
@@ -158,7 +166,6 @@ import { toGithub } from '@/utils/toGithub'
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 
-
 import * as _ from 'lodash'
 import Icon from './comp-icon'
 import router from '@/router'
@@ -198,6 +205,27 @@ const globalData = ref()
 
 const selectSideItemType = (item: string) => {
   currentSideItemType.value = item
+}
+
+const themeList = ref([{
+  url: 'bg0.png',
+},{
+  url: 'bg1.png',
+},{
+  url: 'bg2.png',
+},{
+  url: 'bg3.png',
+},{
+  url: 'bg4.png',
+},{
+  url: 'bg5.png',
+}])
+
+const selectThemeImg = (url: string) => {
+  console.log(url)
+  useCompStore.updateGlobalFormConfig({
+    bgImgUrl: url
+  })
 }
 
 /**
@@ -256,6 +284,7 @@ const defaultFormConfig = {
   displayBtn: true,
   displayWaterMark: false,
   waterMarkText: '柠檬轻表单🍋',
+  bgImgUrl: ''
 }
 
 onMounted(() => {
@@ -857,5 +886,24 @@ const onClose = () => {
 .comp-list-content {
   position: relative;
   min-height: 130px;
+}
+
+.theme {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px;
+  padding: 20px 2px;
+
+  .theme-item {
+    display: flex;
+    flex: 0 0 100%;
+    cursor: pointer;
+    img {
+      height: 120px;
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
 }
 </style>
