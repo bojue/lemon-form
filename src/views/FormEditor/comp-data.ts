@@ -57,8 +57,9 @@ export enum CompType {
 }
 
 export const IgnoreLineNumberTypeList = [
+  CompType.formTitle,
   CompType.divider,
-  CompType.paging
+  CompType.paging,
 ]
 
 // 组件元素类型

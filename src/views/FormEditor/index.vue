@@ -284,7 +284,7 @@ const defaultFormConfig = {
   displayBtn: true,
   displayWaterMark: false,
   waterMarkText: '柠檬轻表单🍋',
-  bgImgUrl: ''
+  bgImgUrl: 'bg1.png'
 }
 
 onMounted(() => {
@@ -479,7 +479,7 @@ const getImageUrl = (imgUrl: string) => {
     return new URL(`/src/assets/background/${imgUrl}`, import.meta.url).href;
   } catch (e) {
     // @ts-ignore
-    const defaultUrl = pageHeader?.defUrl
+    const defaultUrl = 'bg0.png'
     return new URL(`/src/assets/background/${defaultUrl}`, import.meta.url).href;
   }
 }
